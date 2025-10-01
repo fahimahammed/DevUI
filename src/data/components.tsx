@@ -16,6 +16,13 @@ import {
     AlertDialogTitle,
     AlertDialogTrigger
 } from "@/components/ui/alert-dialog";
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select";
 
 export const componentsData = [
     {
@@ -237,5 +244,59 @@ export function CalendarDemo() {
     />
   )
 }`
+    },
+    {
+        id: "select",
+        title: "Select",
+        description: "Fully accessible dropdown with keyboard navigation, dark theme support, and smooth animations. Navigate with arrows, search by typing.",
+        category: "Form",
+        preview: (
+            <div className="w-full max-w-sm pointer-events-auto">
+                <Select>
+                    <SelectTrigger className="w-full" aria-label="Choose a fruit">
+                        <SelectValue placeholder="Select a fruit" />
+                    </SelectTrigger>
+                    <SelectContent>
+                        <SelectItem value="apple">Apple</SelectItem>
+                        <SelectItem value="banana">Banana</SelectItem>
+                        <SelectItem value="blueberry">Blueberry</SelectItem>
+                        <SelectItem value="grapes">Grapes</SelectItem>
+                        <SelectItem value="pineapple">Pineapple</SelectItem>
+                    </SelectContent>
+                </Select>
+            </div>
+        ),
+        code: `import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
+
+export function SelectDemo() {
+  return (
+    <Select>
+      <SelectTrigger className="w-full" aria-label="Choose a fruit">
+        <SelectValue placeholder="Select a fruit" />
+      </SelectTrigger>
+      <SelectContent>
+        <SelectItem value="apple">Apple</SelectItem>
+        <SelectItem value="banana">Banana</SelectItem>
+        <SelectItem value="blueberry">Blueberry</SelectItem>
+        <SelectItem value="grapes">Grapes</SelectItem>
+        <SelectItem value="pineapple">Pineapple</SelectItem>
+      </SelectContent>
+    </Select>
+  )
+}
+
+// Keyboard Accessibility:
+// - Tab: Focus the select trigger
+// - Space/Enter: Open dropdown
+// - Arrow Up/Down: Navigate options
+// - Home/End: Jump to first/last option
+// - Escape: Close dropdown
+// - Type to search: Quick filter options`
     }
 ];
