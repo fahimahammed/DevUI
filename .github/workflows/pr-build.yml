@@ -1,5 +1,6 @@
 name: PR Build & Badge
-
+env:
+  VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
 on:
   pull_request:
     types: [opened, reopened, synchronize]
@@ -7,6 +8,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
