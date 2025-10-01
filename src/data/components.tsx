@@ -244,6 +244,45 @@ export function CalendarDemo() {
     />
   )
 }`
+    },{
+      id: "radio-group",
+      title: "Radio Group",
+      description: "A group of radio buttons that allows the user to select one option from a set.",
+      category: "Form",
+      preview: (
+          <div className="flex flex-col space-y-2">
+              <div className="flex items-center space-x-2">
+                  <input type="radio" id="option1" name="options" className="h-4 w-4 text-primary" />
+                  <label htmlFor="option1" className="text-sm">Option 1</label>
+              </div>  
+              <div className="flex items-center space-x-2">
+                  <input type="radio" id="option2" name="options" className="h-4 w-4 text-primary" />
+                  <label htmlFor="option2" className="text-sm">Option 2</label>
+              </div>
+              <div className="flex items-center space-x-2">
+                  <input type="radio" id="option3" name="options" className="h-4 w-4 text-primary" />
+                  <label htmlFor="option3" className="text-sm">Option 3</label>
+              </div>
+          </div>
+      ),
+      code: `export function RadioGroupDemo() {
+  return (
+    <div className="flex flex-col space-y-2"> 
+      <div className="flex items-center space-x-2">
+        <input type="radio" id="option1" name="options" />
+        <label htmlFor="option1">Option 1</label>
+      </div>
+      <div className="flex items-center space-x-2">
+        <input type="radio" id="option2" name="options" />
+        <label htmlFor="option2">Option 2</label>
+      </div>
+      <div className="flex items-center space-x-2">
+        <input type="radio" id="option3" name="options" />
+        <label htmlFor="option3">Option 3</label>
+      </div>
+    </div>
+  )
+}`
     },
     {
         id: "select",
