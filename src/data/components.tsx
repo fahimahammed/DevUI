@@ -16,6 +16,23 @@ import {
     AlertDialogTitle,
     AlertDialogTrigger
 } from "@/components/ui/alert-dialog";
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select";
+import {
+    Dialog,
+    DialogClose,
+    DialogContent,
+    DialogDescription,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+} from "@/components/ui/dialog";
 
 export const componentsData = [
     {
@@ -235,6 +252,193 @@ export function CalendarDemo() {
       onSelect={setDate}
       className="rounded-md border"
     />
+  )
+}`
+    },{
+      id: "radio-group",
+      title: "Radio Group",
+      description: "A group of radio buttons that allows the user to select one option from a set.",
+      category: "Form",
+      preview: (
+          <div className="flex flex-col space-y-2">
+              <div className="flex items-center space-x-2">
+                  <input type="radio" id="option1" name="options" className="h-4 w-4 text-primary" />
+                  <label htmlFor="option1" className="text-sm">Option 1</label>
+              </div>  
+              <div className="flex items-center space-x-2">
+                  <input type="radio" id="option2" name="options" className="h-4 w-4 text-primary" />
+                  <label htmlFor="option2" className="text-sm">Option 2</label>
+              </div>
+              <div className="flex items-center space-x-2">
+                  <input type="radio" id="option3" name="options" className="h-4 w-4 text-primary" />
+                  <label htmlFor="option3" className="text-sm">Option 3</label>
+              </div>
+          </div>
+      ),
+      code: `export function RadioGroupDemo() {
+  return (
+    <div className="flex flex-col space-y-2"> 
+      <div className="flex items-center space-x-2">
+        <input type="radio" id="option1" name="options" />
+        <label htmlFor="option1">Option 1</label>
+      </div>
+      <div className="flex items-center space-x-2">
+        <input type="radio" id="option2" name="options" />
+        <label htmlFor="option2">Option 2</label>
+      </div>
+      <div className="flex items-center space-x-2">
+        <input type="radio" id="option3" name="options" />
+        <label htmlFor="option3">Option 3</label>
+      </div>
+    </div>
+  )
+}`
+    },
+    {
+        id: "select",
+        title: "Select",
+        description: "Fully accessible dropdown with keyboard navigation, dark theme support, and smooth animations. Navigate with arrows, search by typing.",
+        category: "Form",
+        preview: (
+            <div className="w-full max-w-sm pointer-events-auto">
+                <Select>
+                    <SelectTrigger className="w-full" aria-label="Choose a fruit">
+                        <SelectValue placeholder="Select a fruit" />
+                    </SelectTrigger>
+                    <SelectContent>
+                        <SelectItem value="apple">Apple</SelectItem>
+                        <SelectItem value="banana">Banana</SelectItem>
+                        <SelectItem value="blueberry">Blueberry</SelectItem>
+                        <SelectItem value="grapes">Grapes</SelectItem>
+                        <SelectItem value="pineapple">Pineapple</SelectItem>
+                    </SelectContent>
+                </Select>
+            </div>
+        ),
+        code: `import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
+
+export function SelectDemo() {
+  return (
+    <Select>
+      <SelectTrigger className="w-full" aria-label="Choose a fruit">
+        <SelectValue placeholder="Select a fruit" />
+      </SelectTrigger>
+      <SelectContent>
+        <SelectItem value="apple">Apple</SelectItem>
+        <SelectItem value="banana">Banana</SelectItem>
+        <SelectItem value="blueberry">Blueberry</SelectItem>
+        <SelectItem value="grapes">Grapes</SelectItem>
+        <SelectItem value="pineapple">Pineapple</SelectItem>
+      </SelectContent>
+    </Select>
+  )
+}
+
+// Keyboard Accessibility:
+// - Tab: Focus the select trigger
+// - Space/Enter: Open dropdown
+// - Arrow Up/Down: Navigate options
+// - Home/End: Jump to first/last option
+// - Escape: Close dropdown
+// - Type to search: Quick filter options`
+    },
+    {
+        id: "dialog",
+        title: "Dialog",
+        description: "A modal dialog with smooth animations, dark theme support, and responsive design. Fully accessible with keyboard navigation.",
+        category: "Overlay",
+        preview: (
+            <Dialog>
+                <DialogTrigger asChild>
+                    <Button variant="outline">Open Dialog</Button>
+                </DialogTrigger>
+                <DialogContent className="sm:max-w-[425px]">
+                    <DialogHeader>
+                        <DialogTitle>Dialog Component</DialogTitle>
+                        <DialogDescription>
+                            This is a beautiful dialog with smooth animations and dark theme support. Press Escape or click the close button to dismiss.
+                        </DialogDescription>
+                    </DialogHeader>
+                    <div className="py-4">
+                        <p className="text-sm text-muted-foreground">
+                            Dialogs are perfect for displaying important information, confirmations, or forms that require user attention. This component features:
+                        </p>
+                        <ul className="mt-4 space-y-2 text-sm">
+                            <li className="flex items-start gap-2">
+                                <span className="text-primary mt-0.5">✓</span>
+                                <span>Smooth fade and zoom animations</span>
+                            </li>
+                            <li className="flex items-start gap-2">
+                                <span className="text-primary mt-0.5">✓</span>
+                                <span>Dark theme with backdrop blur</span>
+                            </li>
+                            <li className="flex items-start gap-2">
+                                <span className="text-primary mt-0.5">✓</span>
+                                <span>Keyboard accessible (Escape to close)</span>
+                            </li>
+                            <li className="flex items-start gap-2">
+                                <span className="text-primary mt-0.5">✓</span>
+                                <span>Responsive and mobile-friendly</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <DialogFooter>
+                        <DialogClose asChild>
+                            <Button type="button" variant="outline">Close Dialog</Button>
+                        </DialogClose>
+                    </DialogFooter>
+                </DialogContent>
+            </Dialog>
+        ),
+        code: `import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
+import { Button } from "@/components/ui/button"
+
+export function DialogDemo() {
+  return (
+    <Dialog>
+      <DialogTrigger asChild>
+        <Button variant="outline">Open Dialog</Button>
+      </DialogTrigger>
+      <DialogContent className="sm:max-w-[425px]">
+        <DialogHeader>
+          <DialogTitle>Dialog Component</DialogTitle>
+          <DialogDescription>
+            This is a beautiful dialog with smooth animations and dark theme support.
+          </DialogDescription>
+        </DialogHeader>
+        <div className="py-4">
+          <p className="text-sm text-muted-foreground">
+            Dialogs are perfect for displaying important information or confirmations.
+          </p>
+          <ul className="mt-4 space-y-2 text-sm">
+            <li>✓ Smooth animations</li>
+            <li>✓ Dark theme support</li>
+            <li>✓ Keyboard accessible</li>
+            <li>✓ Responsive design</li>
+          </ul>
+        </div>
+        <DialogFooter>
+          <DialogClose asChild>
+            <Button type="button" variant="outline">Close Dialog</Button>
+          </DialogClose>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
   )
 }`
     }

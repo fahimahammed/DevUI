@@ -47,7 +47,7 @@ const Index = () => {
               Copy, paste, and customize to build amazing UIs.
             </p>
 
-            <div className="flex items-center justify-center gap-4">
+            <div className="flex items-center justify-center gap-4 flex-wrap">
               <Link href={"https://github.com/fahimahammed/DevUI"}>
                 <Button size="lg" className="bg-primary hover:opacity-90 transition-opacity">
                   <Github className="mr-2 h-5 w-5" />
@@ -57,6 +57,11 @@ const Index = () => {
               <Button size="lg" variant="outline" className="border-primary/20 hover:bg-primary/5">
                 Browse Components
               </Button>
+              <Link href="/about">
+                <Button size="lg" variant="ghost" className="text-primary font-semibold border border-primary/10 hover:bg-primary/10">
+                  About Us
+                </Button>
+              </Link>
             </div>
 
             <div className="flex items-center justify-center gap-4 text-sm text-muted-foreground">
@@ -111,15 +116,35 @@ const Index = () => {
         <div className="max-w-6xl mx-auto">
           {filteredComponents.length > 0 ? (
             <div className="grid gap-8 md:grid-cols-1 lg:grid-cols-2">
-              {filteredComponents.map((component, index) => (
-                <div
-                  key={component.id}
-                  className="animate-fade-in"
-                  style={{ animationDelay: `${index * 0.1}s` }}
-                >
-                  <ComponentCard {...component} />
-                </div>
-              ))}
+              <div className="flex flex-col gap-8">
+
+              {filteredComponents.map((component, index) => {
+                if (index % 2 != 0) return null;
+                return (
+                  <div
+                    key={component.id}
+                    className="animate-fade-in"
+                    style={{ animationDelay: `${index * 0.1}s` }}
+                  >
+                    <ComponentCard {...component} />
+                  </div>
+                );
+              })}
+              </div>
+              <div className="flex flex-col gap-8">
+                {filteredComponents.map((component, index) => {
+                  if (index % 2 === 0) return null;
+                  return (
+                    <div
+                      key={component.id}
+                      className="animate-fade-in"
+                      style={{ animationDelay: `${index * 0.1}s` }}
+                    >
+                      <ComponentCard {...component} />
+                    </div>
+                  );
+                })}
+              </div>
             </div>
           ) : (
             <div className="text-center py-12">
