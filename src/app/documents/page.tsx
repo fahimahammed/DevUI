@@ -150,6 +150,9 @@ export default function DocsPage() {
             </p>
           </section>
 
+
+
+                        
           {/* Setup */}
           <section id="Setup">
             <h2 className="text-2xl font-semibold mb-3">Project Setup</h2>
