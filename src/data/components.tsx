@@ -23,6 +23,16 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
+import {
+    Dialog,
+    DialogClose,
+    DialogContent,
+    DialogDescription,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+} from "@/components/ui/dialog";
 
 export const componentsData = [
     {
@@ -337,5 +347,99 @@ export function SelectDemo() {
 // - Home/End: Jump to first/last option
 // - Escape: Close dropdown
 // - Type to search: Quick filter options`
+    },
+    {
+        id: "dialog",
+        title: "Dialog",
+        description: "A modal dialog with smooth animations, dark theme support, and responsive design. Fully accessible with keyboard navigation.",
+        category: "Overlay",
+        preview: (
+            <Dialog>
+                <DialogTrigger asChild>
+                    <Button variant="outline">Open Dialog</Button>
+                </DialogTrigger>
+                <DialogContent className="sm:max-w-[425px]">
+                    <DialogHeader>
+                        <DialogTitle>Dialog Component</DialogTitle>
+                        <DialogDescription>
+                            This is a beautiful dialog with smooth animations and dark theme support. Press Escape or click the close button to dismiss.
+                        </DialogDescription>
+                    </DialogHeader>
+                    <div className="py-4">
+                        <p className="text-sm text-muted-foreground">
+                            Dialogs are perfect for displaying important information, confirmations, or forms that require user attention. This component features:
+                        </p>
+                        <ul className="mt-4 space-y-2 text-sm">
+                            <li className="flex items-start gap-2">
+                                <span className="text-primary mt-0.5">✓</span>
+                                <span>Smooth fade and zoom animations</span>
+                            </li>
+                            <li className="flex items-start gap-2">
+                                <span className="text-primary mt-0.5">✓</span>
+                                <span>Dark theme with backdrop blur</span>
+                            </li>
+                            <li className="flex items-start gap-2">
+                                <span className="text-primary mt-0.5">✓</span>
+                                <span>Keyboard accessible (Escape to close)</span>
+                            </li>
+                            <li className="flex items-start gap-2">
+                                <span className="text-primary mt-0.5">✓</span>
+                                <span>Responsive and mobile-friendly</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <DialogFooter>
+                        <DialogClose asChild>
+                            <Button type="button" variant="outline">Close Dialog</Button>
+                        </DialogClose>
+                    </DialogFooter>
+                </DialogContent>
+            </Dialog>
+        ),
+        code: `import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
+import { Button } from "@/components/ui/button"
+
+export function DialogDemo() {
+  return (
+    <Dialog>
+      <DialogTrigger asChild>
+        <Button variant="outline">Open Dialog</Button>
+      </DialogTrigger>
+      <DialogContent className="sm:max-w-[425px]">
+        <DialogHeader>
+          <DialogTitle>Dialog Component</DialogTitle>
+          <DialogDescription>
+            This is a beautiful dialog with smooth animations and dark theme support.
+          </DialogDescription>
+        </DialogHeader>
+        <div className="py-4">
+          <p className="text-sm text-muted-foreground">
+            Dialogs are perfect for displaying important information or confirmations.
+          </p>
+          <ul className="mt-4 space-y-2 text-sm">
+            <li>✓ Smooth animations</li>
+            <li>✓ Dark theme support</li>
+            <li>✓ Keyboard accessible</li>
+            <li>✓ Responsive design</li>
+          </ul>
+        </div>
+        <DialogFooter>
+          <DialogClose asChild>
+            <Button type="button" variant="outline">Close Dialog</Button>
+          </DialogClose>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  )
+}`
     }
 ];
