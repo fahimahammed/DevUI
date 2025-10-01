@@ -111,15 +111,35 @@ const Index = () => {
         <div className="max-w-6xl mx-auto">
           {filteredComponents.length > 0 ? (
             <div className="grid gap-8 md:grid-cols-1 lg:grid-cols-2">
-              {filteredComponents.map((component, index) => (
-                <div
-                  key={component.id}
-                  className="animate-fade-in"
-                  style={{ animationDelay: `${index * 0.1}s` }}
-                >
-                  <ComponentCard {...component} />
-                </div>
-              ))}
+              <div className="flex flex-col gap-8">
+
+              {filteredComponents.map((component, index) => {
+                if (index % 2 != 0) return null;
+                return (
+                  <div
+                    key={component.id}
+                    className="animate-fade-in"
+                    style={{ animationDelay: `${index * 0.1}s` }}
+                  >
+                    <ComponentCard {...component} />
+                  </div>
+                );
+              })}
+              </div>
+              <div className="flex flex-col gap-8">
+                {filteredComponents.map((component, index) => {
+                  if (index % 2 === 0) return null;
+                  return (
+                    <div
+                      key={component.id}
+                      className="animate-fade-in"
+                      style={{ animationDelay: `${index * 0.1}s` }}
+                    >
+                      <ComponentCard {...component} />
+                    </div>
+                  );
+                })}
+              </div>
             </div>
           ) : (
             <div className="text-center py-12">
