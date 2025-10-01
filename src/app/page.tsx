@@ -47,7 +47,7 @@ const Index = () => {
               Copy, paste, and customize to build amazing UIs.
             </p>
 
-            <div className="flex items-center justify-center gap-4">
+            <div className="flex items-center justify-center gap-4 flex-wrap">
               <Link href={"https://github.com/fahimahammed/DevUI"}>
                 <Button size="lg" className="bg-primary hover:opacity-90 transition-opacity">
                   <Github className="mr-2 h-5 w-5" />
@@ -57,6 +57,11 @@ const Index = () => {
               <Button size="lg" variant="outline" className="border-primary/20 hover:bg-primary/5">
                 Browse Components
               </Button>
+              <Link href="/about">
+                <Button size="lg" variant="ghost" className="text-primary font-semibold border border-primary/10 hover:bg-primary/10">
+                  About Us
+                </Button>
+              </Link>
             </div>
 
             <div className="flex items-center justify-center gap-4 text-sm text-muted-foreground">
