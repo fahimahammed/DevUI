@@ -95,7 +95,7 @@ export default function AboutPage() {
                 <div className="p-2 rounded-lg bg-primary/10">
                   <Sparkles className="h-5 w-5 text-primary" />
                 </div>
-                <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">🌟 Features</h2>
+                <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">Features</h2>
               </div>
               <div className="grid gap-4 sm:gap-6">
                 <ul className="space-y-3 text-muted-foreground">
@@ -140,7 +140,7 @@ export default function AboutPage() {
                   <div className="p-2 rounded-lg bg-primary/10">
                     <Palette className="h-5 w-5 text-primary" />
                   </div>
-                  <h3 className="text-xl sm:text-2xl font-bold tracking-tight">🎨 Design & Components</h3>
+                  <h3 className="text-xl sm:text-2xl font-bold tracking-tight">Design & Components</h3>
                 </div>
                 <p className="text-muted-foreground text-sm sm:text-base">
                   Enjoy a clean, modern UI with subtle gradients, clean sans-serif fonts, and smooth transitions. 
@@ -157,7 +157,7 @@ export default function AboutPage() {
                   <div className="p-2 rounded-lg bg-primary/10">
                     <Zap className="h-5 w-5 text-primary" />
                   </div>
-                  <h3 className="text-xl sm:text-2xl font-bold tracking-tight">⚡ Open Source & Hacktoberfest</h3>
+                  <h3 className="text-xl sm:text-2xl font-bold tracking-tight">Open Source & Hacktoberfest</h3>
                 </div>
                 <p className="text-muted-foreground text-sm sm:text-base">
                   DevUI is GitHub-ready and welcomes contributions from everyone! Whether you want to add new components, 
