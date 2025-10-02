@@ -1,43 +1,22 @@
-'use client'; 
+"use client"
+import { useEffect, useState } from "react";
 
-import React, { useState, useEffect } from 'react';
-
-const BackToTopButton = () => {
+export default function BackToTopButton() {
   const [isVisible, setIsVisible] = useState(false);
-  const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth', 
-    });
-  };
+
   useEffect(() => {
-    const toggleVisibility = () => {
-      if (window.scrollY > 200) { 
-        setIsVisible(true);
-      } else {
-        setIsVisible(false);
-      }
+    const handleScroll = () => {
+      setIsVisible(window.scrollY > 200);
     };
-    window.addEventListener('scroll', toggleVisibility);
-    return () => {
-      window.removeEventListener('scroll', toggleVisibility);
-    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   return (
-<<<<<<< HEAD
-<<<<<<< HEAD
-    isVisible && (
-      <button
-        onClick={scrollToTop}
-        className="fixed bottom-6 right-6 p-3 rounded-full bg-blue-600 text-white shadow-lg hover:bg-blue-700 transition"
-      >
-        ↑
-      </button>
-    )
-=======
-=======
->>>>>>> 1eb2db2b134a1075b42fdbe2c683bad646b00869
     <>
       {isVisible && ( 
         <button
@@ -62,11 +41,5 @@ const BackToTopButton = () => {
         </button>
       )}
     </>
-<<<<<<< HEAD
->>>>>>> 1eb2db2 (Merged, fixed, and tested)
-=======
->>>>>>> 1eb2db2b134a1075b42fdbe2c683bad646b00869
   );
-};
-
-export default BackToTopButton;
+}
