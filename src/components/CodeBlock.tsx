@@ -1,11 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import {
-  vscDarkPlus,
-  vs,
-} from "react-syntax-highlighter/dist/esm/styles/prism";
+import { codeToHtml } from "shiki";
 import { Check, Copy } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
@@ -23,24 +19,37 @@ export const CodeBlock = ({
   showLineNumbers = true,
 }: CodeBlockProps) => {
   const [copied, setCopied] = useState(false);
-  const { theme, resolvedTheme } = useTheme();
+  const [highlightedCode, setHighlightedCode] = useState<string>("");
+  const { resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
-  // Prevent hydration mismatch
   useEffect(() => {
     setMounted(true);
   }, []);
 
-  const currentTheme = mounted ? resolvedTheme || theme : "dark";
-  const syntaxTheme = currentTheme === "dark" ? vscDarkPlus : vs;
+  useEffect(() => {
+    const generateHighlight = async () => {
+      try {
+        const theme = mounted && resolvedTheme === "dark" ? "github-dark" : "github-light";
+        const html = await codeToHtml(code, {
+          lang: language,
+          theme,
+        });
+        setHighlightedCode(html);
+      } catch (error) {
+        console.error("Highlighting error:", error);
+        setHighlightedCode(`<pre><code>${code}</code></pre>`);
+      }
+    };
+
+    generateHighlight();
+  }, [code, language, mounted, resolvedTheme]);
 
   const handleCopy = async () => {
     try {
       await navigator.clipboard.writeText(code);
       setCopied(true);
-      toast.success("Code copied to clipboard!", {
-        duration: 2000,
-      });
+      toast.success("Code copied to clipboard!");
       setTimeout(() => setCopied(false), 2000);
     } catch (err) {
       toast.error("Failed to copy code");
@@ -48,78 +57,66 @@ export const CodeBlock = ({
   };
 
   return (
-    <div className="relative rounded-xl overflow-hidden border border-border bg-card/50 backdrop-blur-sm shadow-sm hover:shadow-md transition-shadow">
-      {/* macOS-style Header with Traffic Lights */}
-      <div className="flex items-center justify-between px-4 py-2.5 border-b border-border bg-secondary/80 dark:bg-secondary/50">
+    <div className="group relative overflow-hidden rounded-xl border border-primary/20 bg-card/50 shadow-lg transition-all duration-300 hover:shadow-xl hover:border-primary/30">
+      {/* Header with primary color accents */}
+      <div className="flex items-center justify-between px-4 py-3 border-b border-primary/20 bg-gradient-to-r from-primary/5 to-primary/10">
         <div className="flex items-center gap-3">
-          {/* macOS Traffic Light Dots */}
-          <div className="flex items-center gap-1.5">
-            <div className="w-3 h-3 rounded-full bg-red-500 hover:bg-red-600 transition-colors" />
-            <div className="w-3 h-3 rounded-full bg-yellow-500 hover:bg-yellow-600 transition-colors" />
-            <div className="w-3 h-3 rounded-full bg-green-500 hover:bg-green-600 transition-colors" />
+          {/* VS Code style dots with primary color */}
+          <div className="flex gap-1.5">
+            <div className="w-3 h-3 rounded-full bg-primary/60" />
+            <div className="w-3 h-3 rounded-full bg-primary/40" />
+            <div className="w-3 h-3 rounded-full bg-primary/20" />
           </div>
-          {/* Language Label */}
-          <span className="text-xs sm:text-sm font-mono text-muted-foreground uppercase tracking-wider font-semibold">
+          <span className="text-xs font-mono text-primary font-semibold uppercase tracking-wider">
             {language}
           </span>
         </div>
         
-        {/* Copy Button */}
         <Button
           variant="ghost"
           size="sm"
           onClick={handleCopy}
-          className="h-7 sm:h-8 px-2 sm:px-3 hover:bg-accent/50 transition-all"
-          aria-label={copied ? "Code copied" : "Copy code"}
+          className="h-8 px-3 text-primary hover:bg-primary/10 hover:text-primary transition-all"
         >
           {copied ? (
             <>
-              <Check className="h-3 w-3 sm:h-4 sm:w-4 mr-1 text-green-500" />
-              <span className="text-xs hidden sm:inline">Copied!</span>
+              <Check className="w-4 h-4 mr-2" />
+              <span className="text-xs">Copied!</span>
             </>
           ) : (
             <>
-              <Copy className="h-3 w-3 sm:h-4 sm:w-4 mr-1" />
-              <span className="text-xs hidden sm:inline">Copy</span>
+              <Copy className="w-4 h-4 mr-2" />
+              <span className="text-xs">Copy</span>
             </>
           )}
         </Button>
       </div>
       
-      {/* Code Content */}
-      <div className="overflow-x-auto">
-        <SyntaxHighlighter
-          language={language}
-          style={{
-            ...syntaxTheme,
-            'code[class*="language-"]': {
-              ...syntaxTheme['code[class*="language-"]'],
-              background: "transparent",
-              backgroundColor: "transparent",
-            },
-          }}
-          showLineNumbers={showLineNumbers}
-          customStyle={{
-            margin: 0,
-            padding: "0.875rem 1rem",
-            background: "transparent",
-            backgroundColor: "transparent",
-            fontSize: "0.8125rem",
-            lineHeight: "1.6",
-          }}
-          codeTagProps={{
-            style: {
-              fontSize: "0.8125rem",
-              fontFamily:
-                "'Fira Code', 'JetBrains Mono', 'Courier New', monospace",
-            },
-          }}
-          wrapLongLines={false}
-          className="scrollbar-thin scrollbar-thumb-muted scrollbar-track-transparent"
-        >
-          {code}
-        </SyntaxHighlighter>
+      {/* Code content with Shiki highlighting */}
+      <div 
+        className="overflow-x-auto text-sm leading-relaxed"
+        style={{
+          fontFamily: "'Fira Code', 'JetBrains Mono', Consolas, monospace",
+        }}
+      >
+        {highlightedCode ? (
+          <div
+            dangerouslySetInnerHTML={{ __html: highlightedCode }}
+            className="[&_pre]:!bg-transparent [&_pre]:!m-0 [&_pre]:p-4 [&_code]:!bg-transparent"
+            style={{
+              // Custom line number styling with primary color
+              counterReset: showLineNumbers ? "line" : "none",
+            }}
+          />
+        ) : (
+          <pre className="p-4 text-muted-foreground">
+            <code>{code}</code>
+          </pre>
+        )}
       </div>
+      
+      {/* Subtle primary color accent at bottom */}
+      <div className="h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent" />
     </div>
   );
 };
