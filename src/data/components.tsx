@@ -37,6 +37,8 @@ import { Progress } from "@/components/ui/progress";
 import { Textarea } from "@/components/ui/textarea";
 import ChatBox from "@/components/ui/chat";
 import { toast } from "sonner";
+import { SidebarDemo } from "@/components/SidebarDemo";
+import Link from "next/link";
 
 
 export const componentsData = [
@@ -600,6 +602,88 @@ export function ToastDemo() {
         </Button>
         <Toaster position="bottom-right" richColors closeButton />
     </div>
-}`}
+}`},
+  {
+    id: "sidebar",
+    title: "Sidebar Navigation",
+    description: "A responsive sidebar navigation with expand/collapse states, nested menu items, and smooth animations. Features hamburger menu for mobile.",
+    category: "Navigation",
+    preview: (
+      <div className="w-full h-64 border rounded-lg overflow-hidden bg-background">
+        <div className="text-center p-8 space-y-4">
+          <div className="text-lg font-semibold">Responsive Sidebar</div>
+          <div className="text-sm text-muted-foreground space-y-1">
+            <div>✅ Desktop fixed, mobile overlay</div>
+            <div>✅ Smooth animations</div>
+            <div>✅ Nested menu support</div>
+            <div>✅ Accessibility features</div>
+          </div>
+          <Link href="/sidebar-demo">
+            <Button variant="outline" size="sm">
+              View Full Demo
+            </Button>
+          </Link>
+        </div>
+      </div>
+    ),
+    code: `import { 
+  Sidebar, 
+  SidebarProvider, 
+  SidebarTrigger, 
+  SidebarContent,
+  MenuItem 
+} from '@/components/ui/sidebar';
+import { Home, Settings, User } from 'lucide-react';
+
+const navigationItems: MenuItem[] = [
+  {
+    id: 'home',
+    label: 'Home',
+    icon: <Home className="w-4 h-4" />,
+    href: '/',
+  },
+  {
+    id: 'user',
+    label: 'User Account',
+    icon: <User className="w-4 h-4" />,
+    children: [
+      {
+        id: 'profile',
+        label: 'Profile',
+        href: '/user/profile',
+      },
+      {
+        id: 'settings',
+        label: 'Settings',
+        icon: <Settings className="w-4 h-4" />,
+        href: '/user/settings',
+      },
+    ],
+  },
+];
+
+export function SidebarDemo() {
+  return (
+    <SidebarProvider>
+      <div className="flex h-screen">
+        <Sidebar 
+          items={navigationItems} 
+          onItemClick={(item) => console.log('Clicked:', item)}
+        />
+        <SidebarContent>
+          <header className="flex items-center gap-4 p-4 border-b">
+            <SidebarTrigger />
+            <h1 className="text-xl font-semibold">My App</h1>
+          </header>
+          <main className="flex-1 p-6">
+            <h2 className="text-2xl font-bold">Welcome!</h2>
+            <p>Your main content goes here.</p>
+          </main>
+        </SidebarContent>
+      </div>
+    </SidebarProvider>
+  );
+}`
+  }
 
 ]
