@@ -1,22 +1,31 @@
-"use client"
-import { useEffect, useState } from "react";
+'use client'; 
 
-export default function BackToTopButton() {
+import React, { useState, useEffect } from 'react';
+
+const BackToTopButton = () => {
   const [isVisible, setIsVisible] = useState(false);
-
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth', 
+    });
+  };
   useEffect(() => {
-    const handleScroll = () => {
-      setIsVisible(window.scrollY > 200);
+    const toggleVisibility = () => {
+      if (window.scrollY > 200) { 
+        setIsVisible(true);
+      } else {
+        setIsVisible(false);
+      }
     };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    window.addEventListener('scroll', toggleVisibility);
+    return () => {
+      window.removeEventListener('scroll', toggleVisibility);
+    };
   }, []);
 
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
-
   return (
+<<<<<<< HEAD
 <<<<<<< HEAD
     isVisible && (
       <button
@@ -27,6 +36,8 @@ export default function BackToTopButton() {
       </button>
     )
 =======
+=======
+>>>>>>> 1eb2db2b134a1075b42fdbe2c683bad646b00869
     <>
       {isVisible && ( 
         <button
@@ -51,6 +62,11 @@ export default function BackToTopButton() {
         </button>
       )}
     </>
+<<<<<<< HEAD
 >>>>>>> 1eb2db2 (Merged, fixed, and tested)
+=======
+>>>>>>> 1eb2db2b134a1075b42fdbe2c683bad646b00869
   );
-}
+};
+
+export default BackToTopButton;
