@@ -35,6 +35,7 @@ import {
 } from "@/components/ui/dialog";
 import { Progress } from "@/components/ui/progress";
 import { Textarea } from "@/components/ui/textarea";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 
 
@@ -552,6 +553,54 @@ export function TextareaDemo() {
           className="min-h-[80px]"
         />
       </div>
+    </div>
+  )
+}`
+    },
+    {
+        id: "avatar",
+        title: "Avatar",
+        description: "An image element with a fallback for representing the user.",
+        category: "Display",
+        preview: (
+            <div className="flex items-center gap-4 flex-wrap justify-center">
+                <Avatar>
+                    <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+                    <AvatarFallback>CN</AvatarFallback>
+                </Avatar>
+                <Avatar>
+                    <AvatarImage src="https://github.com/vercel.png" alt="@vercel" />
+                    <AvatarFallback>VC</AvatarFallback>
+                </Avatar>
+                <Avatar>
+                    <AvatarFallback>JD</AvatarFallback>
+                </Avatar>
+                <Avatar className="h-12 w-12">
+                    <AvatarImage src="https://github.com/nextjs.png" alt="@nextjs" />
+                    <AvatarFallback>NX</AvatarFallback>
+                </Avatar>
+            </div>
+        ),
+        code: `import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+
+export function AvatarDemo() {
+  return (
+    <div className="flex items-center gap-4">
+      <Avatar>
+        <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+        <AvatarFallback>CN</AvatarFallback>
+      </Avatar>
+      <Avatar>
+        <AvatarImage src="https://github.com/vercel.png" alt="@vercel" />
+        <AvatarFallback>VC</AvatarFallback>
+      </Avatar>
+      <Avatar>
+        <AvatarFallback>JD</AvatarFallback>
+      </Avatar>
+      <Avatar className="h-12 w-12">
+        <AvatarImage src="https://github.com/nextjs.png" alt="@nextjs" />
+        <AvatarFallback>NX</AvatarFallback>
+      </Avatar>
     </div>
   )
 }`
