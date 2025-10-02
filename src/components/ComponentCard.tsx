@@ -136,11 +136,14 @@ export const ComponentCard = ({
 
             {/* Tabs Section - Enhanced */}
             <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-                <div className="px-4 sm:px-5 lg:px-6  border-border  ">
-                    <TabsList className=" h-9  sm:h-10 bg-zinc-200">
-                        <TabsTrigger value="preview" className="flex  items-center gap-1.5 sm:gap-2 text-xs sm:text-sm px-2 sm:px-3">
-                            <Eye className="h-3 w-3  sm:h-4 sm:w-4" />
-                            <span className="hidden xs:inline">Preview</span>
+                <div className="px-4 sm:px-5 lg:px-6 py-3 border-b border-border ">
+                    <TabsList className="bg-secondary/70 h-10 sm:h-11 p-1">
+                        <TabsTrigger
+                            value="preview"
+                            className="flex items-center gap-2 text-sm px-4 data-[state=active]:bg-card data-[state=active]:shadow-sm"
+                        >
+                            <Eye className="h-4 w-4" />
+                            <span>Preview</span>
                         </TabsTrigger>
                         <TabsTrigger
                             value="code"
@@ -152,8 +155,11 @@ export const ComponentCard = ({
                     </TabsList>
                 </div>
 
-                <TabsContent value="preview" className="p-4 sm:p-5 lg:p-6 min-h-[180px] sm:min-h-[200px] flex items-center justify-center ">
-                    <div className="w-full flex items-center justify-center overflow-x-auto">
+                <TabsContent
+                    value="preview"
+                    className="p-4 sm:p-6 lg:p-8 min-h-[200px] sm:min-h-[240px]"
+                >
+                    <div className="w-full flex items-center justify-center p-8 rounded-xl border-2 border-dashed border-border/50 bg-secondary/10 hover:border-border transition-colors">
                         <div className="scale-90 sm:scale-95 lg:scale-100 origin-center">
                             {preview}
                         </div>

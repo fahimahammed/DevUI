@@ -119,83 +119,295 @@
 
   body {
     @apply bg-background text-foreground;
+    /* Prevent horizontal overflow from button animations */
+    overflow-x: hidden;
   }
 }
 
 @layer utilities {
+
   /* Extra small breakpoint for very small screens */
   @media (min-width: 475px) {
     .xs\:inline {
       display: inline;
     }
   }
-  
+
   /* Responsive container utilities */
   .container-responsive {
     @apply px-4 sm:px-6 lg:px-8;
   }
-  
+
   /* Responsive spacing utilities */
   .section-spacing {
     @apply py-8 sm:py-12 lg:py-16;
   }
-  
+
   /* Responsive text utilities */
   .text-responsive-sm {
     @apply text-xs sm:text-sm;
   }
-  
+
   .text-responsive-base {
     @apply text-sm sm:text-base;
   }
-  
+
   .text-responsive-lg {
     @apply text-base sm:text-lg md:text-xl;
   }
-  
+
   /* Smooth scaling for components */
   .scale-responsive {
     @apply scale-90 sm:scale-95 lg:scale-100;
   }
-  
+
   /* Responsive gap utilities */
   .gap-responsive {
     @apply gap-4 sm:gap-6 lg:gap-8;
   }
-  
+
   .gap-responsive-sm {
     @apply gap-2 sm:gap-3 lg:gap-4;
   }
-  
+
   /* Custom scrollbar for code blocks */
   .scrollbar-thin {
     scrollbar-width: thin;
   }
-  
+
   .scrollbar-thin::-webkit-scrollbar {
     height: 8px;
     width: 8px;
   }
-  
+
   .scrollbar-thin::-webkit-scrollbar-track {
     background: transparent;
   }
-  
+
   .scrollbar-thin::-webkit-scrollbar-thumb {
     background: hsl(var(--muted-foreground) / 0.3);
     border-radius: 4px;
   }
-  
+
   .scrollbar-thin::-webkit-scrollbar-thumb:hover {
     background: hsl(var(--muted-foreground) / 0.5);
   }
-  
+
   /* Syntax highlighter enhancements */
   pre[class*="language-"] {
     @apply rounded-lg;
   }
-  
+
   code[class*="language-"] {
     @apply font-mono text-sm;
   }
+
+  /* Modern design tokens and animations */
+  .glass-effect {
+    @apply bg-background/80 backdrop-blur-md border border-border/50;
+  }
+
+  .bg-grid-pattern {
+    background-image:
+      linear-gradient(to right, hsl(var(--border)) 1px, transparent 1px),
+      linear-gradient(to bottom, hsl(var(--border)) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+
+  .gradient-border {
+    position: relative;
+    background: linear-gradient(var(--background), var(--background)) padding-box,
+      linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent))) border-box;
+    border: 1px solid transparent;
+  }
+
+  .shine-effect {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn-glow::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: radial-gradient(circle at center,
+        currentColor 0%,
+        transparent 70%);
+    opacity: 0;
+    transition: opacity 200ms ease-out;
+    z-index: -1;
+    pointer-events: none;
+  }
+
+  .btn-glow:hover::before {
+    opacity: 0.1;
+  }
+
+  .btn-glow:focus-visible::before {
+    opacity: 0.15;
+  }
+
+  /* Dark theme adjustments for glow */
+  .dark .btn-glow:hover::before {
+    opacity: 0.05;
+  }
+
+  .dark .btn-glow:focus-visible::before {
+    opacity: 0.08;
+  }
+}
+
+/* Keyframe animations */
+@keyframes button-hover {
+  0% {
+    transform: scale(1);
+  }
+
+  100% {
+    transform: scale(1.01);
+  }
+}
+
+@keyframes button-active {
+  0% {
+    transform: scale(1.01);
+  }
+
+  100% {
+    transform: scale(0.99);
+  }
+}
+
+@keyframes button-focus {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.005);
+  }
+
+  100% {
+    transform: scale(1.01);
+  }
+}
+
+.shine-effect::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  transition: left 0.5s;
+}
+
+.shine-effect:hover::before {
+  left: 100%;
+}
+
+/* Smooth transitions */
+.transition-smooth {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Focus visible for accessibility */
+.focus-ring:focus-visible {
+  @apply outline-none ring-2 ring-primary ring-offset-2 ring-offset-background;
+}
+
+/* Skip link for accessibility */
+.skip-link {
+  @apply sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-primary focus:text-primary-foreground focus:rounded-md focus:shadow-lg;
+}
+
+/* Modern card hover effect */
+.card-hover {
+  @apply transition-all duration-300 ease-out;
+}
+
+.card-hover:hover {
+  @apply shadow-xl shadow-primary/5 -translate-y-1;
+}
+
+/* Gradient text */
+.gradient-text {
+  @apply bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent;
+  background-size: 1000% auto;
+  animation: gradient-shift 8s linear infinite;
+}
+
+@keyframes gradient-shift {
+
+  0%,
+  100% {
+    background-position: 0% center;
+  }
+
+  50% {
+    background-position: 100% center;
+  }
+}
+
+/* Floating animation */
+.float-animation {
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+/* Pulse glow */
+.pulse-glow {
+  animation: pulse-glow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse-glow {
+
+  0%,
+  100% {
+    opacity: 1;
+    box-shadow: 0 0 0 0 hsl(var(--primary) / 0.7);
+  }
+
+  50% {
+    opacity: 0.5;
+    box-shadow: 0 0 0 10px hsl(var(--primary) / 0);
+  }
+}
+
+/* Smooth page transitions */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+/* Better focus states */
+button:focus-visible,
+a:focus-visible,
+input:focus-visible {
+  @apply outline-none ring-2 ring-primary ring-offset-2 ring-offset-background;
+}
+
+/* Modern input styling */
+input[type="text"],
+input[type="search"] {
+  @apply transition-all duration-200;
+}
+
+input[type="text"]:focus,
+input[type="search"]:focus {
+  @apply shadow-sm shadow-primary/20;
 }
