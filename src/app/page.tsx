@@ -1,10 +1,10 @@
 "use client"
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { ComponentCard } from "@/components/ComponentCard";
 import { componentsData } from "@/data/components";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
-import { Github, Search, Sparkles } from "lucide-react";
+import { Github, Search, Sparkles, Filter, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
@@ -161,9 +161,7 @@ const Index = () => {
               onClick={() => setSelectedCategory(null)}
             >
               All ({componentsData.length})
-              All ({componentsData.length})
             </Badge>
-            {categories.map(({ name, count }) => (
             {categories.map(({ name, count }) => (
               <Badge
                 key={name}
@@ -171,7 +169,6 @@ const Index = () => {
                 className="cursor-pointer hover:bg-primary/80 transition-all hover:scale-105 dark:hover:bg-primary/70 dark:border-border text-xs sm:text-sm px-2 sm:px-2.5 py-0.5 sm:py-1"
                 onClick={() => setSelectedCategory(name)}
               >
-                {name} ({count})
                 {name} ({count})
               </Badge>
             ))}
@@ -215,27 +212,6 @@ const Index = () => {
               </div>
             </div>
           ) : (
-            <div className="text-center py-16 space-y-4">
-              <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-muted/50 dark:bg-muted/20 mb-4">
-                <Search className="h-8 w-8 text-muted-foreground" />
-              </div>
-              <div className="space-y-2">
-                <h3 className="text-lg font-semibold text-foreground dark:text-foreground">No components found</h3>
-                <p className="text-muted-foreground max-w-md mx-auto">
-                  {searchQuery 
-                    ? `No results for "${searchQuery}". Try adjusting your search or filters.`
-                    : "No components match the selected category."}
-                </p>
-              </div>
-              {hasActiveFilters && (
-                <Button
-                  variant="outline"
-                  onClick={clearFilters}
-                  className="mt-4"
-                >
-                  Clear All Filters
-                </Button>
-              )}
             <div className="text-center py-16 space-y-4">
               <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-muted/50 dark:bg-muted/20 mb-4">
                 <Search className="h-8 w-8 text-muted-foreground" />
