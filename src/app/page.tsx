@@ -1,18 +1,18 @@
 "use client"
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo } from "react";
 import { ComponentCard } from "@/components/ComponentCard";
 import { componentsData } from "@/data/components";
 import { Input } from "@/components/ui/input";
-import { Slider } from "../components/ui/slider";
 import { Badge } from "@/components/ui/badge";
-import { Github, Search, Sparkles, Filter, X, Code2, Users, ArrowUp } from "lucide-react";
+import { Github, Search, Sparkles, Filter, X, Code2, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { Toaster } from "sonner";
 
 const Index = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+
+  // Get all unique categories with counts
   const categories = useMemo(() => {
     const categoryMap = new Map<string, number>();
     componentsData.forEach(component => {
@@ -22,18 +22,26 @@ const Index = () => {
     });
     return Array.from(categoryMap.entries()).map(([name, count]) => ({ name, count }));
   }, []);
+
+  // Enhanced filtering with better search
   const filteredComponents = useMemo(() => {
     return componentsData.filter(component => {
       const searchLower = searchQuery.toLowerCase().trim();
+
+      // Enhanced search: title, description, category, and id
       const matchesSearch = !searchLower ||
         component.title.toLowerCase().includes(searchLower) ||
         component.description.toLowerCase().includes(searchLower) ||
         component.category?.toLowerCase().includes(searchLower) ||
         component.id.toLowerCase().includes(searchLower);
+
       const matchesCategory = !selectedCategory || component.category === selectedCategory;
+
       return matchesSearch && matchesCategory;
     });
   }, [searchQuery, selectedCategory]);
+
+  // Clear all filters
   const clearFilters = () => {
     setSearchQuery("");
     setSelectedCategory(null);
@@ -154,7 +162,9 @@ const Index = () => {
 
             <div className="relative">
               {/* Search Icon */}
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground group-focus-within:text-primary transition-transform duration-300 group-focus-within:scale-110 animate-pulse-slow" />
+              <Search
+                className="absolute left-4 top-1/2 -translate-y-1/2 h-6 w-6 text-primary pointer-events-none"
+              />
 
               {/* Input Field */}
               <Input
@@ -162,37 +172,20 @@ const Index = () => {
                 placeholder="Search components by name, category, or description..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-12 pr-12 h-16 text-base sm:text-lg font-medium bg-card/60 dark:bg-card/30 backdrop-blur-md border border-border/50 hover:border-border focus:border-primary/50 transition-all duration-300 rounded-xl shadow-md hover:shadow-lg focus:shadow-lg focus:shadow-primary/20 focus-ring animate-fade-in"
+                className="pl-14 pr-12 h-16 text-lg sm:text-xl font-semibold bg-card/60 dark:bg-card/30 backdrop-blur-md border border-transparent focus:border-transparent transition-all duration-300 rounded-xl shadow-md hover:shadow-lg focus:shadow-lg focus:shadow-primary/20 focus-ring animate-fade-in"
               />
 
               {/* Clear Button */}
               {searchQuery && (
                 <button
                   onClick={() => setSearchQuery("")}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-all duration-200 p-1 hover:bg-muted/50 rounded-md focus-ring animate-fade-in"
+                  className="absolute right-4 top-1/2 -translate-y-1/2 hover:text-foreground transition-all duration-200 p-1 hover:bg-muted/50 rounded-md focus-ring animate-fade-in"
                   aria-label="Clear search"
                 >
                   <X className="h-4 w-4" />
                 </button>
               )}
             </div>
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground group-focus-within:text-primary transition-colors" />
-            <Input
-              type="text"
-              placeholder="Search by name, description, or category..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-10 pr-10 h-12 bg-card/50 backdrop-blur-sm border-border hover:border-primary/50 focus:border-primary transition-colors dark:bg-card/30 dark:hover:bg-card/50"
-            />
-            {searchQuery && (
-              <button
-                onClick={() => setSearchQuery("")}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
-                aria-label="Clear search"
-              >
-                <X className="h-4 w-4" />
-              </button>
-            )}
           </div>
 
           {/* Filter Header */}
@@ -353,7 +346,6 @@ const Index = () => {
           </div>
         </div>
       </footer>
-      <Toaster position="bottom-right" richColors closeButton />
     </div>
   );
 };
