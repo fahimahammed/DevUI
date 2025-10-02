@@ -119,6 +119,8 @@
 
   body {
     @apply bg-background text-foreground;
+    /* Prevent horizontal overflow from button animations */
+    overflow-x: hidden;
   }
 }
 
@@ -129,73 +131,188 @@
       display: inline;
     }
   }
-  
+
   /* Responsive container utilities */
   .container-responsive {
     @apply px-4 sm:px-6 lg:px-8;
   }
-  
+
   /* Responsive spacing utilities */
   .section-spacing {
     @apply py-8 sm:py-12 lg:py-16;
   }
-  
+
   /* Responsive text utilities */
   .text-responsive-sm {
     @apply text-xs sm:text-sm;
   }
-  
+
   .text-responsive-base {
     @apply text-sm sm:text-base;
   }
-  
+
   .text-responsive-lg {
     @apply text-base sm:text-lg md:text-xl;
   }
-  
+
   /* Smooth scaling for components */
   .scale-responsive {
     @apply scale-90 sm:scale-95 lg:scale-100;
   }
-  
+
   /* Responsive gap utilities */
   .gap-responsive {
     @apply gap-4 sm:gap-6 lg:gap-8;
   }
-  
+
   .gap-responsive-sm {
     @apply gap-2 sm:gap-3 lg:gap-4;
   }
-  
+
   /* Custom scrollbar for code blocks */
   .scrollbar-thin {
     scrollbar-width: thin;
   }
-  
+
   .scrollbar-thin::-webkit-scrollbar {
     height: 8px;
     width: 8px;
   }
-  
+
   .scrollbar-thin::-webkit-scrollbar-track {
     background: transparent;
   }
-  
+
   .scrollbar-thin::-webkit-scrollbar-thumb {
     background: hsl(var(--muted-foreground) / 0.3);
     border-radius: 4px;
   }
-  
+
   .scrollbar-thin::-webkit-scrollbar-thumb:hover {
     background: hsl(var(--muted-foreground) / 0.5);
   }
-  
+
   /* Syntax highlighter enhancements */
   pre[class*="language-"] {
     @apply rounded-lg;
   }
-  
+
   code[class*="language-"] {
     @apply font-mono text-sm;
+  }
+
+  /* Enhanced button animations */
+  .btn-interactive {
+    @apply transition-all duration-200 ease-out;
+    transform-origin: center;
+    /* Prevent overflow that causes scrollbars */
+    will-change: transform;
+    backface-visibility: hidden;
+    /* Ensure button doesn't cause layout shifts */
+    contain: layout style;
+  }
+
+  /* Prevent button animations from causing page overflow */
+  .btn-interactive-container,
+  [data-slot="button"] {
+    isolation: isolate;
+  }
+
+  .btn-interactive:hover {
+    animation: button-hover 200ms ease-out forwards;
+  }
+
+  .btn-interactive:active {
+    animation: button-active 100ms ease-out forwards;
+  }
+
+  .btn-interactive:focus-visible {
+    animation: button-focus 200ms ease-out forwards;
+  }
+
+  /* Accessibility: Reduce motion for users who prefer it */
+  @media (prefers-reduced-motion: reduce) {
+    .btn-interactive {
+      @apply transition-none;
+      animation: none !important;
+      transform: none !important;
+    }
+
+    .btn-interactive:hover,
+    .btn-interactive:active,
+    .btn-interactive:focus-visible {
+      animation: none !important;
+      transform: none !important;
+    }
+  }
+
+  /* Button glow effect for enhanced interactivity */
+  .btn-glow {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn-glow::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: radial-gradient(
+      circle at center,
+      currentColor 0%,
+      transparent 70%
+    );
+    opacity: 0;
+    transition: opacity 200ms ease-out;
+    z-index: -1;
+    pointer-events: none;
+  }
+
+  .btn-glow:hover::before {
+    opacity: 0.1;
+  }
+
+  .btn-glow:focus-visible::before {
+    opacity: 0.15;
+  }
+
+  /* Dark theme adjustments for glow */
+  .dark .btn-glow:hover::before {
+    opacity: 0.05;
+  }
+
+  .dark .btn-glow:focus-visible::before {
+    opacity: 0.08;
+  }
+}
+
+/* Keyframe animations */
+@keyframes button-hover {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.01);
+  }
+}
+
+@keyframes button-active {
+  0% {
+    transform: scale(1.01);
+  }
+  100% {
+    transform: scale(0.99);
+  }
+}
+
+@keyframes button-focus {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.005);
+  }
+  100% {
+    transform: scale(1.01);
   }
 }
