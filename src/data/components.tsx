@@ -6,36 +6,33 @@ import { Slider } from "@/components/ui/slider";
 import { Calendar } from "@/components/ui/calendar";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
-    AlertDialog,
-    AlertDialogAction,
-    AlertDialogCancel,
-    AlertDialogContent,
-    AlertDialogDescription,
-    AlertDialogFooter,
-    AlertDialogHeader,
-    AlertDialogTitle,
-    AlertDialogTrigger
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger
 } from "@/components/ui/alert-dialog";
 import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
 } from "@/components/ui/select";
 import {
-    Dialog,
-    DialogClose,
-    DialogContent,
-    DialogDescription,
-    DialogFooter,
-    DialogHeader,
-    DialogTitle,
-    DialogTrigger,
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
 } from "@/components/ui/dialog";
-import { Progress } from "@/components/ui/progress";
-import { Textarea } from "@/components/ui/textarea";
-import ChatBox from "@/components/ui/chat";
 
 export const componentsData = [
     {
@@ -43,7 +40,6 @@ export const componentsData = [
         title: "Button",
         description: "Displays a button or a component that looks like a button.",
         category: "Form",
-        status: "Stable",
         preview: (
             <div className="flex gap-4 flex-wrap justify-center">
                 <Button>Default</Button>
@@ -70,7 +66,6 @@ export function ButtonDemo() {
         title: "Input",
         description: "Displays a form input field or a component that looks like an input field.",
         category: "Form",
-        status: "Stable",
         preview: (
             <div className="w-full max-w-sm space-y-4">
                 <Input placeholder="Enter your email..." type="email" />
@@ -93,7 +88,6 @@ export function InputDemo() {
         title: "Badge",
         description: "Displays a badge or a component that looks like a badge.",
         category: "Display",
-        status: "Stable",
         preview: (
             <div className="flex gap-2 flex-wrap justify-center">
                 <Badge>Default</Badge>
@@ -120,7 +114,6 @@ export function BadgeDemo() {
         title: "Switch",
         description: "A control that allows the user to toggle between checked and not checked.",
         category: "Form",
-        status: "Beta",
         preview: (
             <div className="flex items-center space-x-2">
                 <Switch id="airplane-mode" />
@@ -143,7 +136,6 @@ export function SwitchDemo() {
         title: "Slider",
         description: "An input where the user selects a value from within a given range.",
         category: "Form",
-        status: "Beta",
         preview: (
             <div className="w-full max-w-sm">
                 <Slider defaultValue={[50]} max={100} step={1} />
@@ -162,7 +154,6 @@ export function SliderDemo() {
         title: "Checkbox",
         description: "A control that allows the user to toggle between checked and not checked.",
         category: "Form",
-        status: "Stable",
         preview: (
             <div className="flex items-center space-x-2">
                 <Checkbox id="terms" />
@@ -185,7 +176,6 @@ export function CheckboxDemo() {
         title: "Alert Dialog",
         description: "A modal dialog that interrupts the user with important content.",
         category: "Overlay",
-        status: "Stable",
         preview: (
             <AlertDialog>
                 <AlertDialogTrigger asChild>
@@ -244,7 +234,6 @@ export function AlertDialogDemo() {
         title: "Calendar",
         description: "A date field component that allows users to enter and edit date.",
         category: "Form",
-        status: "Stable",
         preview: (
             <div className="rounded-lg border border-border p-4 bg-card">
                 <Calendar mode="single" className="pointer-events-auto" />
@@ -265,30 +254,28 @@ export function CalendarDemo() {
     />
   )
 }`
-    },
-    {
-        id: "radio-group",
-        title: "Radio Group",
-        description: "A group of radio buttons that allows the user to select one option from a set.",
-        category: "Form",
-        status: "Stable",
-        preview: (
-            <div className="flex flex-col space-y-2">
-                <div className="flex items-center space-x-2">
-                    <input type="radio" id="option1" name="options" className="h-4 w-4 text-primary" />
-                    <label htmlFor="option1" className="text-sm">Option 1</label>
-                </div>  
-                <div className="flex items-center space-x-2">
-                    <input type="radio" id="option2" name="options" className="h-4 w-4 text-primary" />
-                    <label htmlFor="option2" className="text-sm">Option 2</label>
-                </div>
-                <div className="flex items-center space-x-2">
-                    <input type="radio" id="option3" name="options" className="h-4 w-4 text-primary" />
-                    <label htmlFor="option3" className="text-sm">Option 3</label>
-                </div>
-            </div>
-        ),
-        code: `export function RadioGroupDemo() {
+    },{
+      id: "radio-group",
+      title: "Radio Group",
+      description: "A group of radio buttons that allows the user to select one option from a set.",
+      category: "Form",
+      preview: (
+          <div className="flex flex-col space-y-2">
+              <div className="flex items-center space-x-2">
+                  <input type="radio" id="option1" name="options" className="h-4 w-4 text-primary" />
+                  <label htmlFor="option1" className="text-sm">Option 1</label>
+              </div>  
+              <div className="flex items-center space-x-2">
+                  <input type="radio" id="option2" name="options" className="h-4 w-4 text-primary" />
+                  <label htmlFor="option2" className="text-sm">Option 2</label>
+              </div>
+              <div className="flex items-center space-x-2">
+                  <input type="radio" id="option3" name="options" className="h-4 w-4 text-primary" />
+                  <label htmlFor="option3" className="text-sm">Option 3</label>
+              </div>
+          </div>
+      ),
+      code: `export function RadioGroupDemo() {
   return (
     <div className="flex flex-col space-y-2"> 
       <div className="flex items-center space-x-2">
@@ -312,7 +299,6 @@ export function CalendarDemo() {
         title: "Select",
         description: "Fully accessible dropdown with keyboard navigation, dark theme support, and smooth animations. Navigate with arrows, search by typing.",
         category: "Form",
-        status: "Stable",
         preview: (
             <div className="w-full max-w-sm pointer-events-auto">
                 <Select>
@@ -352,14 +338,21 @@ export function SelectDemo() {
       </SelectContent>
     </Select>
   )
-}`
+}
+
+// Keyboard Accessibility:
+// - Tab: Focus the select trigger
+// - Space/Enter: Open dropdown
+// - Arrow Up/Down: Navigate options
+// - Home/End: Jump to first/last option
+// - Escape: Close dropdown
+// - Type to search: Quick filter options`
     },
     {
         id: "dialog",
         title: "Dialog",
         description: "A modal dialog with smooth animations, dark theme support, and responsive design. Fully accessible with keyboard navigation.",
         category: "Overlay",
-        status: "Stable",
         preview: (
             <Dialog>
                 <DialogTrigger asChild>
@@ -374,8 +367,26 @@ export function SelectDemo() {
                     </DialogHeader>
                     <div className="py-4">
                         <p className="text-sm text-muted-foreground">
-                            Dialogs are perfect for displaying important information, confirmations, or forms that require user attention.
+                            Dialogs are perfect for displaying important information, confirmations, or forms that require user attention. This component features:
                         </p>
+                        <ul className="mt-4 space-y-2 text-sm">
+                            <li className="flex items-start gap-2">
+                                <span className="text-primary mt-0.5">✓</span>
+                                <span>Smooth fade and zoom animations</span>
+                            </li>
+                            <li className="flex items-start gap-2">
+                                <span className="text-primary mt-0.5">✓</span>
+                                <span>Dark theme with backdrop blur</span>
+                            </li>
+                            <li className="flex items-start gap-2">
+                                <span className="text-primary mt-0.5">✓</span>
+                                <span>Keyboard accessible (Escape to close)</span>
+                            </li>
+                            <li className="flex items-start gap-2">
+                                <span className="text-primary mt-0.5">✓</span>
+                                <span>Responsive and mobile-friendly</span>
+                            </li>
+                        </ul>
                     </div>
                     <DialogFooter>
                         <DialogClose asChild>
@@ -419,127 +430,5 @@ export function DialogDemo() {
     </Dialog>
   )
 }`
-    },
-    {
-        id: "progress",
-        title: "Progress",
-        description: "Displays an indicator showing the completion progress of a task, typically displayed as a progress bar.",
-        category: "Display",
-        preview: (
-            <div className="w-full max-w-sm space-y-4">
-                <div className="space-y-2">
-                    <div className="flex justify-between text-sm">
-                        <span>Progress</span>
-                        <span>33%</span>
-                    </div>
-                    <Progress value={33} className="w-full" />
-                </div>
-                <div className="space-y-2">
-                    <div className="flex justify-between text-sm">
-                        <span>Loading</span>
-                        <span>75%</span>
-                    </div>
-                    <Progress value={75} className="w-full" />
-                </div>
-                <div className="space-y-2">
-                    <div className="flex justify-between text-sm">
-                        <span>Complete</span>
-                        <span>100%</span>
-                    </div>
-                    <Progress value={100} className="w-full" />
-                </div>
-            </div>
-        ),
-        code: `import { Progress } from "@/components/ui/progress"
-
-export function ProgressDemo() {
-  return (
-    <div className="w-full max-w-sm space-y-4">
-      <div className="space-y-2">
-        <div className="flex justify-between text-sm">
-          <span>Progress</span>
-          <span>33%</span>
-        </div>
-        <Progress value={33} className="w-full" />
-      </div>
-      <div className="space-y-2">
-        <div className="flex justify-between text-sm">
-          <span>Loading</span>
-          <span>75%</span>
-        </div>
-        <Progress value={75} className="w-full" />
-      </div>
-      <div className="space-y-2">
-        <div className="flex justify-between text-sm">
-          <span>Complete</span>
-          <span>100%</span>
-        </div>
-        <Progress value={100} className="w-full" />
-      </div>
-    </div>
-  )
-}`
-    },
-    {
-        id: "textarea",
-        title: "Textarea",
-        description: "A multi-line text input component for longer text content like comments, descriptions, or messages.",
-        category: "Form",
-        preview: (
-            <div className="w-full max-w-sm space-y-4">
-                <div className="space-y-2">
-                    <label htmlFor="message" className="text-sm font-medium">Message</label>
-                    <Textarea 
-                        id="message" 
-                        placeholder="Type your message here..." 
-                        className="min-h-[100px]"
-                    />
-                </div>
-                <div className="space-y-2">
-                    <label htmlFor="feedback" className="text-sm font-medium">Feedback</label>
-                    <Textarea 
-                        id="feedback" 
-                        placeholder="Share your feedback..." 
-                        className="min-h-[80px]"
-                    />
-                </div>
-            </div>
-        ),
-        code: `import { Textarea } from "@/components/ui/textarea"
-
-export function TextareaDemo() {
-  return (
-    <div className="w-full max-w-sm space-y-4">
-      <div className="space-y-2">
-        <label htmlFor="message" className="text-sm font-medium">Message</label>
-        <Textarea 
-          id="message" 
-          placeholder="Type your message here..." 
-          className="min-h-[100px]"
-        />
-      </div>
-      <div className="space-y-2">
-        <label htmlFor="feedback" className="text-sm font-medium">Feedback</label>
-        <Textarea 
-          id="feedback" 
-          placeholder="Share your feedback..." 
-          className="min-h-[80px]"
-        />
-      </div>
-    </div>
-  )
-}`
-    },
-    {
-        id: "chat",
-        title: "Chat",
-        description: "Interactive chat demo with animations, theming and code snippet handling.",
-        category: "Widgets",
-        preview: <ChatBox header={{ title: "AI Assistant", subtitle: "Powered by DevUI " }} />,
-        code: `import ChatBox from "@/components/ui/chat"
-
-  export function ChatDemo() {
-    return <ChatBox header={{ title: "AI Assistant", subtitle: "Powered by DevUI " }} />
-  }`
     }
 ];
