@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { Github, Search, Sparkles, Filter, X, Code2, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import Header from "@/components/Header";
 
 const Index = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -51,6 +52,8 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background">
+
+      <Header />
       {/* Hero Section - Modern & Clean */}
       <section id="main-content" className="relative overflow-hidden border-b border-border/50">
         {/* Animated Background */}

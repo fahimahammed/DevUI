@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -21,6 +21,10 @@ const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { theme, setTheme } = useTheme();
   const pathname = usePathname();
+
+  // Prevent hydration mismatch
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
 
   const navigation = [
     { name: "Home", href: "/", icon: Home },
@@ -47,7 +51,6 @@ const Header = () => {
 
   return (
     <>
-      {/* Skip to main content - Accessibility */}
       <a href="#main-content" className="skip-link">
         Skip to main content
       </a>
@@ -56,18 +59,23 @@ const Header = () => {
         <div className="container mx-auto px-4">
           <div className="flex h-16 items-center justify-between">
             {/* Logo */}
-            <Link href="/" className="flex items-center space-x-2 group focus-ring rounded-md" aria-label="DevUI home">
+            <Link
+              href="/"
+              className="flex items-center space-x-2 group focus-ring rounded-md"
+              aria-label="DevUI home"
+            >
               <div className="relative">
                 <Code2 className="h-8 w-8 text-primary transition-all duration-300 group-hover:scale-110 group-hover:rotate-12" />
                 <div className="absolute -inset-1 rounded-full bg-primary/20 blur opacity-0 group-hover:opacity-100 transition-all duration-300" />
               </div>
-              <span className="text-xl font-bold gradient-text">
-                DevUI
-              </span>
+              <span className="text-xl font-bold gradient-text">DevUI</span>
             </Link>
 
             {/* Desktop Navigation */}
-            <nav className="hidden md:flex items-center space-x-1" aria-label="Main navigation">
+            <nav
+              className="hidden md:flex items-center space-x-1"
+              aria-label="Main navigation"
+            >
               {navigation.map((item) => {
                 const isActive = pathname === item.href;
                 return (
@@ -75,8 +83,11 @@ const Header = () => {
                     <Button
                       variant="ghost"
                       aria-current={isActive ? "page" : undefined}
-                      className={`text-muted-foreground hover:text-foreground hover:bg-primary/10 transition-all duration-200 focus-ring ${isActive ? "bg-primary/10 text-foreground font-medium" : ""
-                        }`}
+                      className={`text-muted-foreground hover:text-foreground hover:bg-primary/10 transition-all duration-200 focus-ring ${
+                        isActive
+                          ? "bg-primary/10 text-foreground font-medium"
+                          : ""
+                      }`}
                     >
                       <item.icon className="h-4 w-4 mr-2" />
                       {item.name}
@@ -89,19 +100,29 @@ const Header = () => {
             {/* Actions */}
             <div className="flex items-center space-x-2">
               {/* Theme Toggle */}
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-                className="hover:bg-primary/10 transition-all duration-200 focus-ring"
-                aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
-              >
-                <Sun className="h-5 w-5 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-                <Moon className="absolute h-5 w-5 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-              </Button>
+              {mounted && (
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() =>
+                    setTheme(theme === "dark" ? "light" : "dark")
+                  }
+                  className="relative hover:bg-primary/10 transition-all duration-200 focus-ring"
+                  aria-label={`Switch to ${
+                    theme === "dark" ? "light" : "dark"
+                  } mode`}
+                >
+                  <Sun className="h-5 w-5 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+                  <Moon className="absolute h-5 w-5 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+                </Button>
+              )}
 
               {/* GitHub Link */}
-              <Link href="https://github.com/fahimahammed/DevUI" target="_blank" rel="noopener noreferrer">
+              <Link
+                href="https://github.com/fahimahammed/DevUI"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <Button
                   variant="ghost"
                   size="icon"
@@ -113,7 +134,11 @@ const Header = () => {
               </Link>
 
               {/* Star Button */}
-              <Link href="https://github.com/fahimahammed/DevUI" target="_blank" rel="noopener noreferrer">
+              <Link
+                href="https://github.com/fahimahammed/DevUI"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <Button
                   size="sm"
                   className="hidden sm:flex bg-primary hover:bg-primary/90 transition-all duration-200 focus-ring shine-effect"
@@ -158,10 +183,11 @@ const Header = () => {
                       href={item.href}
                       onClick={() => setIsMenuOpen(false)}
                       aria-current={isActive ? "page" : undefined}
-                      className={`flex items-center px-3 py-2 rounded-md text-base font-medium transition-all duration-200 focus-ring ${isActive
+                      className={`flex items-center px-3 py-2 rounded-md text-base font-medium transition-all duration-200 focus-ring ${
+                        isActive
                           ? "bg-primary/10 text-foreground"
                           : "text-muted-foreground hover:text-foreground hover:bg-primary/10"
-                        }`}
+                      }`}
                     >
                       <item.icon className="h-4 w-4 mr-3" />
                       {item.name}
