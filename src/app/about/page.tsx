@@ -6,13 +6,13 @@ import Link from "next/link";
 
 export default function AboutPage() {
   return (
-  <main className="min-h-screen bg-black flex flex-col items-center justify-start py-16 px-2 sm:px-6">
+    <main className="min-h-screen bg-black flex flex-col items-center justify-start py-16 px-2 sm:px-6">
       <section className="w-full max-w-3xl text-center mb-12 animate-fade-in flex flex-col items-center">
         <h1 className="text-5xl md:text-6xl font-bold mb-4 tracking-tight bg-gradient-to-r from-purple-400 via-blue-400 to-purple-600 bg-clip-text text-transparent">
-          About DevUI Components
+          About DevUI
         </h1>
         <p className="text-xl md:text-2xl text-gray-300 mb-8 font-medium max-w-2xl mx-auto">
-          DevUI Components is a modern, open-source component library showcase built with shadcn/ui. Explore, copy, and reuse beautifully designed components in your React or Next.js projects. GitHub-ready and perfect for Hacktoberfest 2025! 🚀
+          DevUI is a modern, open-source component library showcase built with shadcn/ui. Explore, copy, and reuse beautifully designed components in your React or Next.js projects. GitHub-ready and perfect for Hacktoberfest 2025! 🚀
         </p>
       </section>
       {/* Team/Project Purpose Section */}

@@ -1,4 +1,4 @@
-name: Deploy to Vercel
+name: Deploy to Vercel (v2)
 env:
   VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
   VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
