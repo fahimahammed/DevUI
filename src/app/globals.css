@@ -121,3 +121,8 @@
     @apply bg-background text-foreground;
   }
 }
+
+:focus {
+  outline: 2px solid var(--color-primary-foreground); /* adapts to theme */
+  outline-offset: 2px;
+}
