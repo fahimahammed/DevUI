@@ -47,6 +47,16 @@ import {
   MenubarSeparator,
   MenubarTrigger,
 } from "@/components/ui/menubar";
+import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "@/components/ui/drawer";
 
 export const componentsData = [
   {
@@ -845,6 +855,78 @@ export function MenuBarDemo() {
         </MenubarContent>
       </MenubarMenu>
     </Menubar>
+  )
+}`,
+  },
+  {
+    id: "drawer",
+    title: "Drawer",
+    description: "A panel that slides in from the side of the screen.",
+    category: "Overlay",
+    preview: (
+      <Drawer>
+        <DrawerTrigger asChild>
+          <Button>Open Drawer</Button>
+        </DrawerTrigger>
+        <DrawerContent>
+          <DrawerHeader>
+            <DrawerTitle>Drawer Title</DrawerTitle>
+            <DrawerDescription>
+              This is a simple drawer component example.
+            </DrawerDescription>
+          </DrawerHeader>
+          <div className="p-4">
+            <p className="text-sm text-gray-600">
+              You can put any content here like forms, menus, or text.
+            </p>
+          </div>
+          <DrawerFooter>
+            <Button>Submit</Button>
+            <DrawerClose asChild>
+              <Button variant="outline">Cancel</Button>
+            </DrawerClose>
+          </DrawerFooter>
+        </DrawerContent>
+      </Drawer>
+    ),
+    code: `import {
+  Drawer,
+  DrawerTrigger,
+  DrawerContent,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerClose,
+} from "@/components/ui/drawer"
+import { Button } from "@/components/ui/button"
+
+export function DrawerDemo() {
+  return (
+    <Drawer>
+      <DrawerTrigger asChild>
+        <Button>Open Drawer</Button>
+      </DrawerTrigger>
+      <DrawerContent>
+        <DrawerHeader>
+          <DrawerTitle>Drawer Title</DrawerTitle>
+          <DrawerDescription>
+            This is a simple drawer component example.
+          </DrawerDescription>
+        </DrawerHeader>
+        <div className="p-4">
+          <p className="text-sm text-gray-600">
+            You can put any content here like forms, menus, or text.
+          </p>
+        </div>
+        <DrawerFooter>
+          <Button>Submit</Button>
+          <DrawerClose asChild>
+            <Button variant="outline">Cancel</Button>
+          </DrawerClose>
+        </DrawerFooter>
+      </DrawerContent>
+    </Drawer>
   )
 }`,
   },
