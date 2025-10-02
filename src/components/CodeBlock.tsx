@@ -1,6 +1,5 @@
 import { useState } from "react";
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
+import dynamic from "next/dynamic";
 import { Check, Copy } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
@@ -13,6 +12,14 @@ interface CodeBlockProps {
 
 export const CodeBlock = ({ code, language = "tsx", showLineNumbers = true }: CodeBlockProps) => {
     const [copied, setCopied] = useState(false);
+    const SyntaxHighlighter = dynamic(() =>
+        import("react-syntax-highlighter").then(m => m.Prism as any),
+        { ssr: false, loading: () => <div className="p-4 text-xs text-muted-foreground">Loading highlighter…</div> }
+    );
+    const stylePromise = dynamic(() =>
+        import("react-syntax-highlighter/dist/esm/styles/prism").then(m => m.vscDarkPlus),
+        { ssr: false }
+    ) as unknown as any;
 
     const handleCopy = async () => {
         await navigator.clipboard.writeText(code);
@@ -47,7 +54,7 @@ export const CodeBlock = ({ code, language = "tsx", showLineNumbers = true }: Co
             <div className="overflow-x-auto bg-primary">
                 <SyntaxHighlighter
                     language={language}
-                    style={vscDarkPlus}
+                    style={stylePromise}
                     showLineNumbers={showLineNumbers}
                     customStyle={{
                         margin: 0,

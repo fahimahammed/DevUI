@@ -1,5 +1,5 @@
 "use client"
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { ComponentCard } from "@/components/ComponentCard";
 import { componentsData } from "@/data/components";
 import { Input } from "@/components/ui/input";
@@ -7,19 +7,59 @@ import { Badge } from "@/components/ui/badge";
 import { Github, Search, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 const Index = () => {
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [inputValue, setInputValue] = useState("");
 
-  const categories = Array.from(new Set(componentsData.map(c => c.category).filter(Boolean)));
+  // Initialize state from URL on mount/searchParams change
+  useEffect(() => {
+    const q = searchParams.get("search") ?? "";
+    const cat = searchParams.get("category");
+    setSearchQuery(q);
+    setInputValue(q);
+    setSelectedCategory(cat ?? null);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchParams]);
 
-  const filteredComponents = componentsData.filter(component => {
-    const matchesSearch = component.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      component.description.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesCategory = !selectedCategory || component.category === selectedCategory;
-    return matchesSearch && matchesCategory;
-  });
+  // Debounce user typing before applying to searchQuery
+  useEffect(() => {
+    const handle = setTimeout(() => {
+      setSearchQuery(inputValue);
+    }, 200);
+    return () => clearTimeout(handle);
+  }, [inputValue]);
+
+  // Reflect state back to URL (replace to avoid history spam)
+  useEffect(() => {
+    const params = new URLSearchParams(searchParams.toString());
+    if (searchQuery) params.set("search", searchQuery); else params.delete("search");
+    if (selectedCategory) params.set("category", selectedCategory); else params.delete("category");
+    const query = params.toString();
+    router.replace(`${pathname}${query ? `?${query}` : ""}`);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchQuery, selectedCategory]);
+
+  const categories = useMemo(
+    () => Array.from(new Set(componentsData.map(c => c.category).filter(Boolean))),
+    []
+  );
+
+  const filteredComponents = useMemo(() => {
+    const q = searchQuery.trim().toLowerCase();
+    return componentsData.filter(component => {
+      const matchesSearch = q === "" || component.title.toLowerCase().includes(q) ||
+        component.description.toLowerCase().includes(q);
+      const matchesCategory = !selectedCategory || component.category === selectedCategory;
+      return matchesSearch && matchesCategory;
+    });
+  }, [searchQuery, selectedCategory]);
 
   return (
     <div className="min-h-screen bg-background">
@@ -83,8 +123,8 @@ const Index = () => {
             <Input
               type="text"
               placeholder="Search components..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
+              value={inputValue}
+              onChange={(e) => setInputValue(e.target.value)}
               className="pl-10 h-12 bg-card/50 backdrop-blur-sm border-border"
             />
           </div>
