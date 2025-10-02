@@ -23,6 +23,11 @@ export const CodeBlock = ({
   const { resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
+  // Calculate line count and create line numbers array
+  const lines = code.split('\n');
+  const lineCount = lines.length;
+  const maxLineNumberWidth = lineCount.toString().length;
+
   useEffect(() => {
     setMounted(true);
   }, []);
@@ -35,7 +40,14 @@ export const CodeBlock = ({
           lang: language,
           theme,
         });
-        setHighlightedCode(html);
+        
+        // If line numbers are enabled, process the HTML to add line number structure
+        if (showLineNumbers) {
+          const processedHtml = addLineNumbersToHtml(html, lineCount);
+          setHighlightedCode(processedHtml);
+        } else {
+          setHighlightedCode(html);
+        }
       } catch (error) {
         console.error("Highlighting error:", error);
         setHighlightedCode(`<pre><code>${code}</code></pre>`);
@@ -43,7 +55,29 @@ export const CodeBlock = ({
     };
 
     generateHighlight();
-  }, [code, language, mounted, resolvedTheme]);
+  }, [code, language, mounted, resolvedTheme, showLineNumbers, lineCount]);
+
+  // Function to add line numbers to the highlighted HTML
+  const addLineNumbersToHtml = (html: string, totalLines: number) => {
+    // Split HTML by newlines and add line number structure
+    const htmlLines = html.split('\n');
+    const preMatch = html.match(/<pre[^>]*>/);
+    const codeMatch = html.match(/<code[^>]*>/);
+    const preOpenTag = preMatch ? preMatch[0] : '<pre>';
+    const codeOpenTag = codeMatch ? codeMatch[0] : '<code>';
+    
+    // Extract the content between <code> and </code>
+    const codeContent = html.match(/<code[^>]*>([\s\S]*?)<\/code>/)?.[1] || '';
+    const lines = codeContent.split('\n');
+    
+    // Wrap each line with line number data
+    const numberedLines = lines.map((line, index) => {
+      const lineNumber = index + 1;
+      return `<span class="code-line" data-line-number="${lineNumber}">${line}</span>`;
+    }).join('\n');
+    
+    return `${preOpenTag}${codeOpenTag}${numberedLines}</code></pre>`;
+  };
 
   const handleCopy = async () => {
     try {
@@ -92,24 +126,57 @@ export const CodeBlock = ({
         </Button>
       </div>
       
-      {/* Code content with Shiki highlighting */}
+      {/* Code content with Shiki highlighting and logical line numbers */}
       <div 
-        className="overflow-x-auto text-sm leading-relaxed"
+        className="overflow-x-auto text-sm leading-relaxed relative"
         style={{
           fontFamily: "'Fira Code', 'JetBrains Mono', Consolas, monospace",
         }}
       >
+        {showLineNumbers && (
+          <div 
+            className="absolute left-0 top-0 flex flex-col py-4 px-2 text-right select-none pointer-events-none z-10"
+            style={{
+              width: `${Math.max(2.5, maxLineNumberWidth * 0.6 + 1)}rem`,
+              backgroundColor: 'transparent',
+              borderRight: '1px solid hsl(var(--primary) / 0.2)',
+            }}
+          >
+            {Array.from({ length: lineCount }, (_, i) => (
+              <span
+                key={i + 1}
+                className="block text-xs leading-relaxed opacity-70 hover:opacity-100 transition-opacity"
+                style={{
+                  color: 'hsl(var(--primary) / 0.8)',
+                  lineHeight: '1.5',
+                  height: '1.5em',
+                }}
+              >
+                {i + 1}
+              </span>
+            ))}
+          </div>
+        )}
+        
         {highlightedCode ? (
           <div
             dangerouslySetInnerHTML={{ __html: highlightedCode }}
-            className="[&_pre]:!bg-transparent [&_pre]:!m-0 [&_pre]:p-4 [&_code]:!bg-transparent"
+            className={`
+              [&_pre]:!bg-transparent [&_pre]:!m-0 [&_pre]:py-4 [&_code]:!bg-transparent
+              ${showLineNumbers ? `[&_pre]:pl-[${Math.max(2.5, maxLineNumberWidth * 0.6 + 1) + 1}rem]` : '[&_pre]:px-4'}
+            `}
             style={{
-              // Custom line number styling with primary color
-              counterReset: showLineNumbers ? "line" : "none",
+              marginLeft: showLineNumbers ? `${Math.max(2.5, maxLineNumberWidth * 0.6 + 1)}rem` : '0',
+              paddingLeft: showLineNumbers ? '1rem' : '1rem',
             }}
           />
         ) : (
-          <pre className="p-4 text-muted-foreground">
+          <pre 
+            className={`py-4 text-muted-foreground ${showLineNumbers ? 'pl-16' : 'px-4'}`}
+            style={{
+              marginLeft: showLineNumbers ? `${Math.max(2.5, maxLineNumberWidth * 0.6 + 1)}rem` : '0',
+            }}
+          >
             <code>{code}</code>
           </pre>
         )}
