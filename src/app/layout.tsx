@@ -1,6 +1,9 @@
+// src/app/layout.tsx
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import BackToTopButton from '@/components/ui/BackToTopButton';
 import "./globals.css";
+import ThemeColorPicker from "@/components/ui/ThemeColorPicker";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -24,10 +27,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+        <ThemeColorPicker />
         {children}
+        <BackToTopButton />
       </body>
     </html>
   );
