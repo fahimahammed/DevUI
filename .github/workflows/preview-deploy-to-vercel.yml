@@ -26,3 +26,12 @@ jobs:
 
       - name: Show Preview URL
         run: echo "Preview URL- ${{ steps.vercel.outputs.preview_url }}"
+
+      - name: Comment Preview URL on PR
+        uses: peter-evans/create-or-update-comment@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          issue-number: ${{ github.event.pull_request.number }}
+          body: |
+            🚀 Vercel Preview Deployed!
+            Preview URL: [${{ steps.vercel.outputs.preview_url }}](${{ steps.vercel.outputs.preview_url }})
