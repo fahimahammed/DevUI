@@ -27,16 +27,16 @@ const Index = () => {
   const filteredComponents = useMemo(() => {
     return componentsData.filter(component => {
       const searchLower = searchQuery.toLowerCase().trim();
-      
+
       // Enhanced search: title, description, category, and id
-      const matchesSearch = !searchLower || 
+      const matchesSearch = !searchLower ||
         component.title.toLowerCase().includes(searchLower) ||
         component.description.toLowerCase().includes(searchLower) ||
         component.category?.toLowerCase().includes(searchLower) ||
         component.id.toLowerCase().includes(searchLower);
-      
+
       const matchesCategory = !selectedCategory || component.category === selectedCategory;
-      
+
       return matchesSearch && matchesCategory;
     });
   }, [searchQuery, selectedCategory]);
@@ -100,47 +100,47 @@ const Index = () => {
                 </Button>
               </Link>
             </div>
-          {/* Stats Section */}
-<section className="relative z-10 mt-6 sm:mt-10">
-  <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-    <div className="flex items-center justify-center flex-wrap gap-2 sm:gap-3 animate-fade-up">
-      {[
-        {
-          label: `${componentsData.length}+ Components`,
-          icon: <Code2 className="h-4 w-4 text-primary" />,
-          delay: "0s",
-        },
-        {
-          label: "TypeScript",
-          icon: (
-            <img
-              src="https://raw.githubusercontent.com/devicons/devicon/master/icons/typescript/typescript-original.svg"
-              alt="TypeScript"
-              className="h-4 w-4"
-            />
-          ),
-          delay: "0.15s",
-        },
-        {
-          label: "Responsive",
-          icon: <Users className="h-4 w-4 text-black" />,
-          delay: "0.3s",
-        },
-      ].map((stat, i) => (
-        <div
-          key={i}
-          className="flex items-center gap-1.5 px-2.5 py-1 rounded-full 
+            {/* Stats Section */}
+            <section className="relative z-10 mt-6 sm:mt-10">
+              <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="flex items-center justify-center flex-wrap gap-2 sm:gap-3 animate-fade-up">
+                  {[
+                    {
+                      label: `${componentsData.length}+ Components`,
+                      icon: <Code2 className="h-4 w-4 text-primary" />,
+                      delay: "0s",
+                    },
+                    {
+                      label: "TypeScript",
+                      icon: (
+                        <img
+                          src="https://raw.githubusercontent.com/devicons/devicon/master/icons/typescript/typescript-original.svg"
+                          alt="TypeScript"
+                          className="h-4 w-4"
+                        />
+                      ),
+                      delay: "0.15s",
+                    },
+                    {
+                      label: "Responsive",
+                      icon: <Users className="h-4 w-4 text-black" />,
+                      delay: "0.3s",
+                    },
+                  ].map((stat, i) => (
+                    <div
+                      key={i}
+                      className="flex items-center gap-1.5 px-2.5 py-1 rounded-full 
                      bg-muted/30 dark:bg-muted/20 text-xs sm:text-sm 
                      hover:bg-muted/50 transition-colors duration-200"
-          style={{ animationDelay: stat.delay }}
-        >
-          {stat.icon}
-          <span className="font-medium">{stat.label}</span>
-        </div>
-      ))}
-    </div>
-  </div>
-</section>
+                      style={{ animationDelay: stat.delay }}
+                    >
+                      {stat.icon}
+                      <span className="font-medium">{stat.label}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </section>
 
 
 
@@ -152,86 +152,86 @@ const Index = () => {
       </section>
 
       {/* Search & Filters - Engaging Animated Search */}
-<section className="container mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-16">
-  <div className="max-w-5xl mx-auto space-y-6">
+      <section className="container mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-16">
+        <div className="max-w-5xl mx-auto space-y-6">
 
-    {/* Search Bar */}
-    <div className="relative group">
-      {/* Animated Glow Background */}
-      <div className="absolute inset-0 bg-gradient-to-r from-primary/30 to-accent/30 rounded-xl blur-2xl opacity-0 group-focus-within:opacity-100 transition-opacity duration-500 animate-fade-in" />
-      
-      <div className="relative">
-        {/* Search Icon */}
-        <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground group-focus-within:text-primary transition-transform duration-300 group-focus-within:scale-110 animate-pulse-slow" />
-        
-        {/* Input Field */}
-        <Input
-          type="search"
-          placeholder="Search components by name, category, or description..."
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          className="pl-12 pr-12 h-16 text-base sm:text-lg font-medium bg-card/60 dark:bg-card/30 backdrop-blur-md border border-border/50 hover:border-border focus:border-primary/50 transition-all duration-300 rounded-xl shadow-md hover:shadow-lg focus:shadow-lg focus:shadow-primary/20 focus-ring animate-fade-in"
-        />
+          {/* Search Bar */}
+          <div className="relative group">
+            {/* Animated Glow Background */}
+            <div className="absolute inset-0 bg-gradient-to-r from-primary/30 to-accent/30 rounded-xl blur-2xl opacity-0 group-focus-within:opacity-100 transition-opacity duration-500 animate-fade-in" />
 
-        {/* Clear Button */}
-        {searchQuery && (
-          <button
-            onClick={() => setSearchQuery("")}
-            className="absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-all duration-200 p-1 hover:bg-muted/50 rounded-md focus-ring animate-fade-in"
-            aria-label="Clear search"
-          >
-            <X className="h-4 w-4" />
-          </button>
-        )}
-      </div>
-    </div>
+            <div className="relative">
+              {/* Search Icon */}
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground group-focus-within:text-primary transition-transform duration-300 group-focus-within:scale-110 animate-pulse-slow" />
 
-    {/* Filter Header */}
-    <div className="flex items-center justify-between flex-wrap gap-4">
-      <div className="flex items-center gap-3">
-        <Filter className="h-5 w-5 text-primary animate-fade-in" />
-        <span className="text-base font-semibold text-foreground animate-fade-in">Filter by Category</span>
-        {hasActiveFilters && (
-          <span className="text-sm text-muted-foreground ml-2 animate-fade-in">
-            · {filteredComponents.length} {filteredComponents.length === 1 ? "result" : "results"}
-          </span>
-        )}
-      </div>
-      {hasActiveFilters && (
-        <Button
-          variant="ghost"
-          size="sm"
-          onClick={clearFilters}
-          className="h-9 px-3 text-sm rounded-full hover:bg-destructive/10 hover:text-destructive transition-colors focus-ring animate-fade-in"
-        >
-          <X className="h-3 w-3 mr-1" />
-          Clear
-        </Button>
-      )}
-    </div>
+              {/* Input Field */}
+              <Input
+                type="search"
+                placeholder="Search components by name, category, or description..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="pl-12 pr-12 h-16 text-base sm:text-lg font-medium bg-card/60 dark:bg-card/30 backdrop-blur-md border border-border/50 hover:border-border focus:border-primary/50 transition-all duration-300 rounded-xl shadow-md hover:shadow-lg focus:shadow-lg focus:shadow-primary/20 focus-ring animate-fade-in"
+              />
 
-    {/* Category Badges */}
-    <div className="flex flex-wrap gap-3">
-      <Badge
-        variant={selectedCategory === null ? "default" : "outline"}
-        className="cursor-pointer transition-transform duration-200 hover:scale-105 text-sm sm:text-base px-4 py-2 rounded-full animate-fade-in"
-        onClick={() => setSelectedCategory(null)}
-      >
-        All ({componentsData.length})
-      </Badge>
-      {categories.map(({ name, count }) => (
-        <Badge
-          key={name}
-          variant={selectedCategory === name ? "default" : "outline"}
-          className="cursor-pointer transition-transform duration-200 hover:scale-105 text-sm sm:text-base px-4 py-2 rounded-full animate-fade-in"
-          onClick={() => setSelectedCategory(name)}
-        >
-          {name} ({count})
-        </Badge>
-      ))}
-    </div>
-  </div>
-</section>
+              {/* Clear Button */}
+              {searchQuery && (
+                <button
+                  onClick={() => setSearchQuery("")}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-all duration-200 p-1 hover:bg-muted/50 rounded-md focus-ring animate-fade-in"
+                  aria-label="Clear search"
+                >
+                  <X className="h-4 w-4" />
+                </button>
+              )}
+            </div>
+          </div>
+
+          {/* Filter Header */}
+          <div className="flex items-center justify-between flex-wrap gap-4">
+            <div className="flex items-center gap-3">
+              <Filter className="h-5 w-5 text-primary animate-fade-in" />
+              <span className="text-base font-semibold text-foreground animate-fade-in">Filter by Category</span>
+              {hasActiveFilters && (
+                <span className="text-sm text-muted-foreground ml-2 animate-fade-in">
+                  · {filteredComponents.length} {filteredComponents.length === 1 ? "result" : "results"}
+                </span>
+              )}
+            </div>
+            {hasActiveFilters && (
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={clearFilters}
+                className="h-9 px-3 text-sm rounded-full hover:bg-destructive/10 hover:text-destructive transition-colors focus-ring animate-fade-in"
+              >
+                <X className="h-3 w-3 mr-1" />
+                Clear
+              </Button>
+            )}
+          </div>
+
+          {/* Category Badges */}
+          <div className="flex flex-wrap gap-3">
+            <Badge
+              variant={selectedCategory === null ? "default" : "outline"}
+              className="cursor-pointer transition-transform duration-200 hover:scale-105 text-sm sm:text-base px-4 py-2 rounded-full animate-fade-in"
+              onClick={() => setSelectedCategory(null)}
+            >
+              All ({componentsData.length})
+            </Badge>
+            {categories.map(({ name, count }) => (
+              <Badge
+                key={name}
+                variant={selectedCategory === name ? "default" : "outline"}
+                className="cursor-pointer transition-transform duration-200 hover:scale-105 text-sm sm:text-base px-4 py-2 rounded-full animate-fade-in"
+                onClick={() => setSelectedCategory(name)}
+              >
+                {name} ({count})
+              </Badge>
+            ))}
+          </div>
+        </div>
+      </section>
 
 
       {/* Components Grid - Masonry Layout */}
@@ -278,7 +278,7 @@ const Index = () => {
               <div className="space-y-3">
                 <h3 className="text-xl font-semibold text-foreground">No components found</h3>
                 <p className="text-muted-foreground max-w-md mx-auto leading-relaxed">
-                  {searchQuery 
+                  {searchQuery
                     ? `No results for "${searchQuery}". Try adjusting your search or filters.`
                     : "No components match the selected category."}
                 </p>
@@ -311,12 +311,12 @@ const Index = () => {
                   Built with ❤️ for <span className="text-foreground font-medium">Hacktoberfest 2025</span>
                 </p>
               </div>
-              
+
               <div className="flex items-center gap-3">
                 <Link href="https://github.com/fahimahammed/DevUI" target="_blank" rel="noopener noreferrer">
-                  <Button 
-                    variant="ghost" 
-                    size="icon" 
+                  <Button
+                    variant="ghost"
+                    size="icon"
                     className="text-muted-foreground hover:text-foreground hover:bg-primary/10 transition-all duration-200 focus-ring"
                     aria-label="View on GitHub"
                   >
@@ -324,9 +324,9 @@ const Index = () => {
                   </Button>
                 </Link>
                 <Link href="https://github.com/fahimahammed" target="_blank" rel="noopener noreferrer">
-                  <Button 
-                    variant="ghost" 
-                    size="sm" 
+                  <Button
+                    variant="ghost"
+                    size="sm"
                     className="text-muted-foreground hover:text-foreground hover:bg-primary/10 transition-all duration-200 focus-ring"
                   >
                     <Users className="h-4 w-4 mr-2" />
@@ -335,7 +335,7 @@ const Index = () => {
                 </Link>
               </div>
             </div>
-            
+
             <div className="mt-8 pt-6 border-t border-border/50 text-center">
               <p className="text-xs text-muted-foreground">
                 © {new Date().getFullYear()} DevUI. Open source under MIT License.
