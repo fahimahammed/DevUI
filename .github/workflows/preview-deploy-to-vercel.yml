@@ -8,10 +8,22 @@ jobs:
   vercel-preview:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v3
 
       - name: Install Vercel CLI
         run: npm install --global vercel@latest pnpm
+
+      # Debug step (optional, remove later)
+      - name: Debug Secrets
+        run: |
+          echo "ORG_ID=$VERCEL_ORG_ID"
+          echo "PROJECT_ID=$VERCEL_PROJECT_ID"
+          echo "TOKEN length: ${#VERCEL_TOKEN}"
+        env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
 
       - name: Pull Vercel Environment Information
         run: vercel pull --yes --environment=preview --token=${{ secrets.VERCEL_TOKEN }}
@@ -40,9 +52,6 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const previewUrl = process.env.preview_url;
-            github.rest.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: `🚀 Preview deployed: [${previewUrl}](${previewUrl})`
-            })
+            if (previewUrl) {
+              github.rest.issues.createComment({
+                issue_number: context._
