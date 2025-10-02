@@ -33,6 +33,7 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "@/components/ui/dialog";
+import { toast } from "sonner";
 
 
 export const componentsData = [
@@ -442,5 +443,36 @@ export function DialogDemo() {
     </Dialog>
   )
 }`
-    }
+    },{
+        id: "toast",
+        title: "Toast",
+        description: "A brief message that appears temporarily to inform users of an action or event.",
+        category: "Feedback",
+        preview: (<>
+        <div className="grid grid-cols-2 gap-2">
+
+            <Button variant="outline" onClick={() => toast('This is a toast notification!')}>Show Toast</Button>
+            <Button variant="outline" onClick={() => toast('This is a toast notification!',{
+              description: 'Here is a description for more context.'
+            })}>Toast with Description</Button>
+            <Button variant="outline" onClick={() => toast.success('This is a success toast!')}>Success Toast</Button>
+            <Button variant="outline" onClick={() => toast.error('This is an error toast!')}>Error Toast</Button>
+            <Button variant="outline" onClick={() => toast.warning('This is a warning toast!')}>Warning Toast</Button>
+            <Button variant="outline" onClick={() => toast.info('This is an info toast!')}>Info Toast</Button>
+        </div>
+        </>),
+        code: `import { toast } from "sonner"
+import { Button } from "@/components/ui/button";
+import { Toaster } from "@/components/ui/sonner";
+
+
+export function ToastDemo() {
+  return (
+    <div>
+        <Button variant="outline" onClick={() => toast.success('This is a success toast!')}>
+          Success Toast
+        </Button>
+        <Toaster position="bottom-right" richColors closeButton />
+    </div>
+}`}
   ]

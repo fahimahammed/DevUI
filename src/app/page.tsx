@@ -7,6 +7,8 @@ import { Badge } from "@/components/ui/badge";
 import { Github, Search, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { Toaster } from "@/components/ui/sonner";
+import { ModeToggle } from "@/components/theme/theme-toggle";
 
 const Index = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -79,7 +81,7 @@ const Index = () => {
       <section className="container mx-auto px-4 py-12">
         <div className="max-w-6xl mx-auto space-y-6">
           <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground z-[1]" />
             <Input
               type="text"
               placeholder="Search components..."
@@ -92,7 +94,7 @@ const Index = () => {
           <div className="flex flex-wrap gap-2">
             <Badge
               variant={selectedCategory === null ? "default" : "outline"}
-              className="cursor-pointer hover:bg-primary/80 transition-colors"
+              className="cursor-pointer hover:bg-primary/80 hover:text-primary-foreground transition-colors"
               onClick={() => setSelectedCategory(null)}
             >
               All
@@ -101,7 +103,7 @@ const Index = () => {
               <Badge
                 key={category}
                 variant={selectedCategory === category ? "default" : "outline"}
-                className="cursor-pointer hover:bg-primary/80 transition-colors"
+                className="cursor-pointer hover:bg-primary/80 hover:text-primary-foreground transition-colors"
                 onClick={() => setSelectedCategory(category)}
               >
                 {category}
@@ -161,7 +163,8 @@ const Index = () => {
             <div className="text-sm text-muted-foreground">
               Built with ❤️ for Hacktoberfest 2025
             </div>
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2">
+                <ModeToggle />
               <Link href={"https://github.com/fahimahammed"}>
                 <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground">
                   <Github className="h-5 w-5" />
@@ -171,6 +174,7 @@ const Index = () => {
           </div>
         </div>
       </footer>
+      <Toaster position="bottom-right" richColors closeButton />
     </div>
   );
 };

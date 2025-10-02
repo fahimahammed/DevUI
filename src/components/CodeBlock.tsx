@@ -44,7 +44,7 @@ export const CodeBlock = ({ code, language = "tsx", showLineNumbers = true }: Co
                     )}
                 </Button>
             </div>
-            <div className="overflow-x-auto bg-primary">
+            <div className="overflow-x-auto bg-black">
                 <SyntaxHighlighter
                     language={language}
                     style={vscDarkPlus}
