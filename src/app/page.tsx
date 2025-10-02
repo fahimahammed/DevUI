@@ -57,6 +57,11 @@ const Index = () => {
               <Button size="lg" variant="outline" className="border-primary/20 hover:bg-primary/5">
                 Browse Components
               </Button>
+              <Link href="/documents">
+                <Button size="lg" variant="outline" className="border-primary/20 hover:bg-primary/5">
+                  Docs
+                </Button>
+              </Link>
               <Link href="/about">
                 <Button size="lg" variant="ghost" className="text-primary font-semibold border border-primary/10 hover:bg-primary/10">
                   About Us
