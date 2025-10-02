@@ -153,7 +153,7 @@ const Index = () => {
           <div className="flex flex-wrap gap-2">
             <Badge
               variant={selectedCategory === null ? "default" : "outline"}
-              className="cursor-pointer hover:bg-primary/80 transition-all hover:scale-105 dark:hover:bg-primary/70 dark:border-border"
+              className="cursor-pointer hover:bg-primary/80 transition-all  dark:hover:bg-primary/70 dark:border-border px-3 py-2 hover:text-white"
               onClick={() => setSelectedCategory(null)}
             >
               All ({componentsData.length})
@@ -162,7 +162,7 @@ const Index = () => {
               <Badge
                 key={name}
                 variant={selectedCategory === name ? "default" : "outline"}
-                className="cursor-pointer hover:bg-primary/80 transition-all hover:scale-105 dark:hover:bg-primary/70 dark:border-border"
+                className="cursor-pointer hover:bg-primary/80 transition-all  dark:hover:bg-primary/70 dark:border-border px-3 py-2 hover:text-white"
                 onClick={() => setSelectedCategory(name)}
               >
                 {name} ({count})
