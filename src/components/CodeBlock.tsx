@@ -41,9 +41,9 @@ export const CodeBlock = ({ code, language = "tsx", showLineNumbers = true }: Co
     };
 
     return (
-        <div className="relative rounded-lg overflow-hidden border border-border bg-card/50 backdrop-blur-sm shadow-sm hover:shadow-md transition-shadow">
-            <div className="flex items-center justify-between px-3 sm:px-4 py-2 border-b border-border bg-secondary/80 dark:bg-secondary/50">
-                <span className="text-xs sm:text-sm font-mono text-muted-foreground uppercase tracking-wide">{language}</span>
+        <div className="relative rounded-lg overflow-hidden border border-border bg-card/50 backdrop-blur-sm  hover:shadow-md transition-shadow">
+            <div className="flex items-center justify-between px-3 sm:px-4 py-2 border-b border-border bg-zinc-200 dark:bg-secondary/50">
+                <span className="text-xs sm:text-sm font-mono  text-zinc-600 tracking-wide">{language}</span>
                 <Button
                     variant="ghost"
                     size="sm"

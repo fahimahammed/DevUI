@@ -66,7 +66,7 @@ export const ComponentCard = ({
                 {/* Preview Tab */}
                 <TabsContent 
                     value="preview" 
-                    className="p-6 sm:p-8 min-h-[220px] flex items-center justify-center bg-gradient-to-br from-muted/5 to-background/50"
+                    className="p-6 sm:p-8 min-h-[220px] flex items-center justify-center  bg-gradient-to-br from-muted/5 to-background/50"
                 >
                     <div className="w-full flex items-center justify-center overflow-x-auto">
                         <div className="scale-95 sm:scale-100 origin-center transition-transform duration-300 group-hover:scale-[1.02]">
