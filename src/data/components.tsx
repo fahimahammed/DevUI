@@ -34,6 +34,7 @@ import {
     DialogTrigger,
 } from "@/components/ui/dialog";
 import { Progress } from "@/components/ui/progress";
+import { Textarea } from "@/components/ui/textarea";
 
 
 export const componentsData = [
@@ -499,6 +500,56 @@ export function ProgressDemo() {
           <span>100%</span>
         </div>
         <Progress value={100} className="w-full" />
+      </div>
+    </div>
+  )
+}`
+    },
+    {
+        id: "textarea",
+        title: "Textarea",
+        description: "A multi-line text input component for longer text content like comments, descriptions, or messages.",
+        category: "Form",
+        preview: (
+            <div className="w-full max-w-sm space-y-4">
+                <div className="space-y-2">
+                    <label htmlFor="message" className="text-sm font-medium">Message</label>
+                    <Textarea 
+                        id="message" 
+                        placeholder="Type your message here..." 
+                        className="min-h-[100px]"
+                    />
+                </div>
+                <div className="space-y-2">
+                    <label htmlFor="feedback" className="text-sm font-medium">Feedback</label>
+                    <Textarea 
+                        id="feedback" 
+                        placeholder="Share your feedback..." 
+                        className="min-h-[80px]"
+                    />
+                </div>
+            </div>
+        ),
+        code: `import { Textarea } from "@/components/ui/textarea"
+
+export function TextareaDemo() {
+  return (
+    <div className="w-full max-w-sm space-y-4">
+      <div className="space-y-2">
+        <label htmlFor="message" className="text-sm font-medium">Message</label>
+        <Textarea 
+          id="message" 
+          placeholder="Type your message here..." 
+          className="min-h-[100px]"
+        />
+      </div>
+      <div className="space-y-2">
+        <label htmlFor="feedback" className="text-sm font-medium">Feedback</label>
+        <Textarea 
+          id="feedback" 
+          placeholder="Share your feedback..." 
+          className="min-h-[80px]"
+        />
       </div>
     </div>
   )
