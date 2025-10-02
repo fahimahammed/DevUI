@@ -2,7 +2,16 @@ import { useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { CodeBlock } from "./CodeBlock";
-import { Eye, Code2 } from "lucide-react";
+import { Eye, Code2, Info, ChevronDown, ChevronUp } from "lucide-react";
+import { Button } from "@/components/ui/button";
+
+interface PropData {
+    name: string;
+    type: string;
+    description: string;
+    required?: boolean;
+    default?: string;
+}
 
 interface ComponentCardProps {
     title: string;
@@ -10,6 +19,9 @@ interface ComponentCardProps {
     preview: React.ReactNode;
     code: string;
     category?: string;
+    propsData?: PropData[];
+    usageNotes?: string;
+    installCommand?: string;
 }
 
 export const ComponentCard = ({
@@ -17,26 +29,112 @@ export const ComponentCard = ({
     description,
     preview,
     code,
-    category
+    category,
+    propsData,
+    usageNotes,
+    installCommand
 }: ComponentCardProps) => {
     const [activeTab, setActiveTab] = useState("preview");
+    const [showDetails, setShowDetails] = useState(false);
 
     return (
-        <Card className="overflow-hidden border-border bg-card/50 backdrop-blur-sm hover:shadow-md transition-all duration-300 ">
-            <div className="p-4 sm:p-5 lg:p-6 border-b border-border">
-                <div className="flex  items-start justify-between mb-2">
-                    <div className="flex gap-2 items-center">
-                        <h3 className="text-lg sm:text-xl font-semibold text-foreground mb-1 ">{title}</h3>
-                        {category && (
-                            <span className="h-max inline-block px-2 py-0.5 sm:py-1 text-xs font-medium rounded-md  text-primary border border-primary/20">
-                                {category}
-                            </span>
-                        )}
+        <Card className="overflow-hidden border-border bg-card/50 backdrop-blur-sm hover:shadow-lg transition-all duration-300">
+            {/* Header Section - Enhanced */}
+            <div className="p-4 sm:p-5 lg:p-6 border-b border-border bg-gradient-to-br from-card to-card/50">
+                <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3 mb-3">
+                    <div className="flex-1">
+                        <div className="flex flex-wrap items-center gap-2 mb-2">
+                            <h3 className="text-xl sm:text-2xl font-bold text-foreground">
+                                {title}
+                            </h3>
+                            {category && (
+                                <span className="inline-flex items-center px-2.5 py-0.5 text-xs font-semibold rounded-full bg-primary/10 text-primary border border-primary/20">
+                                    {category}
+                                </span>
+                            )}
+                        </div>
+                        <p className="text-sm text-muted-foreground leading-relaxed">
+                            {description}
+                        </p>
                     </div>
                 </div>
-                <p className="text-xs sm:text-sm text-muted-foreground mt-2">{description}</p>
+
+                {/* Quick Actions Row */}
+                {(propsData || installCommand) && (
+                    <div className="flex flex-wrap items-center gap-2 mt-4 pt-4 border-t border-border/50">
+                        {propsData && (
+                            <Button
+                                variant="outline"
+                                size="sm"
+                                onClick={() => setShowDetails(!showDetails)}
+                                className="h-8 text-xs gap-1.5"
+                            >
+                                <Info className="h-3.5 w-3.5" />
+                                Props & API
+                                {showDetails ? (
+                                    <ChevronUp className="h-3.5 w-3.5" />
+                                ) : (
+                                    <ChevronDown className="h-3.5 w-3.5" />
+                                )}
+                            </Button>
+                        )}
+                        {installCommand && (
+                            <code className="px-3 py-1.5 text-xs font-mono bg-secondary/80 rounded-md border border-border">
+                                {installCommand}
+                            </code>
+                        )}
+                    </div>
+                )}
             </div>
 
+            {/* Expandable Props Documentation */}
+            {showDetails && propsData && (
+                <div className="px-4 sm:px-5 lg:px-6 py-4 border-b border-border bg-secondary/30 animate-in slide-in-from-top-2 duration-300">
+                    <h4 className="text-sm font-semibold text-foreground mb-3 flex items-center gap-2">
+                        <Info className="h-4 w-4 text-primary" />
+                        Component Props
+                    </h4>
+                    <div className="space-y-2">
+                        {propsData.map((prop, idx) => (
+                            <div
+                                key={idx}
+                                className="p-3 rounded-lg bg-card border border-border hover:border-primary/50 transition-colors"
+                            >
+                                <div className="flex flex-wrap items-start gap-2 mb-1">
+                                    <code className="text-sm font-mono font-semibold text-primary">
+                                        {prop.name}
+                                    </code>
+                                    {prop.required && (
+                                        <span className="text-xs px-1.5 py-0.5 rounded bg-destructive/10 text-destructive font-medium">
+                                            required
+                                        </span>
+                                    )}
+                                    <code className="text-xs font-mono text-muted-foreground">
+                                        {prop.type}
+                                    </code>
+                                    {prop.default && (
+                                        <code className="text-xs font-mono text-muted-foreground ml-auto">
+                                            default: {prop.default}
+                                        </code>
+                                    )}
+                                </div>
+                                <p className="text-xs text-muted-foreground leading-relaxed">
+                                    {prop.description}
+                                </p>
+                            </div>
+                        ))}
+                    </div>
+                    {usageNotes && (
+                        <div className="mt-3 p-3 rounded-lg bg-primary/5 border border-primary/20">
+                            <p className="text-xs text-foreground/80 leading-relaxed">
+                                💡 <span className="font-medium">Usage Tip:</span> {usageNotes}
+                            </p>
+                        </div>
+                    )}
+                </div>
+            )}
+
+            {/* Tabs Section - Enhanced */}
             <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
                 <div className="px-4 sm:px-5 lg:px-6  border-border  ">
                     <TabsList className=" h-9  sm:h-10 bg-zinc-200">
@@ -44,9 +142,12 @@ export const ComponentCard = ({
                             <Eye className="h-3 w-3  sm:h-4 sm:w-4" />
                             <span className="hidden xs:inline">Preview</span>
                         </TabsTrigger>
-                        <TabsTrigger value="code" className="flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm px-2 sm:px-3">
-                            <Code2 className="h-3 w-3 sm:h-4 sm:w-4" />
-                            <span className="hidden xs:inline">Code</span>
+                        <TabsTrigger
+                            value="code"
+                            className="flex items-center gap-2 text-sm px-4 data-[state=active]:bg-card data-[state=active]:shadow-sm"
+                        >
+                            <Code2 className="h-4 w-4" />
+                            <span>Code</span>
                         </TabsTrigger>
                     </TabsList>
                 </div>
