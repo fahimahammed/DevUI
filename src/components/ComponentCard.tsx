@@ -38,10 +38,10 @@ export const ComponentCard = ({
     >
       <div className="p-6 border-b border-border">
         <div className="flex items-start justify-between mb-2">
-          <div>
-            <h3 className="text-xl font-semibold text-foreground mb-1">{title}</h3>
+          <div className="flex gap-2 items-center">
+            <h3 className="text-lg sm:text-xl font-semibold text-foreground mb-1">{title}</h3>
             {category && (
-              <span className="inline-block px-2 py-1 text-xs font-medium rounded-md bg-primary/10 text-primary border border-primary/20 mr-2">
+              <span className="h-max inline-block px-2 py-0.5 sm:py-1 text-xs font-medium rounded-md bg-primary/10 text-primary border border-primary/20">
                 {category}
               </span>
             )}
@@ -55,7 +55,7 @@ export const ComponentCard = ({
             )}
           </div>
         </div>
-        <p className="text-sm text-muted-foreground mt-2">{description}</p>
+        <p className="text-xs sm:text-sm text-muted-foreground mt-2">{description}</p>
       </div>
 
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">

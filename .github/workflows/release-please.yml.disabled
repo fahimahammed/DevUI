@@ -1,0 +1,23 @@
+on:
+    push:
+        branches:
+            - stage
+
+permissions:
+    contents: write
+    pull-requests: write
+
+# cancel any previous runs in progress for the same branch
+concurrency:
+    group: ${{ github.workflow }}-${{ github.ref }}
+    cancel-in-progress: true
+
+name: release-please
+jobs:
+    release-please:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: googleapis/release-please-action@v4
+              with:
+                  config-file: release-please-config.json
+                  token: ${{ secrets.GH_TOKEN }}
