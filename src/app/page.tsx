@@ -135,7 +135,7 @@ const Index = () => {
               <Filter className="h-3 w-3 sm:h-4 sm:w-4 text-muted-foreground" />
               <span className="text-xs sm:text-sm font-medium text-foreground dark:text-foreground">Filter by Category</span>
               {hasActiveFilters && (
-                <Badge variant="secondary" className="ml-2">
+                <Badge variant="secondary" className="ml-2 text-xs bg-zinc-200">
                   {filteredComponents.length} result{filteredComponents.length !== 1 ? 's' : ''}
                 </Badge>
               )}
@@ -157,7 +157,7 @@ const Index = () => {
           <div className="flex flex-wrap gap-1.5 sm:gap-2">
             <Badge
               variant={selectedCategory === null ? "default" : "outline"}
-              className="cursor-pointer hover:bg-primary/80 transition-all hover:scale-105 dark:hover:bg-primary/70 dark:border-border text-xs sm:text-sm px-2 sm:px-2.5 py-0.5 sm:py-1"
+              className="cursor-pointer hover:bg-primary/80 hover:text-white dark:hover:bg-primary/70 dark:border-border text-xs sm:text-sm sm:px-2.5 py-0.5 sm:py-1 lg:px-3 lg:py-2 lg:text-[16px]"
               onClick={() => setSelectedCategory(null)}
             >
               All ({componentsData.length})
@@ -166,7 +166,7 @@ const Index = () => {
               <Badge
                 key={name}
                 variant={selectedCategory === name ? "default" : "outline"}
-                className="cursor-pointer hover:bg-primary/80 transition-all hover:scale-105 dark:hover:bg-primary/70 dark:border-border text-xs sm:text-sm px-2 sm:px-2.5 py-0.5 sm:py-1"
+                className="cursor-pointer hover:bg-primary/80   hover:text-white transition dark:hover:bg-primary/70 dark:border-border text-xs sm:text-sm px-2 sm:px-2.5 py-0.5 sm:py-1 lg:px-3 lg:py-2"
                 onClick={() => setSelectedCategory(name)}
               >
                 {name} ({count})
