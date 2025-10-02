@@ -5,6 +5,7 @@ import { Switch } from "@/components/ui/switch";
 import { Slider } from "@/components/ui/slider";
 import { Calendar } from "@/components/ui/calendar";
 import { Checkbox } from "@/components/ui/checkbox";
+import { CardFlip } from "@/components/ui/card-flip";
 import {
     AlertDialog,
     AlertDialogAction,
@@ -441,5 +442,29 @@ export function DialogDemo() {
     </Dialog>
   )
 }`
-    }
+    },
+    {
+  id: "card-flip",
+  title: "Card Flip",
+  description: "A responsive card that flips to reveal more information on hover. Works in light & dark themes.",
+  category: "Display",
+  preview: (
+    <CardFlip
+      frontTitle="Hello!!!"
+      frontContent="Hover me to see more!!!"
+      backContent="Hey There! Welcome Here, Surprise! This is the back content."
+    />
+  ),
+  code: `import { CardFlip } from "@/components/ui/CardFlip"
+
+export function CardFlipDemo() {
+  return (
+    <CardFlip
+      frontTitle="Hello!!!"
+      frontContent="Hover me to see more!!!"
+      backContent="Hey There! Welcome Here, Surprise! This is the back content."
+    />
+  )
+}`
+}
 ];
