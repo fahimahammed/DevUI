@@ -265,8 +265,8 @@
   /* Gradient text */
   .gradient-text {
     @apply bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent;
-    background-size: 200% auto;
-    animation: gradient-shift 3s linear infinite;
+    background-size: 1000% auto;
+    animation: gradient-shift 8s linear infinite;
   }
 
   @keyframes gradient-shift {
