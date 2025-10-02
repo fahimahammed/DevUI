@@ -1,16 +1,17 @@
 "use client"
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ComponentCard } from "@/components/ComponentCard";
 import { componentsData } from "@/data/components";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
-import { Github, Search, Sparkles } from "lucide-react";
+import { Github, Search, Sparkles, ArrowUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
 const Index = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [showScrollTop, setShowScrollTop] = useState(false);
 
   const categories = Array.from(new Set(componentsData.map(c => c.category).filter(Boolean)));
 
@@ -20,6 +21,18 @@ const Index = () => {
     const matchesCategory = !selectedCategory || component.category === selectedCategory;
     return matchesSearch && matchesCategory;
   });
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowScrollTop(window.scrollY > 200);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -171,6 +184,17 @@ const Index = () => {
           </div>
         </div>
       </footer>
+
+      {/*Back to Top Button */}
+      {showScrollTop && (
+        <button
+          onClick={scrollToTop}
+          aria-label="Back to top"
+          className="fixed bottom-6 right-6 p-3 rounded-full bg-primary text-white shadow-lg hover:bg-primary/90 transition"
+        >
+          <ArrowUp className="h-5 w-5" />
+        </button>
+      )}
     </div>
   );
 };
