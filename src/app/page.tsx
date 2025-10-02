@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { Github, Search, Sparkles, Filter, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { Toaster } from "sonner";
 
 const Index = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -255,6 +256,7 @@ const Index = () => {
           </div>
         </div>
       </footer>
+      <Toaster position="bottom-right" richColors closeButton />
     </div>
   );
 };
