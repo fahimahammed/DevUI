@@ -47,6 +47,7 @@ import {
   MenubarSeparator,
   MenubarTrigger,
 } from "@/components/ui/menubar";
+import { FileUpload } from "@/components/ui/file-upload";
 
 export const componentsData = [
   {
@@ -847,5 +848,113 @@ export function MenuBarDemo() {
     </Menubar>
   )
 }`,
+  },
+  {
+    id: "file-upload",
+    title: "File Upload",
+    description:
+      "A comprehensive file upload component with drag & drop, progress tracking, multiple variants, and file validation.",
+    category: "Form",
+    preview: (
+      <div className="w-full max-w-md space-y-6">
+        <div className="space-y-2">
+          <label className="text-sm font-medium">Default Upload</label>
+          <FileUpload
+            variant="default"
+            accept="image/*"
+            multiple={true}
+            maxFiles={3}
+            maxSize={5 * 1024 * 1024} // 5MB
+            onFileSelect={(files) => console.log("Selected files:", files)}
+            onFileUpload={async (files) => {
+              console.log("Uploading files:", files)
+              // Simulate upload delay
+              await new Promise(resolve => setTimeout(resolve, 2000))
+            }}
+          />
+        </div>
+        <div className="space-y-2">
+          <label className="text-sm font-medium">Compact Upload</label>
+          <FileUpload
+            variant="compact"
+            accept=".pdf,.doc,.docx"
+            onFileSelect={(files) => console.log("Selected documents:", files)}
+          />
+        </div>
+      </div>
+    ),
+    code: `import { FileUpload } from "@/components/ui/file-upload"
+
+export function FileUploadDemo() {
+  const handleFileSelect = (files: File[]) => {
+    console.log("Selected files:", files)
+  }
+
+  const handleFileUpload = async (files: File[]) => {
+    console.log("Uploading files:", files)
+    // Implement your upload logic here
+    // This is just a simulation
+    await new Promise(resolve => setTimeout(resolve, 2000))
+  }
+
+  return (
+    <div className="w-full max-w-md space-y-6">
+      {/* Default variant with drag & drop */}
+      <div className="space-y-2">
+        <label className="text-sm font-medium">Image Upload</label>
+        <FileUpload
+          variant="default"
+          accept="image/*"
+          multiple={true}
+          maxFiles={3}
+          maxSize={5 * 1024 * 1024} // 5MB
+          onFileSelect={handleFileSelect}
+          onFileUpload={handleFileUpload}
+        />
+      </div>
+
+      {/* Compact variant */}
+      <div className="space-y-2">
+        <label className="text-sm font-medium">Document Upload</label>
+        <FileUpload
+          variant="compact"
+          accept=".pdf,.doc,.docx"
+          onFileSelect={handleFileSelect}
+        />
+      </div>
+
+      {/* Dropzone variant */}
+      <div className="space-y-2">
+        <label className="text-sm font-medium">Large File Drop Zone</label>
+        <FileUpload
+          variant="dropzone"
+          accept="*/*"
+          multiple={false}
+          maxSize={100 * 1024 * 1024} // 100MB
+          onFileSelect={handleFileSelect}
+          onFileUpload={handleFileUpload}
+        >
+          <div className="text-center">
+            <p className="text-sm text-muted-foreground">
+              Perfect for large files up to 100MB
+            </p>
+          </div>
+        </FileUpload>
+      </div>
+    </div>
+  )
+}
+
+// Component Features:
+// ✅ Drag & drop support
+// ✅ Multiple file selection
+// ✅ File size validation
+// ✅ Progress tracking
+// ✅ Three variants: default, compact, dropzone
+// ✅ Custom file type restrictions
+// ✅ Upload simulation with status indicators
+// ✅ Accessible with keyboard navigation
+// ✅ Responsive design
+// ✅ Dark theme support`,
   },
 ];
