@@ -38,9 +38,9 @@ export const ComponentCard = ({
             </div>
 
             <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-                <div className="px-4 sm:px-5 lg:px-6  border-border ">
-                    <TabsList className="bg-secondary/50 h-9  sm:h-10">
-                        <TabsTrigger value="preview" className="flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm px-2 sm:px-3">
+                <div className="px-4 sm:px-5 lg:px-6  border-border  ">
+                    <TabsList className=" h-9  sm:h-10 bg-zinc-200">
+                        <TabsTrigger value="preview" className="flex  items-center gap-1.5 sm:gap-2 text-xs sm:text-sm px-2 sm:px-3">
                             <Eye className="h-3 w-3  sm:h-4 sm:w-4" />
                             <span className="hidden xs:inline">Preview</span>
                         </TabsTrigger>
@@ -51,7 +51,7 @@ export const ComponentCard = ({
                     </TabsList>
                 </div>
 
-                <TabsContent value="preview" className="p-4 sm:p-5 lg:p-6 min-h-[180px] sm:min-h-[200px] flex items-center justify-center">
+                <TabsContent value="preview" className="p-4 sm:p-5 lg:p-6 min-h-[180px] sm:min-h-[200px] flex items-center justify-center ">
                     <div className="w-full flex items-center justify-center overflow-x-auto">
                         <div className="scale-90 sm:scale-95 lg:scale-100 origin-center">
                             {preview}
