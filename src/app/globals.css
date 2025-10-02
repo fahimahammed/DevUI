@@ -166,4 +166,16 @@
   .gap-responsive-sm {
     @apply gap-2 sm:gap-3 lg:gap-4;
   }
+
+  /* Subtle primary-colored glow for focus/hover states */
+  .shadow-glow-primary {
+    box-shadow: 0 0 0 0 rgba(0,0,0,0);
+    transition: box-shadow 200ms ease, border-color 200ms ease;
+  }
+
+  .shadow-glow-primary:hover,
+  .shadow-glow-primary:focus,
+  .shadow-glow-primary:focus-visible {
+    box-shadow: 0 0 0 3px color-mix(in oklch, var(--ring) 40%, transparent), 0 6px 18px -8px color-mix(in oklch, var(--primary) 45%, transparent);
+  }
 }
