@@ -11,7 +11,6 @@ import Link from "next/link";
 const Index = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-  const [showScrollTop, setShowScrollTop] = useState(false);
 
   // Get all unique categories with counts
   const categories = useMemo(() => {
@@ -49,18 +48,6 @@ const Index = () => {
   };
 
   const hasActiveFilters = searchQuery || selectedCategory;
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setShowScrollTop(window.scrollY > 200);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
 
   return (
     <div className="min-h-screen bg-zinc-50">
@@ -268,17 +255,6 @@ const Index = () => {
           </div>
         </div>
       </footer>
-
-      {/*Back to Top Button */}
-      {showScrollTop && (
-        <button
-          onClick={scrollToTop}
-          aria-label="Back to top"
-          className="fixed bottom-6 right-6 p-3 rounded-full bg-primary text-white shadow-lg hover:bg-primary/90 transition"
-        >
-          <ArrowUp className="h-5 w-5" />
-        </button>
-      )}
     </div>
   );
 };
