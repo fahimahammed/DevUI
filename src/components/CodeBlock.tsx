@@ -1,93 +1,111 @@
 "use client"
 
-import { useState, useEffect } from "react";
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { vscDarkPlus, vs } from "react-syntax-highlighter/dist/esm/styles/prism";
-import { Check, Copy } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { toast } from "sonner";
-import { useTheme } from "next-themes";
+import { useState } from "react"
+import { Check, Copy } from "lucide-react"
+import { Button } from "@/components/ui/button"
 
 interface CodeBlockProps {
-    code: string;
-    language?: string;
-    showLineNumbers?: boolean;
+  code: string
+  language?: string
+  showLineNumbers?: boolean
+  className?: string
 }
 
-export const CodeBlock = ({ code, language = "tsx", showLineNumbers = true }: CodeBlockProps) => {
-    const [copied, setCopied] = useState(false);
-    const { theme, resolvedTheme } = useTheme();
-    const [mounted, setMounted] = useState(false);
+export function CodeBlock({
+  code,
+  language = "tsx",
+  showLineNumbers = true,
+  className,
+}: CodeBlockProps) {
+  const [copied, setCopied] = useState(false)
 
-    // Prevent hydration mismatch
-    useEffect(() => {
-        setMounted(true);
-    }, []);
+  const copyToClipboard = async () => {
+    try {
+      await navigator.clipboard.writeText(code)
+      setCopied(true)
+      setTimeout(() => setCopied(false), 2000)
+    } catch (err) {
+      console.error("Failed to copy code:", err)
+    }
+  }
 
-    const currentTheme = mounted ? (resolvedTheme || theme) : 'dark';
-    const syntaxTheme = currentTheme === 'dark' ? vscDarkPlus : vs;
+  const lines = code.split("\n")
 
-    const handleCopy = async () => {
-        try {
-            await navigator.clipboard.writeText(code);
-            setCopied(true);
-            toast.success("Code copied to clipboard!", {
-                duration: 2000,
-            });
-            setTimeout(() => setCopied(false), 2000);
-        } catch (err) {
-            toast.error("Failed to copy code");
-        }
-    };
-
-    return (
-        <div className="relative rounded-lg overflow-hidden border border-border bg-card/50 backdrop-blur-sm  hover:shadow-md transition-shadow">
-            <div className="flex items-center justify-between px-3 sm:px-4 py-2 border-b border-border bg-zinc-200 dark:bg-secondary/50">
-                <span className="text-xs sm:text-sm font-mono  text-zinc-600 tracking-wide">{language}</span>
-                <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={handleCopy}
-                    className="h-7 sm:h-8 px-2 sm:px-3 hover:bg-accent/50 transition-all"
-                    aria-label={copied ? "Code copied" : "Copy code"}
-                >
-                    {copied ? (
-                        <>
-                            <Check className="h-3 w-3 sm:h-4 sm:w-4 mr-1 text-green-500" />
-                            <span className="text-xs hidden sm:inline">Copied!</span>
-                        </>
-                    ) : (
-                        <>
-                            <Copy className="h-3 w-3 sm:h-4 sm:w-4 mr-1" />
-                            <span className="text-xs hidden sm:inline">Copy</span>
-                        </>
-                    )}
-                </Button>
-            </div>
-            <div className="overflow-x-auto bg-[#1e1e1e] dark:bg-[#1e1e1e] light:bg-[#f5f5f5]">
-                <SyntaxHighlighter
-                    language={language}
-                    style={syntaxTheme}
-                    showLineNumbers={showLineNumbers}
-                    customStyle={{
-                        margin: 0,
-                        padding: "0.875rem 1rem",
-                        background: "transparent",
-                        fontSize: "0.8125rem",
-                        lineHeight: "1.6",
-                    }}
-                    codeTagProps={{
-                        style: {
-                            fontSize: "0.8125rem",
-                            fontFamily: "'Fira Code', 'JetBrains Mono', 'Courier New', monospace",
-                        }
-                    }}
-                    wrapLongLines={false}
-                    className="scrollbar-thin scrollbar-thumb-muted scrollbar-track-transparent"
-                >
-                    {code}
-                </SyntaxHighlighter>
-            </div>
+  return (
+    <div className={`group relative overflow-hidden rounded-xl border border-primary/30 bg-card/60 shadow-2xl shadow-black/20 transition-all duration-300 hover:shadow-zinc-900/30 ${className || ""}`}>
+      {/* Subtle gradient overlay using primary/accent */}
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-primary/8 via-transparent to-accent/8" />
+      
+      {/* Header */}
+      <div className="relative flex items-center justify-between border-b border-primary/20 px-5 py-3 backdrop-blur-sm bg-card/70">
+        <div className="flex items-center gap-3">
+          <div className="flex gap-1.5">
+            <div className="h-3 w-3 rounded-full bg-primary/80" />
+            <div className="h-3 w-3 rounded-full bg-primary/80" />
+            <div className="h-3 w-3 rounded-full bg-primary/80" />
+          </div>
+          <span className="text-xs font-semibold tracking-wider text-primary uppercase">
+            {language}
+          </span>
         </div>
-    );
-};
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={copyToClipboard}
+          className="h-8 gap-2 px-3 text-foreground transition-all hover:bg-primary hover:text-primary-foreground"
+        >
+          {copied ? (
+            <>
+              <Check className="h-4 w-4 text-emerald-400" />
+              <span className="text-xs font-medium">Copied</span>
+            </>
+          ) : (
+            <>
+              <Copy className="h-4 w-4 text-primary" />
+              <span className="text-xs font-medium">Copy code</span>
+            </>
+          )}
+        </Button>
+      </div>
+
+      {/* Code content */}
+      <div className="relative overflow-x-auto">
+        <pre className="px-5 py-4">
+          <code className="text-[13px] leading-relaxed">
+              {showLineNumbers ? (
+                <div className="flex gap-6">
+                  <div className="select-none font-mono text-primary/80">
+                    {lines.map((_, i) => (
+                      <div 
+                        key={i} 
+                        className="h-[22px] text-right transition-colors group-hover:text-primary/60"
+                      >
+                        {String(i + 1).padStart(2, "0")}
+                      </div>
+                    ))}
+                  </div>
+                  <div className="flex-1 font-mono text-foreground">
+                    {lines.map((line, i) => (
+                      <div 
+                        key={i} 
+                        className="h-[22px] whitespace-pre"
+                      >
+                        {line || " "}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ) : (
+                <div className="font-mono text-foreground whitespace-pre">
+                  {code}
+                </div>
+              )}
+          </code>
+        </pre>
+      </div>
+
+      {/* Bottom gradient accent */}
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent" />
+    </div>
+  )
+}
