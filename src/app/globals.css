@@ -121,3 +121,49 @@
     @apply bg-background text-foreground;
   }
 }
+
+@layer utilities {
+  /* Extra small breakpoint for very small screens */
+  @media (min-width: 475px) {
+    .xs\:inline {
+      display: inline;
+    }
+  }
+  
+  /* Responsive container utilities */
+  .container-responsive {
+    @apply px-4 sm:px-6 lg:px-8;
+  }
+  
+  /* Responsive spacing utilities */
+  .section-spacing {
+    @apply py-8 sm:py-12 lg:py-16;
+  }
+  
+  /* Responsive text utilities */
+  .text-responsive-sm {
+    @apply text-xs sm:text-sm;
+  }
+  
+  .text-responsive-base {
+    @apply text-sm sm:text-base;
+  }
+  
+  .text-responsive-lg {
+    @apply text-base sm:text-lg md:text-xl;
+  }
+  
+  /* Smooth scaling for components */
+  .scale-responsive {
+    @apply scale-90 sm:scale-95 lg:scale-100;
+  }
+  
+  /* Responsive gap utilities */
+  .gap-responsive {
+    @apply gap-4 sm:gap-6 lg:gap-8;
+  }
+  
+  .gap-responsive-sm {
+    @apply gap-2 sm:gap-3 lg:gap-4;
+  }
+}
