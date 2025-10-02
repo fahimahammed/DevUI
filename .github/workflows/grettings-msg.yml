@@ -1,0 +1,39 @@
+name: 'Greetings'
+
+on:
+  push:
+    branches:
+      - '**'
+  issues:
+    types: [opened]
+  pull_request_target:
+    branches:
+      - '**'
+    types: [opened]
+
+permissions:
+  issues: write
+  pull-requests: write
+  contents: read
+
+jobs:
+  welcome:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Welcome Message
+        uses: EddieHubCommunity/gh-action-community/src/welcome@main
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          issue-message: |
+            Welcome, @${{ github.actor }}! Thanks for raising the issue.
+            Soon the maintainers/owner will review it and provide you with feedback/suggestions.
+            Make sure to **star this awesome repository** and **follow the account!**
+            * *DevUI*
+          pr-message: |
+            Great job, @${{ github.actor }}! Thanks for creating the pull request.
+            Soon the maintainers/owner will review it and provide you with feedback/suggestions.
+            Make sure to **star this awesome repository** and **follow the account!**
+            * *DevUI*
