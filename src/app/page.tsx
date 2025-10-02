@@ -1,10 +1,18 @@
-"use client"
+"use client";
 import { useState, useMemo, useEffect } from "react";
 import { ComponentCard } from "@/components/ComponentCard";
 import { componentsData } from "@/data/components";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
-import { Github, Search, Sparkles, Filter, X, Code2, Users } from "lucide-react";
+import {
+  Github,
+  Search,
+  Sparkles,
+  Filter,
+  X,
+  Code2,
+  Users,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
@@ -15,27 +23,35 @@ const Index = () => {
   // Get all unique categories with counts
   const categories = useMemo(() => {
     const categoryMap = new Map<string, number>();
-    componentsData.forEach(component => {
+    componentsData.forEach((component) => {
       if (component.category) {
-        categoryMap.set(component.category, (categoryMap.get(component.category) || 0) + 1);
+        categoryMap.set(
+          component.category,
+          (categoryMap.get(component.category) || 0) + 1
+        );
       }
     });
-    return Array.from(categoryMap.entries()).map(([name, count]) => ({ name, count }));
+    return Array.from(categoryMap.entries()).map(([name, count]) => ({
+      name,
+      count,
+    }));
   }, []);
 
   // Enhanced filtering with better search
   const filteredComponents = useMemo(() => {
-    return componentsData.filter(component => {
+    return componentsData.filter((component) => {
       const searchLower = searchQuery.toLowerCase().trim();
 
       // Enhanced search: title, description, category, and id
-      const matchesSearch = !searchLower ||
+      const matchesSearch =
+        !searchLower ||
         component.title.toLowerCase().includes(searchLower) ||
         component.description.toLowerCase().includes(searchLower) ||
         component.category?.toLowerCase().includes(searchLower) ||
         component.id.toLowerCase().includes(searchLower);
 
-      const matchesCategory = !selectedCategory || component.category === selectedCategory;
+      const matchesCategory =
+        !selectedCategory || component.category === selectedCategory;
 
       return matchesSearch && matchesCategory;
     });
@@ -52,12 +68,18 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background">
       {/* Hero Section - Modern & Clean */}
-      <section id="main-content" className="relative overflow-hidden border-b border-border/50">
+      <section
+        id="main-content"
+        className="relative overflow-hidden border-b border-border/50"
+      >
         {/* Animated Background */}
         <div className="absolute inset-0 bg-grid-pattern opacity-[0.02] dark:opacity-[0.05]" />
         <div className="absolute inset-0">
           <div className="absolute top-20 left-20 w-72 h-72 bg-primary/10 dark:bg-primary/5 rounded-full blur-[100px] animate-glow float-animation" />
-          <div className="absolute bottom-20 right-20 w-96 h-96 bg-accent/10 dark:bg-accent/5 rounded-full blur-[120px] animate-glow" style={{ animationDelay: '1s', animationDuration: '8s' }} />
+          <div
+            className="absolute bottom-20 right-20 w-96 h-96 bg-accent/10 dark:bg-accent/5 rounded-full blur-[120px] animate-glow"
+            style={{ animationDelay: "1s", animationDuration: "8s" }}
+          />
         </div>
 
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20 lg:py-28 relative z-10">
@@ -65,7 +87,9 @@ const Index = () => {
             {/* Badge */}
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-primary/20 bg-primary/5 dark:bg-primary/10 backdrop-blur-sm transition-all duration-300 hover:border-primary/30 hover:bg-primary/10 shine-effect animate-fade-in">
               <Sparkles className="h-4 w-4 text-primary animate-pulse" />
-              <span className="text-sm font-medium text-primary">Open Source • Hacktoberfest 2025</span>
+              <span className="text-sm font-medium text-primary">
+                Open Source • Hacktoberfest 2025
+              </span>
             </div>
 
             {/* Main Heading */}
@@ -76,26 +100,48 @@ const Index = () => {
             </h1>
 
             {/* Description */}
-            <p className="text-lg sm:text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed px-4 animate-fade-up" style={{ animationDelay: '0.1s' }}>
-              Beautiful, accessible, and developer-friendly React components built with{" "}
+            <p
+              className="text-lg sm:text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed px-4 animate-fade-up"
+              style={{ animationDelay: "0.1s" }}
+            >
+              Beautiful, accessible, and developer-friendly React components
+              built with{" "}
               <span className="text-foreground font-semibold">shadcn/ui</span>.
               <br className="hidden sm:block" />
               Copy, paste, and customize to build amazing UIs.
             </p>
 
             {/* CTA Buttons */}
-            <div className="flex items-center justify-center gap-4 flex-wrap px-4 animate-fade-up" style={{ animationDelay: '0.2s' }}>
-              <Link href="https://github.com/fahimahammed/DevUI" target="_blank" rel="noopener noreferrer">
-                <Button size="lg" className="bg-primary hover:bg-primary/90 transition-all duration-300 focus-ring shine-effect shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/30 hover:scale-105">
+            <div
+              className="flex items-center justify-center gap-4 flex-wrap px-4 animate-fade-up"
+              style={{ animationDelay: "0.2s" }}
+            >
+              <Link
+                href="https://github.com/fahimahammed/DevUI"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Button
+                  size="lg"
+                  className="bg-primary hover:bg-primary/90 transition-all duration-300 focus-ring shine-effect shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/30 hover:scale-105"
+                >
                   <Github className="mr-2 h-5 w-5" />
                   Star on GitHub
                 </Button>
               </Link>
-              <Button size="lg" variant="outline" className="border-border hover:bg-accent/10 hover:border-accent/50 transition-all duration-300 focus-ring backdrop-blur-sm hover:scale-105">
-                Browse Components
+              <Button
+                size="lg"
+                variant="outline"
+                className="border-border hover:bg-accent/10 hover:border-accent/50 transition-all duration-300 focus-ring backdrop-blur-sm hover:scale-105"
+              >
+                <a href="#component-categories">Browse Components</a>
               </Button>
               <Link href="/about">
-                <Button size="lg" variant="ghost" className="text-foreground font-semibold hover:bg-primary/10 transition-all duration-300 focus-ring">
+                <Button
+                  size="lg"
+                  variant="ghost"
+                  className="text-foreground font-semibold hover:bg-primary/10 transition-all duration-300 focus-ring"
+                >
                   About Us
                 </Button>
               </Link>
@@ -141,9 +187,6 @@ const Index = () => {
                 </div>
               </div>
             </section>
-
-
-
           </div>
         </div>
 
@@ -154,7 +197,6 @@ const Index = () => {
       {/* Search & Filters - Engaging Animated Search */}
       <section className="container mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-16">
         <div className="max-w-5xl mx-auto space-y-6">
-
           {/* Search Bar */}
           <div className="relative group">
             {/* Animated Glow Background */}
@@ -162,9 +204,7 @@ const Index = () => {
 
             <div className="relative">
               {/* Search Icon */}
-              <Search
-                className="absolute left-4 top-1/2 -translate-y-1/2 h-6 w-6 text-primary pointer-events-none"
-              />
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-6 w-6 text-primary pointer-events-none" />
 
               {/* Input Field */}
               <Input
@@ -192,10 +232,13 @@ const Index = () => {
           <div className="flex items-center justify-between flex-wrap gap-4">
             <div className="flex items-center gap-3">
               <Filter className="h-5 w-5 text-primary animate-fade-in" />
-              <span className="text-base font-semibold text-foreground animate-fade-in">Filter by Category</span>
+              <span className="text-base font-semibold text-foreground animate-fade-in">
+                Filter by Category
+              </span>
               {hasActiveFilters && (
                 <span className="text-sm text-muted-foreground ml-2 animate-fade-in">
-                  · {filteredComponents.length} {filteredComponents.length === 1 ? "result" : "results"}
+                  · {filteredComponents.length}{" "}
+                  {filteredComponents.length === 1 ? "result" : "results"}
                 </span>
               )}
             </div>
@@ -213,7 +256,7 @@ const Index = () => {
           </div>
 
           {/* Category Badges */}
-          <div className="flex flex-wrap gap-3">
+          <div className="flex flex-wrap gap-3" id="component-categories">
             <Badge
               variant={selectedCategory === null ? "default" : "outline"}
               className="cursor-pointer transition-transform duration-200 hover:scale-105 text-sm sm:text-base px-4 py-2 rounded-full animate-fade-in"
@@ -234,7 +277,6 @@ const Index = () => {
           </div>
         </div>
       </section>
-
 
       {/* Components Grid - Masonry Layout */}
       <section className="container mx-auto px-4 sm:px-6 lg:px-8 pb-20 sm:pb-24 lg:pb-32">
@@ -278,7 +320,9 @@ const Index = () => {
                 <Search className="h-10 w-10 text-muted-foreground" />
               </div>
               <div className="space-y-3">
-                <h3 className="text-xl font-semibold text-foreground">No components found</h3>
+                <h3 className="text-xl font-semibold text-foreground">
+                  No components found
+                </h3>
                 <p className="text-muted-foreground max-w-md mx-auto leading-relaxed">
                   {searchQuery
                     ? `No results for "${searchQuery}". Try adjusting your search or filters.`
@@ -307,15 +351,24 @@ const Index = () => {
               <div className="flex flex-col items-center md:items-start gap-3">
                 <div className="flex items-center gap-2">
                   <Code2 className="h-5 w-5 text-primary" />
-                  <span className="text-sm font-semibold gradient-text">DevUI</span>
+                  <span className="text-sm font-semibold gradient-text">
+                    DevUI
+                  </span>
                 </div>
                 <p className="text-sm text-muted-foreground text-center md:text-left">
-                  Built with ❤️ for <span className="text-foreground font-medium">Hacktoberfest 2025</span>
+                  Built with ❤️ for{" "}
+                  <span className="text-foreground font-medium">
+                    Hacktoberfest 2025
+                  </span>
                 </p>
               </div>
 
               <div className="flex items-center gap-3">
-                <Link href="https://github.com/fahimahammed/DevUI" target="_blank" rel="noopener noreferrer">
+                <Link
+                  href="https://github.com/fahimahammed/DevUI"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   <Button
                     variant="ghost"
                     size="icon"
@@ -325,7 +378,11 @@ const Index = () => {
                     <Github className="h-5 w-5" />
                   </Button>
                 </Link>
-                <Link href="https://github.com/fahimahammed" target="_blank" rel="noopener noreferrer">
+                <Link
+                  href="https://github.com/fahimahammed"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   <Button
                     variant="ghost"
                     size="sm"
@@ -340,7 +397,8 @@ const Index = () => {
 
             <div className="mt-8 pt-6 border-t border-border/50 text-center">
               <p className="text-xs text-muted-foreground">
-                © {new Date().getFullYear()} DevUI. Open source under MIT License.
+                © {new Date().getFullYear()} DevUI. Open source under MIT
+                License.
               </p>
             </div>
           </div>

@@ -14,7 +14,7 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-  AlertDialogTrigger
+  AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import {
   Select,
@@ -39,7 +39,14 @@ import ChatBox from "@/components/ui/chat";
 import { toast } from "sonner";
 import { SidebarDemo } from "@/components/SidebarDemo";
 import Link from "next/link";
-
+import {
+  Menubar,
+  MenubarContent,
+  MenubarItem,
+  MenubarMenu,
+  MenubarSeparator,
+  MenubarTrigger,
+} from "@/components/ui/menubar";
 
 export const componentsData = [
   {
@@ -66,12 +73,13 @@ export function ButtonDemo() {
       <Button variant="outline">Outline</Button>
     </div>
   )
-}`
+}`,
   },
   {
     id: "input",
     title: "Input",
-    description: "Displays a form input field or a component that looks like an input field.",
+    description:
+      "Displays a form input field or a component that looks like an input field.",
     category: "Form",
     preview: (
       <div className="w-full max-w-sm space-y-4">
@@ -88,7 +96,7 @@ export function InputDemo() {
       <Input placeholder="Password" type="password" />
     </div>
   )
-}`
+}`,
   },
   {
     id: "badge",
@@ -114,17 +122,20 @@ export function BadgeDemo() {
       <Badge variant="outline">Outline</Badge>
     </div>
   )
-}`
+}`,
   },
   {
     id: "switch",
     title: "Switch",
-    description: "A control that allows the user to toggle between checked and not checked.",
+    description:
+      "A control that allows the user to toggle between checked and not checked.",
     category: "Form",
     preview: (
       <div className="flex items-center space-x-2">
         <Switch id="airplane-mode" />
-        <label htmlFor="airplane-mode" className="text-sm">Airplane Mode</label>
+        <label htmlFor="airplane-mode" className="text-sm">
+          Airplane Mode
+        </label>
       </div>
     ),
     code: `import { Switch } from "@/components/ui/switch"
@@ -136,12 +147,13 @@ export function SwitchDemo() {
       <label htmlFor="airplane-mode">Airplane Mode</label>
     </div>
   )
-}`
+}`,
   },
   {
     id: "slider",
     title: "Slider",
-    description: "An input where the user selects a value from within a given range.",
+    description:
+      "An input where the user selects a value from within a given range.",
     category: "Form",
     preview: (
       <div className="w-full max-w-sm">
@@ -154,17 +166,20 @@ export function SliderDemo() {
   return (
     <Slider defaultValue={[50]} max={100} step={1} />
   )
-}`
+}`,
   },
   {
     id: "checkbox",
     title: "Checkbox",
-    description: "A control that allows the user to toggle between checked and not checked.",
+    description:
+      "A control that allows the user to toggle between checked and not checked.",
     category: "Form",
     preview: (
       <div className="flex items-center space-x-2">
         <Checkbox id="terms" />
-        <label htmlFor="terms" className="text-sm">Accept terms and conditions</label>
+        <label htmlFor="terms" className="text-sm">
+          Accept terms and conditions
+        </label>
       </div>
     ),
     code: `import { Checkbox } from "@/components/ui/checkbox"
@@ -176,12 +191,13 @@ export function CheckboxDemo() {
       <label htmlFor="terms">Accept terms and conditions</label>
     </div>
   )
-}`
+}`,
   },
   {
     id: "alert-dialog",
     title: "Alert Dialog",
-    description: "A modal dialog that interrupts the user with important content.",
+    description:
+      "A modal dialog that interrupts the user with important content.",
     category: "Overlay",
     preview: (
       <AlertDialog>
@@ -192,7 +208,8 @@ export function CheckboxDemo() {
           <AlertDialogHeader>
             <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
             <AlertDialogDescription>
-              This action cannot be undone. This will permanently delete your account.
+              This action cannot be undone. This will permanently delete your
+              account.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
@@ -234,12 +251,13 @@ export function AlertDialogDemo() {
       </AlertDialogContent>
     </AlertDialog>
   )
-}`
+}`,
   },
   {
     id: "calendar",
     title: "Calendar",
-    description: "A date field component that allows users to enter and edit date.",
+    description:
+      "A date field component that allows users to enter and edit date.",
     category: "Form",
     preview: (
       <div className="rounded-lg border border-border p-4 bg-card">
@@ -260,25 +278,48 @@ export function CalendarDemo() {
       className="rounded-md border"
     />
   )
-}`
-  }, {
+}`,
+  },
+  {
     id: "radio-group",
     title: "Radio Group",
-    description: "A group of radio buttons that allows the user to select one option from a set.",
+    description:
+      "A group of radio buttons that allows the user to select one option from a set.",
     category: "Form",
     preview: (
       <div className="flex flex-col space-y-2">
         <div className="flex items-center space-x-2">
-          <input type="radio" id="option1" name="options" className="h-4 w-4 text-primary" />
-          <label htmlFor="option1" className="text-sm">Option 1</label>
+          <input
+            type="radio"
+            id="option1"
+            name="options"
+            className="h-4 w-4 text-primary"
+          />
+          <label htmlFor="option1" className="text-sm">
+            Option 1
+          </label>
         </div>
         <div className="flex items-center space-x-2">
-          <input type="radio" id="option2" name="options" className="h-4 w-4 text-primary" />
-          <label htmlFor="option2" className="text-sm">Option 2</label>
+          <input
+            type="radio"
+            id="option2"
+            name="options"
+            className="h-4 w-4 text-primary"
+          />
+          <label htmlFor="option2" className="text-sm">
+            Option 2
+          </label>
         </div>
         <div className="flex items-center space-x-2">
-          <input type="radio" id="option3" name="options" className="h-4 w-4 text-primary" />
-          <label htmlFor="option3" className="text-sm">Option 3</label>
+          <input
+            type="radio"
+            id="option3"
+            name="options"
+            className="h-4 w-4 text-primary"
+          />
+          <label htmlFor="option3" className="text-sm">
+            Option 3
+          </label>
         </div>
       </div>
     ),
@@ -299,12 +340,13 @@ export function CalendarDemo() {
       </div>
     </div>
   )
-}`
+}`,
   },
   {
     id: "select",
     title: "Select",
-    description: "Fully accessible dropdown with keyboard navigation, dark theme support, and smooth animations. Navigate with arrows, search by typing.",
+    description:
+      "Fully accessible dropdown with keyboard navigation, dark theme support, and smooth animations. Navigate with arrows, search by typing.",
     category: "Form",
     preview: (
       <div className="w-full max-w-sm pointer-events-auto">
@@ -353,12 +395,13 @@ export function SelectDemo() {
 // - Arrow Up/Down: Navigate options
 // - Home/End: Jump to first/last option
 // - Escape: Close dropdown
-// - Type to search: Quick filter options`
+// - Type to search: Quick filter options`,
   },
   {
     id: "dialog",
     title: "Dialog",
-    description: "A modal dialog with smooth animations, dark theme support, and responsive design. Fully accessible with keyboard navigation.",
+    description:
+      "A modal dialog with smooth animations, dark theme support, and responsive design. Fully accessible with keyboard navigation.",
     category: "Overlay",
     preview: (
       <Dialog>
@@ -369,12 +412,15 @@ export function SelectDemo() {
           <DialogHeader>
             <DialogTitle>Dialog Component</DialogTitle>
             <DialogDescription>
-              This is a beautiful dialog with smooth animations and dark theme support. Press Escape or click the close button to dismiss.
+              This is a beautiful dialog with smooth animations and dark theme
+              support. Press Escape or click the close button to dismiss.
             </DialogDescription>
           </DialogHeader>
           <div className="py-4">
             <p className="text-sm text-muted-foreground">
-              Dialogs are perfect for displaying important information, confirmations, or forms that require user attention. This component features:
+              Dialogs are perfect for displaying important information,
+              confirmations, or forms that require user attention. This
+              component features:
             </p>
             <ul className="mt-4 space-y-2 text-sm">
               <li className="flex items-start gap-2">
@@ -397,7 +443,9 @@ export function SelectDemo() {
           </div>
           <DialogFooter>
             <DialogClose asChild>
-              <Button type="button" variant="outline">Close Dialog</Button>
+              <Button type="button" variant="outline">
+                Close Dialog
+              </Button>
             </DialogClose>
           </DialogFooter>
         </DialogContent>
@@ -447,12 +495,13 @@ export function DialogDemo() {
       </DialogContent>
     </Dialog>
   )
-}`
+}`,
   },
   {
     id: "progress",
     title: "Progress",
-    description: "Displays an indicator showing the completion progress of a task, typically displayed as a progress bar.",
+    description:
+      "Displays an indicator showing the completion progress of a task, typically displayed as a progress bar.",
     category: "Display",
     preview: (
       <div className="w-full max-w-sm space-y-4">
@@ -507,17 +556,20 @@ export function ProgressDemo() {
       </div>
     </div>
   )
-}`
+}`,
   },
   {
     id: "textarea",
     title: "Textarea",
-    description: "A multi-line text input component for longer text content like comments, descriptions, or messages.",
+    description:
+      "A multi-line text input component for longer text content like comments, descriptions, or messages.",
     category: "Form",
     preview: (
       <div className="w-full max-w-sm space-y-4">
         <div className="space-y-2">
-          <label htmlFor="message" className="text-sm font-medium">Message</label>
+          <label htmlFor="message" className="text-sm font-medium">
+            Message
+          </label>
           <Textarea
             id="message"
             placeholder="Type your message here..."
@@ -525,7 +577,9 @@ export function ProgressDemo() {
           />
         </div>
         <div className="space-y-2">
-          <label htmlFor="feedback" className="text-sm font-medium">Feedback</label>
+          <label htmlFor="feedback" className="text-sm font-medium">
+            Feedback
+          </label>
           <Textarea
             id="feedback"
             placeholder="Share your feedback..."
@@ -557,39 +611,77 @@ export function TextareaDemo() {
       </div>
     </div>
   )
-}`
-
+}`,
   },
   {
     id: "chat",
     title: "Chat",
-    description: "Interactive chat demo with animations, theming and code snippet handling.",
+    description:
+      "Interactive chat demo with animations, theming and code snippet handling.",
     category: "Widgets",
-    preview: <ChatBox header={{ title: "AI Assistant", subtitle: "Powered by DevUI " }} />,
+    preview: (
+      <ChatBox
+        header={{ title: "AI Assistant", subtitle: "Powered by DevUI " }}
+      />
+    ),
     code: `import ChatBox from "@/components/ui/chat"
 
   export function ChatDemo() {
     return <ChatBox header={{ title: "AI Assistant", subtitle: "Powered by DevUI " }} />
-  }`
+  }`,
   },
   {
     id: "toast",
     title: "Toast",
-    description: "A brief message that appears temporarily to inform users of an action or event.",
+    description:
+      "A brief message that appears temporarily to inform users of an action or event.",
     category: "Feedback",
-    preview: (<>
-      <div className="grid grid-cols-2 gap-2">
-
-        <Button variant="outline" onClick={() => toast('This is a toast notification!')}>Show Toast</Button>
-        <Button variant="outline" onClick={() => toast('This is a toast notification!', {
-          description: 'Here is a description for more context.'
-        })}>Toast with Description</Button>
-        <Button variant="outline" onClick={() => toast.success('This is a success toast!')}>Success Toast</Button>
-        <Button variant="outline" onClick={() => toast.error('This is an error toast!')}>Error Toast</Button>
-        <Button variant="outline" onClick={() => toast.warning('This is a warning toast!')}>Warning Toast</Button>
-        <Button variant="outline" onClick={() => toast.info('This is an info toast!')}>Info Toast</Button>
-      </div>
-    </>),
+    preview: (
+      <>
+        <div className="grid grid-cols-2 gap-2">
+          <Button
+            variant="outline"
+            onClick={() => toast("This is a toast notification!")}
+          >
+            Show Toast
+          </Button>
+          <Button
+            variant="outline"
+            onClick={() =>
+              toast("This is a toast notification!", {
+                description: "Here is a description for more context.",
+              })
+            }
+          >
+            Toast with Description
+          </Button>
+          <Button
+            variant="outline"
+            onClick={() => toast.success("This is a success toast!")}
+          >
+            Success Toast
+          </Button>
+          <Button
+            variant="outline"
+            onClick={() => toast.error("This is an error toast!")}
+          >
+            Error Toast
+          </Button>
+          <Button
+            variant="outline"
+            onClick={() => toast.warning("This is a warning toast!")}
+          >
+            Warning Toast
+          </Button>
+          <Button
+            variant="outline"
+            onClick={() => toast.info("This is an info toast!")}
+          >
+            Info Toast
+          </Button>
+        </div>
+      </>
+    ),
     code: `import { toast, Toaster } from "sonner"
 import { Button } from "@/components/ui/button";
 
@@ -602,11 +694,13 @@ export function ToastDemo() {
         </Button>
         <Toaster position="bottom-right" richColors closeButton />
     </div>
-}`},
+}`,
+  },
   {
     id: "sidebar",
     title: "Sidebar Navigation",
-    description: "A responsive sidebar navigation with expand/collapse states, nested menu items, and smooth animations. Features hamburger menu for mobile.",
+    description:
+      "A responsive sidebar navigation with expand/collapse states, nested menu items, and smooth animations. Features hamburger menu for mobile.",
     category: "Navigation",
     preview: (
       <div className="w-full h-64 border rounded-lg overflow-hidden bg-background">
@@ -683,7 +777,75 @@ export function SidebarDemo() {
       </div>
     </SidebarProvider>
   );
-}`
-  }
+}`,
+  },
+  {
+    id: "menubar",
+    title: "MenuBar",
+    description: "A horizontal menu bar for navigation or grouped actions.",
+    category: "Navigation",
+    preview: (
+      <div className="flex justify-center">
+        <Menubar>
+          <MenubarMenu>
+            <MenubarTrigger>File</MenubarTrigger>
+            <MenubarContent>
+              <MenubarItem>New Tab</MenubarItem>
+              <MenubarItem>Open...</MenubarItem>
+              <MenubarItem disabled>Save As...</MenubarItem>
+              <MenubarSeparator />
+              <MenubarItem>Exit</MenubarItem>
+            </MenubarContent>
+          </MenubarMenu>
+          <MenubarMenu>
+            <MenubarTrigger>Edit</MenubarTrigger>
+            <MenubarContent>
+              <MenubarItem>Undo</MenubarItem>
+              <MenubarItem>Redo</MenubarItem>
+              <MenubarSeparator />
+              <MenubarItem>Cut</MenubarItem>
+              <MenubarItem>Copy</MenubarItem>
+              <MenubarItem>Paste</MenubarItem>
+            </MenubarContent>
+          </MenubarMenu>
+        </Menubar>
+      </div>
+    ),
+    code: `import {
+  Menubar,
+  MenubarMenu,
+  MenubarTrigger,
+  MenubarContent,
+  MenubarItem,
+  MenubarSeparator,
+} from "@/components/ui/menubar"
 
-]
+export function MenuBarDemo() {
+  return (
+    <Menubar>
+      <MenubarMenu>
+        <MenubarTrigger>File</MenubarTrigger>
+        <MenubarContent>
+          <MenubarItem>New Tab</MenubarItem>
+          <MenubarItem>Open...</MenubarItem>
+          <MenubarItem disabled>Save As...</MenubarItem>
+          <MenubarSeparator />
+          <MenubarItem>Exit</MenubarItem>
+        </MenubarContent>
+      </MenubarMenu>
+      <MenubarMenu>
+        <MenubarTrigger>Edit</MenubarTrigger>
+        <MenubarContent>
+          <MenubarItem>Undo</MenubarItem>
+          <MenubarItem>Redo</MenubarItem>
+          <MenubarSeparator />
+          <MenubarItem>Cut</MenubarItem>
+          <MenubarItem>Copy</MenubarItem>
+          <MenubarItem>Paste</MenubarItem>
+        </MenubarContent>
+      </MenubarMenu>
+    </Menubar>
+  )
+}`,
+  },
+];
