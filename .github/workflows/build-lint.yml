@@ -46,8 +46,10 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const buildStatus = '${{ needs.build-and-test.outputs.build-status }}';
-            const lintStatus = '${{ needs.build-and-test.outputs.lint-status }}';
+            const buildOutcome = '${{ needs.build-and-test.outputs.build-status }}';
+            const lintOutcome = '${{ needs.build-and-test.outputs.lint-status }}';
+            const buildStatus = buildOutcome === 'success' ? '✅ Success' : '❌ Failed';
+            const lintStatus = lintOutcome === 'success' ? '✅ Success' : '❌ Failed';
             const body = `
             | Check | Status |
             |-------|--------|
