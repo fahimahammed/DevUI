@@ -207,13 +207,20 @@ const Index = () => {
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-6 w-6 text-primary pointer-events-none" />
 
               {/* Input Field */}
+              <div className="relative">
+
               <Input
                 type="search"
                 placeholder="Search components by name, category, or description..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-14 pr-12 h-16 text-lg sm:text-xl font-semibold bg-card/60 dark:bg-card/30 backdrop-blur-md border border-transparent focus:border-transparent transition-all duration-300 rounded-xl shadow-md hover:shadow-lg focus:shadow-lg focus:shadow-primary/20 focus-ring animate-fade-in"
-              />
+                className="pl-14 lg:text-lg font-normal pr-12 h-16 bg-card/60 dark:bg-card/30 backdrop-blur-md border  transition-all duration-300 rounded-xl hover:shadow-lg  focus:shadow-lg focus:shadow-primary/20 focus-ring animate-fade-in"
+              >
+                
+
+              </Input>
+                <Search className="top-1/3 left-5 absolute text-zinc-500"/>
+                </div>
 
               {/* Clear Button */}
               {searchQuery && (
@@ -342,6 +349,21 @@ const Index = () => {
           )}
         </div>
       </section>
+
+      <section className="flex justify-evenly items-center">
+
+        <h1 className="text-5xl sm:text-6xl md:text-5xl lg:text-7xl min-h-[30vh] font-bold tracking-tight animate-fade-up px-4 mb-10 w-1/2">
+              <span className="gradient-text">Wanna Build More</span>
+              <br />
+              <span className="text-foreground">Components? </span>
+        </h1>
+        <a href="" className="bg-zinc-900 px-6 rotate-[13deg] py-2 rounded-full -translate-9">
+        <div className=" text-2xl text-white">
+          Contribute it Here
+        </div>
+        </a>
+      </section>
+
 
       {/* Footer - Clean & Modern */}
       <footer className="border-t border-border/50 bg-card/30 backdrop-blur-sm">
