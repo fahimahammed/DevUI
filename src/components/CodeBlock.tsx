@@ -48,9 +48,9 @@ export const CodeBlock = ({
   };
 
   return (
-    <div className="relative rounded-xl overflow-hidden border border-border bg-card/50 backdrop-blur-sm shadow-sm hover:shadow-md transition-shadow">
+    <div className="relative rounded-xl overflow-hidden border border-border bg-card/50 backdrop-blur-sm  hover:shadow-md transition-shadow">
       {/* macOS-style Header with Traffic Lights */}
-      <div className="flex items-center justify-between px-4 py-2.5 border-b border-border bg-secondary/80 dark:bg-secondary/50">
+      <div className="flex items-center justify-between px-4 py-2.5 border-b border-border bg-zinc-200 dark:bg-zinc-800">
         <div className="flex items-center gap-3">
           {/* macOS Traffic Light Dots */}
           <div className="flex items-center gap-1.5">
@@ -59,7 +59,7 @@ export const CodeBlock = ({
             <div className="w-3 h-3 rounded-full bg-green-500 hover:bg-green-600 transition-colors" />
           </div>
           {/* Language Label */}
-          <span className="text-xs sm:text-sm font-mono text-muted-foreground uppercase tracking-wider font-semibold">
+          <span className="text-xs font-mono text-muted-foreground uppercase tracking-wider font-semibold">
             {language}
           </span>
         </div>
