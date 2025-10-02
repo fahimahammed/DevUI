@@ -1,4 +1,4 @@
-name: Deploy Preview to Vercel (v2)
+name: Deploy Preview to Vercel (v3)
 
 on:
   pull_request:
@@ -8,10 +8,23 @@ jobs:
   vercel-preview:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v3
 
       - name: Install Vercel CLI
         run: npm install --global vercel@latest pnpm
+
+      # 🔎 Debug (optional) - remove later once secrets are verified
+      - name: Check Secrets
+        run: |
+          if [ -z "$VERCEL_TOKEN" ]; then echo "TOKEN missing"; else echo "TOKEN ok"; fi
+          if [ -z "$VERCEL_ORG_ID" ]; then echo "ORG_ID missing"; else echo "ORG_ID ok"; fi
+          if [ -z "$VERCEL_PROJECT_ID" ]; then echo "PROJECT_ID missing"; else echo "PROJECT_ID ok"; fi
+
+        env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
 
       - name: Pull Vercel Environment Information
         run: vercel pull --yes --environment=preview --token=${{ secrets.VERCEL_TOKEN }}
@@ -40,9 +53,18 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const previewUrl = process.env.preview_url;
-            github.rest.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: `🚀 Preview deployed: [${previewUrl}](${previewUrl})`
-            })
+            if (previewUrl) {
+              github.rest.issues.createComment({
+                issue_number: context.issue.number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                body: `🚀 Preview deployed: [${previewUrl}](${previewUrl})`
+              });
+            } else {
+              github.rest.issues.createComment({
+                issue_number: context.issue.number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                body: "⚠️ Preview deployment failed. Please check workflow logs."
+              });
+            }
