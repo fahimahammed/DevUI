@@ -18,12 +18,32 @@ import Link from "next/link";
 
 const Index = () => {
   const [searchQuery, setSearchQuery] = useState("");
+  const [debouncedQuery, setDebouncedQuery] = useState("");
+
+  useEffect(() => {
+    const handle = setTimeout(() => setDebouncedQuery(searchQuery), 250);
+    return () => clearTimeout(handle);
+  }, [searchQuery]);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
-  // Get all unique categories with counts
+  // First apply search-only filtering (case-insensitive)
+  const searchFilteredComponents = useMemo(() => {
+    const searchLower = debouncedQuery.toLowerCase().trim();
+    if (!searchLower) return componentsData;
+    return componentsData.filter((component) => {
+      return (
+        component.title.toLowerCase().includes(searchLower) ||
+        component.description.toLowerCase().includes(searchLower) ||
+        component.category?.toLowerCase().includes(searchLower) ||
+        component.id.toLowerCase().includes(searchLower)
+      );
+    });
+  }, [debouncedQuery]);
+
+  // Get categories with counts based on current search results
   const categories = useMemo(() => {
     const categoryMap = new Map<string, number>();
-    componentsData.forEach((component) => {
+    searchFilteredComponents.forEach((component) => {
       if (component.category) {
         categoryMap.set(
           component.category,
@@ -35,27 +55,16 @@ const Index = () => {
       name,
       count,
     }));
-  }, []);
+  }, [searchFilteredComponents]);
 
   // Enhanced filtering with better search
   const filteredComponents = useMemo(() => {
-    return componentsData.filter((component) => {
-      const searchLower = searchQuery.toLowerCase().trim();
-
-      // Enhanced search: title, description, category, and id
-      const matchesSearch =
-        !searchLower ||
-        component.title.toLowerCase().includes(searchLower) ||
-        component.description.toLowerCase().includes(searchLower) ||
-        component.category?.toLowerCase().includes(searchLower) ||
-        component.id.toLowerCase().includes(searchLower);
-
+    return searchFilteredComponents.filter((component) => {
       const matchesCategory =
         !selectedCategory || component.category === selectedCategory;
-
-      return matchesSearch && matchesCategory;
+      return matchesCategory;
     });
-  }, [searchQuery, selectedCategory]);
+  }, [searchFilteredComponents, selectedCategory]);
 
   // Clear all filters
   const clearFilters = () => {
@@ -208,7 +217,7 @@ const Index = () => {
 
               {/* Input Field */}
               <Input
-                type="search"
+                type="text"
                 placeholder="Search components by name, category, or description..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
@@ -262,7 +271,7 @@ const Index = () => {
               className="cursor-pointer transition-transform duration-200 hover:scale-105 text-sm sm:text-base px-4 py-2 rounded-full animate-fade-in"
               onClick={() => setSelectedCategory(null)}
             >
-              All ({componentsData.length})
+              All ({searchFilteredComponents.length})
             </Badge>
             {categories.map(({ name, count }) => (
               <Badge
@@ -293,7 +302,7 @@ const Index = () => {
                       className="animate-fade-in"
                       style={{ animationDelay: `${index * 0.05}s` }}
                     >
-                      <ComponentCard {...component} />
+                      <ComponentCard {...component} highlightQuery={debouncedQuery} />
                     </div>
                   );
                 })}
@@ -308,7 +317,7 @@ const Index = () => {
                       className="animate-fade-in"
                       style={{ animationDelay: `${index * 0.05}s` }}
                     >
-                      <ComponentCard {...component} />
+                      <ComponentCard {...component} highlightQuery={debouncedQuery} />
                     </div>
                   );
                 })}

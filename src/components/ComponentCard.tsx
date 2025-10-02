@@ -22,6 +22,7 @@ interface ComponentCardProps {
     propsData?: PropData[];
     usageNotes?: string;
     installCommand?: string;
+    highlightQuery?: string;
 }
 
 export const ComponentCard = ({
@@ -32,7 +33,8 @@ export const ComponentCard = ({
     category,
     propsData,
     usageNotes,
-    installCommand
+    installCommand,
+    highlightQuery
 }: ComponentCardProps) => {
     const [activeTab, setActiveTab] = useState("preview");
     const [showDetails, setShowDetails] = useState(false);
@@ -45,7 +47,21 @@ export const ComponentCard = ({
                     <div className="flex-1">
                         <div className="flex flex-wrap items-center gap-2 mb-2">
                             <h3 className="text-xl sm:text-2xl font-bold text-foreground">
-                                {title}
+                                {highlightQuery ? (
+                                    <>
+                                        {title.split(new RegExp(`(${highlightQuery})`, "ig")).map((part, idx) => (
+                                            part.toLowerCase() === highlightQuery.toLowerCase() ? (
+                                                <mark key={idx} className="bg-primary/20 text-primary rounded px-0.5">
+                                                    {part}
+                                                </mark>
+                                            ) : (
+                                                <span key={idx}>{part}</span>
+                                            )
+                                        ))}
+                                    </>
+                                ) : (
+                                    title
+                                )}
                             </h3>
                             {category && (
                                 <span className="inline-flex items-center px-2.5 py-0.5 text-xs font-semibold rounded-full bg-primary/10 text-primary border border-primary/20">
