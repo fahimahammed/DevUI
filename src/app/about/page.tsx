@@ -12,7 +12,7 @@ export default function AboutPage() {
           About DevUI
         </h1>
         <p className="text-xl md:text-2xl text-gray-300 mb-8 font-medium max-w-2xl mx-auto">
-          DevUI Components is a modern, open-source component library showcase built with shadcn/ui. Explore, copy, and reuse beautifully designed components in your React or Next.js projects. GitHub-ready and perfect for Hacktoberfest 2025! 🚀
+          DevUI is a modern, open-source component library showcase built with shadcn/ui. Explore, copy, and reuse beautifully designed components in your React or Next.js projects. GitHub-ready and perfect for Hacktoberfest 2025! 🚀
         </p>
       </section>
       {/* Team/Project Purpose Section */}
