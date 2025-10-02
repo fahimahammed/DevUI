@@ -32,10 +32,10 @@ jobs:
         id: build
         run: npm run build
 
-      # Run lint
+      # Run lint (allow failure to continue workflow)
       - name: Run lint
         id: lint
-        run: npm run lint || true   # prevent workflow from failing so we can report status
+        run: npm run lint || true
 
   comment-pr:
     needs: build-and-test
@@ -46,19 +46,27 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const buildOutcome = '${{ needs.build-and-test.outputs.build-status }}';
-            const lintOutcome = '${{ needs.build-and-test.outputs.lint-status }}';
-            const buildStatus = buildOutcome === 'success' ? '✅ Success' : '❌ Failed';
-            const lintStatus = lintOutcome === 'success' ? '✅ Success' : '❌ Failed';
-            const body = `
-            | Check | Status |
-            |-------|--------|
-            | Build | ${buildStatus} |
-            | Lint  | ${lintStatus} |
-            `;
-            await github.rest.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body
-            });
+            // Only comment if the PR is from this repository
+            if (context.payload.pull_request.head.repo.full_name === context.repo.repo) {
+              const buildOutcome = '${{ needs.build-and-test.outputs.build-status }}';
+              const lintOutcome = '${{ needs.build-and-test.outputs.lint-status }}';
+
+              const buildStatus = buildOutcome === 'success' ? '✅ Success' : '❌ Failed';
+              const lintStatus = lintOutcome === 'success' ? '✅ Success' : '❌ Failed';
+
+              const body = `
+                    | Check | Status |
+                    |-------|--------|
+                    | Build | ${buildStatus} |
+                    | Lint  | ${lintStatus} |
+                    `;
+
+              await github.rest.issues.createComment({
+                issue_number: context.issue.number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                body
+              });
+            } else {
+              console.log('Skipping comment: PR is from a forked repository.');
+            }
