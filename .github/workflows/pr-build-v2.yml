@@ -1,4 +1,4 @@
-name: PR Build & Badge
+name: PR Build & Badge (v2)
 env:
   VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
 on:
