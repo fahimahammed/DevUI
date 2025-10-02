@@ -1,10 +1,10 @@
 "use client"
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { ComponentCard } from "@/components/ComponentCard";
 import { componentsData } from "@/data/components";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
-import { Github, Search, Sparkles } from "lucide-react";
+import { Github, Search, Sparkles, Filter, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
@@ -12,14 +12,42 @@ const Index = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
-  const categories = Array.from(new Set(componentsData.map(c => c.category).filter(Boolean)));
+  // Get all unique categories with counts
+  const categories = useMemo(() => {
+    const categoryMap = new Map<string, number>();
+    componentsData.forEach(component => {
+      if (component.category) {
+        categoryMap.set(component.category, (categoryMap.get(component.category) || 0) + 1);
+      }
+    });
+    return Array.from(categoryMap.entries()).map(([name, count]) => ({ name, count }));
+  }, []);
 
-  const filteredComponents = componentsData.filter(component => {
-    const matchesSearch = component.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      component.description.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesCategory = !selectedCategory || component.category === selectedCategory;
-    return matchesSearch && matchesCategory;
-  });
+  // Enhanced filtering with better search
+  const filteredComponents = useMemo(() => {
+    return componentsData.filter(component => {
+      const searchLower = searchQuery.toLowerCase().trim();
+      
+      // Enhanced search: title, description, category, and id
+      const matchesSearch = !searchLower || 
+        component.title.toLowerCase().includes(searchLower) ||
+        component.description.toLowerCase().includes(searchLower) ||
+        component.category?.toLowerCase().includes(searchLower) ||
+        component.id.toLowerCase().includes(searchLower);
+      
+      const matchesCategory = !selectedCategory || component.category === selectedCategory;
+      
+      return matchesSearch && matchesCategory;
+    });
+  }, [searchQuery, selectedCategory]);
+
+  // Clear all filters
+  const clearFilters = () => {
+    setSearchQuery("");
+    setSelectedCategory(null);
+  };
+
+  const hasActiveFilters = searchQuery || selectedCategory;
 
   return (
     <div className="min-h-screen bg-background">
@@ -78,33 +106,68 @@ const Index = () => {
       {/* Search and Filters */}
       <section className="container mx-auto px-4 py-12">
         <div className="max-w-6xl mx-auto space-y-6">
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+          {/* Search Bar */}
+          <div className="relative group">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground group-focus-within:text-primary transition-colors" />
             <Input
               type="text"
-              placeholder="Search components..."
+              placeholder="Search by name, description, or category..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-10 h-12 bg-card/50 backdrop-blur-sm border-border"
+              className="pl-10 pr-10 h-12 bg-card/50 backdrop-blur-sm border-border hover:border-primary/50 focus:border-primary transition-colors dark:bg-card/30 dark:hover:bg-card/50"
             />
+            {searchQuery && (
+              <button
+                onClick={() => setSearchQuery("")}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+                aria-label="Clear search"
+              >
+                <X className="h-4 w-4" />
+              </button>
+            )}
           </div>
 
+          {/* Filter Header */}
+          <div className="flex items-center justify-between flex-wrap gap-4">
+            <div className="flex items-center gap-2">
+              <Filter className="h-4 w-4 text-muted-foreground" />
+              <span className="text-sm font-medium text-foreground dark:text-foreground">Filter by Category</span>
+              {hasActiveFilters && (
+                <Badge variant="secondary" className="ml-2">
+                  {filteredComponents.length} result{filteredComponents.length !== 1 ? 's' : ''}
+                </Badge>
+              )}
+            </div>
+            {hasActiveFilters && (
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={clearFilters}
+                className="h-8 text-xs hover:bg-destructive/10 hover:text-destructive dark:hover:bg-destructive/20"
+              >
+                <X className="h-3 w-3 mr-1" />
+                Clear Filters
+              </Button>
+            )}
+          </div>
+
+          {/* Category Badges */}
           <div className="flex flex-wrap gap-2">
             <Badge
               variant={selectedCategory === null ? "default" : "outline"}
-              className="cursor-pointer hover:bg-primary/80 transition-colors"
+              className="cursor-pointer hover:bg-primary/80 transition-all hover:scale-105 dark:hover:bg-primary/70 dark:border-border"
               onClick={() => setSelectedCategory(null)}
             >
-              All
+              All ({componentsData.length})
             </Badge>
-            {categories.map(category => (
+            {categories.map(({ name, count }) => (
               <Badge
-                key={category}
-                variant={selectedCategory === category ? "default" : "outline"}
-                className="cursor-pointer hover:bg-primary/80 transition-colors"
-                onClick={() => setSelectedCategory(category)}
+                key={name}
+                variant={selectedCategory === name ? "default" : "outline"}
+                className="cursor-pointer hover:bg-primary/80 transition-all hover:scale-105 dark:hover:bg-primary/70 dark:border-border"
+                onClick={() => setSelectedCategory(name)}
               >
-                {category}
+                {name} ({count})
               </Badge>
             ))}
           </div>
@@ -147,8 +210,27 @@ const Index = () => {
               </div>
             </div>
           ) : (
-            <div className="text-center py-12">
-              <p className="text-muted-foreground">No components found matching your search.</p>
+            <div className="text-center py-16 space-y-4">
+              <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-muted/50 dark:bg-muted/20 mb-4">
+                <Search className="h-8 w-8 text-muted-foreground" />
+              </div>
+              <div className="space-y-2">
+                <h3 className="text-lg font-semibold text-foreground dark:text-foreground">No components found</h3>
+                <p className="text-muted-foreground max-w-md mx-auto">
+                  {searchQuery 
+                    ? `No results for "${searchQuery}". Try adjusting your search or filters.`
+                    : "No components match the selected category."}
+                </p>
+              </div>
+              {hasActiveFilters && (
+                <Button
+                  variant="outline"
+                  onClick={clearFilters}
+                  className="mt-4"
+                >
+                  Clear All Filters
+                </Button>
+              )}
             </div>
           )}
         </div>
