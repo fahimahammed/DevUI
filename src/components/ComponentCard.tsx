@@ -1,3 +1,4 @@
+"use client"
 import { useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -39,7 +40,7 @@ export const ComponentCard = ({
 
             <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
                 <div className="px-4 sm:px-5 lg:px-6  border-border ">
-                    <TabsList className="bg-secondary/50 h-9  sm:h-10">
+                    <TabsList className="bg-zinc-100 h-9  sm:h-10">
                         <TabsTrigger value="preview" className="flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm px-2 sm:px-3">
                             <Eye className="h-3 w-3  sm:h-4 sm:w-4" />
                             <span className="hidden xs:inline">Preview</span>
