@@ -411,3 +411,8 @@ input[type="text"]:focus,
 input[type="search"]:focus {
   @apply shadow-sm shadow-primary/20;
 }
+
+:focus {
+  outline: 2px solid var(--color-primary-foreground); /* adapts to theme */
+  outline-offset: 2px;
+}
