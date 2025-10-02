@@ -100,24 +100,50 @@ const Index = () => {
                 </Button>
               </Link>
             </div>
+          {/* Stats Section */}
+<section className="relative z-10 mt-6 sm:mt-10">
+  <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="flex items-center justify-center flex-wrap gap-2 sm:gap-3 animate-fade-up">
+      {[
+        {
+          label: `${componentsData.length}+ Components`,
+          icon: <Code2 className="h-4 w-4 text-primary" />,
+          delay: "0s",
+        },
+        {
+          label: "TypeScript",
+          icon: (
+            <img
+              src="https://raw.githubusercontent.com/devicons/devicon/master/icons/typescript/typescript-original.svg"
+              alt="TypeScript"
+              className="h-4 w-4"
+            />
+          ),
+          delay: "0.15s",
+        },
+        {
+          label: "Responsive",
+          icon: <Users className="h-4 w-4 text-black" />,
+          delay: "0.3s",
+        },
+      ].map((stat, i) => (
+        <div
+          key={i}
+          className="flex items-center gap-1.5 px-2.5 py-1 rounded-full 
+                     bg-muted/30 dark:bg-muted/20 text-xs sm:text-sm 
+                     hover:bg-muted/50 transition-colors duration-200"
+          style={{ animationDelay: stat.delay }}
+        >
+          {stat.icon}
+          <span className="font-medium">{stat.label}</span>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
 
-            {/* Stats */}
-            <div className="flex items-center justify-center gap-6 text-sm text-muted-foreground flex-wrap animate-fade-up" style={{ animationDelay: '0.3s' }}>
-              <div className="flex items-center gap-2">
-                <div className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-                <span className="font-medium">{componentsData.length}+ Components</span>
-              </div>
-              <span className="hidden sm:inline text-border">•</span>
-              <div className="flex items-center gap-2">
-                <div className="w-2 h-2 rounded-full bg-accent animate-pulse" style={{ animationDelay: '0.5s' }} />
-                <span className="font-medium">TypeScript</span>
-              </div>
-              <span className="hidden sm:inline text-border">•</span>
-              <div className="flex items-center gap-2">
-                <div className="w-2 h-2 rounded-full bg-primary animate-pulse" style={{ animationDelay: '1s' }} />
-                <span className="font-medium">Fully Responsive</span>
-              </div>
-            </div>
+
+
           </div>
         </div>
 
@@ -125,89 +151,88 @@ const Index = () => {
         <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-border to-transparent" />
       </section>
 
-      {/* Search and Filters - Modern & Intuitive */}
-      <section className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-14 lg:py-16">
-        <div className="max-w-6xl mx-auto space-y-6 sm:space-y-8">
-          {/* Search Bar with Modern Design */}
-          <div className="relative group">
-            <div className="absolute inset-0 bg-gradient-to-r from-primary/10 to-accent/10 rounded-lg blur-xl opacity-0 group-focus-within:opacity-100 transition-opacity duration-500" />
-            <div className="relative">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground group-focus-within:text-primary transition-all duration-300" />
-              <Input
-                type="search"
-                placeholder="Search by name, description, or category..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-12 pr-12 h-14 text-base bg-card/50 dark:bg-card/30 backdrop-blur-sm border-border/50 hover:border-border focus:border-primary/50 transition-all duration-300 rounded-lg shadow-sm focus:shadow-md focus:shadow-primary/10 focus-ring"
-              />
-              {searchQuery && (
-                <button
-                  onClick={() => setSearchQuery("")}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-all duration-200 p-1 hover:bg-muted/50 rounded-md focus-ring"
-                  aria-label="Clear search"
-                >
-                  <X className="h-4 w-4" />
-                </button>
-              )}
-            </div>
-          </div>
+      {/* Search & Filters - Engaging Animated Search */}
+<section className="container mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-16">
+  <div className="max-w-5xl mx-auto space-y-6">
 
-          {/* Filter Header with Better Design */}
-          <div className="flex items-center justify-between flex-wrap gap-4">
-            <div className="flex items-center gap-3">
-              <div className="p-2 rounded-lg bg-primary/10 dark:bg-primary/5">
-                <Filter className="h-4 w-4 text-primary" />
-              </div>
-              <div>
-                <span className="text-sm font-semibold text-foreground">Filter by Category</span>
-                {hasActiveFilters && (
-                  <p className="text-xs text-muted-foreground mt-0.5">
-                    {filteredComponents.length} {filteredComponents.length === 1 ? 'result' : 'results'} found
-                  </p>
-                )}
-              </div>
-            </div>
-            {hasActiveFilters && (
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={clearFilters}
-                className="h-9 text-sm hover:bg-destructive/10 hover:text-destructive dark:hover:bg-destructive/20 transition-all duration-200 focus-ring"
-              >
-                <X className="h-3 w-3 mr-2" />
-                Clear Filters
-              </Button>
-            )}
-          </div>
+    {/* Search Bar */}
+    <div className="relative group">
+      {/* Animated Glow Background */}
+      <div className="absolute inset-0 bg-gradient-to-r from-primary/30 to-accent/30 rounded-xl blur-2xl opacity-0 group-focus-within:opacity-100 transition-opacity duration-500 animate-fade-in" />
+      
+      <div className="relative">
+        {/* Search Icon */}
+        <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground group-focus-within:text-primary transition-transform duration-300 group-focus-within:scale-110 animate-pulse-slow" />
+        
+        {/* Input Field */}
+        <Input
+          type="search"
+          placeholder="Search components by name, category, or description..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          className="pl-12 pr-12 h-16 text-base sm:text-lg font-medium bg-card/60 dark:bg-card/30 backdrop-blur-md border border-border/50 hover:border-border focus:border-primary/50 transition-all duration-300 rounded-xl shadow-md hover:shadow-lg focus:shadow-lg focus:shadow-primary/20 focus-ring animate-fade-in"
+        />
 
-          {/* Category Badges - Modern Pills */}
-          <div className="flex flex-wrap gap-2">
-            <Badge
-              variant={selectedCategory === null ? "default" : "outline"}
-              className="cursor-pointer transition-all duration-300 hover:scale-105 focus-ring text-sm px-3 py-1.5 shadow-sm hover:shadow-md"
-              onClick={() => setSelectedCategory(null)}
-              role="button"
-              tabIndex={0}
-              onKeyDown={(e) => e.key === 'Enter' && setSelectedCategory(null)}
-            >
-              All ({componentsData.length})
-            </Badge>
-            {categories.map(({ name, count }) => (
-              <Badge
-                key={name}
-                variant={selectedCategory === name ? "default" : "outline"}
-                className="cursor-pointer transition-all duration-300 hover:scale-105 focus-ring text-sm px-3 py-1.5 shadow-sm hover:shadow-md"
-                onClick={() => setSelectedCategory(name)}
-                role="button"
-                tabIndex={0}
-                onKeyDown={(e) => e.key === 'Enter' && setSelectedCategory(name)}
-              >
-                {name} ({count})
-              </Badge>
-            ))}
-          </div>
-        </div>
-      </section>
+        {/* Clear Button */}
+        {searchQuery && (
+          <button
+            onClick={() => setSearchQuery("")}
+            className="absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-all duration-200 p-1 hover:bg-muted/50 rounded-md focus-ring animate-fade-in"
+            aria-label="Clear search"
+          >
+            <X className="h-4 w-4" />
+          </button>
+        )}
+      </div>
+    </div>
+
+    {/* Filter Header */}
+    <div className="flex items-center justify-between flex-wrap gap-4">
+      <div className="flex items-center gap-3">
+        <Filter className="h-5 w-5 text-primary animate-fade-in" />
+        <span className="text-base font-semibold text-foreground animate-fade-in">Filter by Category</span>
+        {hasActiveFilters && (
+          <span className="text-sm text-muted-foreground ml-2 animate-fade-in">
+            · {filteredComponents.length} {filteredComponents.length === 1 ? "result" : "results"}
+          </span>
+        )}
+      </div>
+      {hasActiveFilters && (
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={clearFilters}
+          className="h-9 px-3 text-sm rounded-full hover:bg-destructive/10 hover:text-destructive transition-colors focus-ring animate-fade-in"
+        >
+          <X className="h-3 w-3 mr-1" />
+          Clear
+        </Button>
+      )}
+    </div>
+
+    {/* Category Badges */}
+    <div className="flex flex-wrap gap-3">
+      <Badge
+        variant={selectedCategory === null ? "default" : "outline"}
+        className="cursor-pointer transition-transform duration-200 hover:scale-105 text-sm sm:text-base px-4 py-2 rounded-full animate-fade-in"
+        onClick={() => setSelectedCategory(null)}
+      >
+        All ({componentsData.length})
+      </Badge>
+      {categories.map(({ name, count }) => (
+        <Badge
+          key={name}
+          variant={selectedCategory === name ? "default" : "outline"}
+          className="cursor-pointer transition-transform duration-200 hover:scale-105 text-sm sm:text-base px-4 py-2 rounded-full animate-fade-in"
+          onClick={() => setSelectedCategory(name)}
+        >
+          {name} ({count})
+        </Badge>
+      ))}
+    </div>
+  </div>
+</section>
+
 
       {/* Components Grid - Masonry Layout */}
       <section className="container mx-auto px-4 sm:px-6 lg:px-8 pb-20 sm:pb-24 lg:pb-32">
