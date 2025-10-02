@@ -3,6 +3,7 @@ import { Card } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { CodeBlock } from "./CodeBlock";
 import { Eye, Code2 } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
 
 interface ComponentCardProps {
     title: string;
@@ -10,6 +11,7 @@ interface ComponentCardProps {
     preview: React.ReactNode;
     code: string;
     category?: string;
+    status?: "Stable" | "Beta"; // added status prop
 }
 
 export const ComponentCard = ({
@@ -17,7 +19,8 @@ export const ComponentCard = ({
     description,
     preview,
     code,
-    category
+    category,
+    status
 }: ComponentCardProps) => {
     const [activeTab, setActiveTab] = useState("preview");
 
@@ -28,9 +31,17 @@ export const ComponentCard = ({
                     <div>
                         <h3 className="text-xl font-semibold text-foreground mb-1">{title}</h3>
                         {category && (
-                            <span className="inline-block px-2 py-1 text-xs font-medium rounded-md bg-primary/10 text-primary border border-primary/20">
+                            <span className="inline-block px-2 py-1 text-xs font-medium rounded-md bg-primary/10 text-primary border border-primary/20 mr-2">
                                 {category}
                             </span>
+                        )}
+                        {status && (
+                            <Badge
+                                variant={status === "Stable" ? "default" : "secondary"}
+                                className="text-xs"
+                            >
+                                {status}
+                            </Badge>
                         )}
                     </div>
                 </div>

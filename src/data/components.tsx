@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/button"; 
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Switch } from "@/components/ui/switch";
@@ -41,6 +41,7 @@ export const componentsData = [
         title: "Button",
         description: "Displays a button or a component that looks like a button.",
         category: "Form",
+        status: "Stable",
         preview: (
             <div className="flex gap-4 flex-wrap justify-center">
                 <Button>Default</Button>
@@ -67,6 +68,7 @@ export function ButtonDemo() {
         title: "Input",
         description: "Displays a form input field or a component that looks like an input field.",
         category: "Form",
+        status: "Stable",
         preview: (
             <div className="w-full max-w-sm space-y-4">
                 <Input placeholder="Enter your email..." type="email" />
@@ -89,6 +91,7 @@ export function InputDemo() {
         title: "Badge",
         description: "Displays a badge or a component that looks like a badge.",
         category: "Display",
+        status: "Stable",
         preview: (
             <div className="flex gap-2 flex-wrap justify-center">
                 <Badge>Default</Badge>
@@ -115,6 +118,7 @@ export function BadgeDemo() {
         title: "Switch",
         description: "A control that allows the user to toggle between checked and not checked.",
         category: "Form",
+        status: "Beta",
         preview: (
             <div className="flex items-center space-x-2">
                 <Switch id="airplane-mode" />
@@ -137,6 +141,7 @@ export function SwitchDemo() {
         title: "Slider",
         description: "An input where the user selects a value from within a given range.",
         category: "Form",
+        status: "Beta",
         preview: (
             <div className="w-full max-w-sm">
                 <Slider defaultValue={[50]} max={100} step={1} />
@@ -155,6 +160,7 @@ export function SliderDemo() {
         title: "Checkbox",
         description: "A control that allows the user to toggle between checked and not checked.",
         category: "Form",
+        status: "Stable",
         preview: (
             <div className="flex items-center space-x-2">
                 <Checkbox id="terms" />
@@ -177,6 +183,7 @@ export function CheckboxDemo() {
         title: "Alert Dialog",
         description: "A modal dialog that interrupts the user with important content.",
         category: "Overlay",
+        status: "Stable",
         preview: (
             <AlertDialog>
                 <AlertDialogTrigger asChild>
@@ -235,6 +242,7 @@ export function AlertDialogDemo() {
         title: "Calendar",
         description: "A date field component that allows users to enter and edit date.",
         category: "Form",
+        status: "Stable",
         preview: (
             <div className="rounded-lg border border-border p-4 bg-card">
                 <Calendar mode="single" className="pointer-events-auto" />
@@ -255,28 +263,30 @@ export function CalendarDemo() {
     />
   )
 }`
-    },{
-      id: "radio-group",
-      title: "Radio Group",
-      description: "A group of radio buttons that allows the user to select one option from a set.",
-      category: "Form",
-      preview: (
-          <div className="flex flex-col space-y-2">
-              <div className="flex items-center space-x-2">
-                  <input type="radio" id="option1" name="options" className="h-4 w-4 text-primary" />
-                  <label htmlFor="option1" className="text-sm">Option 1</label>
-              </div>  
-              <div className="flex items-center space-x-2">
-                  <input type="radio" id="option2" name="options" className="h-4 w-4 text-primary" />
-                  <label htmlFor="option2" className="text-sm">Option 2</label>
-              </div>
-              <div className="flex items-center space-x-2">
-                  <input type="radio" id="option3" name="options" className="h-4 w-4 text-primary" />
-                  <label htmlFor="option3" className="text-sm">Option 3</label>
-              </div>
-          </div>
-      ),
-      code: `export function RadioGroupDemo() {
+    },
+    {
+        id: "radio-group",
+        title: "Radio Group",
+        description: "A group of radio buttons that allows the user to select one option from a set.",
+        category: "Form",
+        status: "Stable",
+        preview: (
+            <div className="flex flex-col space-y-2">
+                <div className="flex items-center space-x-2">
+                    <input type="radio" id="option1" name="options" className="h-4 w-4 text-primary" />
+                    <label htmlFor="option1" className="text-sm">Option 1</label>
+                </div>  
+                <div className="flex items-center space-x-2">
+                    <input type="radio" id="option2" name="options" className="h-4 w-4 text-primary" />
+                    <label htmlFor="option2" className="text-sm">Option 2</label>
+                </div>
+                <div className="flex items-center space-x-2">
+                    <input type="radio" id="option3" name="options" className="h-4 w-4 text-primary" />
+                    <label htmlFor="option3" className="text-sm">Option 3</label>
+                </div>
+            </div>
+        ),
+        code: `export function RadioGroupDemo() {
   return (
     <div className="flex flex-col space-y-2"> 
       <div className="flex items-center space-x-2">
@@ -300,6 +310,7 @@ export function CalendarDemo() {
         title: "Select",
         description: "Fully accessible dropdown with keyboard navigation, dark theme support, and smooth animations. Navigate with arrows, search by typing.",
         category: "Form",
+        status: "Stable",
         preview: (
             <div className="w-full max-w-sm pointer-events-auto">
                 <Select>
@@ -339,21 +350,14 @@ export function SelectDemo() {
       </SelectContent>
     </Select>
   )
-}
-
-// Keyboard Accessibility:
-// - Tab: Focus the select trigger
-// - Space/Enter: Open dropdown
-// - Arrow Up/Down: Navigate options
-// - Home/End: Jump to first/last option
-// - Escape: Close dropdown
-// - Type to search: Quick filter options`
+}`
     },
     {
         id: "dialog",
         title: "Dialog",
         description: "A modal dialog with smooth animations, dark theme support, and responsive design. Fully accessible with keyboard navigation.",
         category: "Overlay",
+        status: "Stable",
         preview: (
             <Dialog>
                 <DialogTrigger asChild>
@@ -368,26 +372,8 @@ export function SelectDemo() {
                     </DialogHeader>
                     <div className="py-4">
                         <p className="text-sm text-muted-foreground">
-                            Dialogs are perfect for displaying important information, confirmations, or forms that require user attention. This component features:
+                            Dialogs are perfect for displaying important information, confirmations, or forms that require user attention.
                         </p>
-                        <ul className="mt-4 space-y-2 text-sm">
-                            <li className="flex items-start gap-2">
-                                <span className="text-primary mt-0.5">✓</span>
-                                <span>Smooth fade and zoom animations</span>
-                            </li>
-                            <li className="flex items-start gap-2">
-                                <span className="text-primary mt-0.5">✓</span>
-                                <span>Dark theme with backdrop blur</span>
-                            </li>
-                            <li className="flex items-start gap-2">
-                                <span className="text-primary mt-0.5">✓</span>
-                                <span>Keyboard accessible (Escape to close)</span>
-                            </li>
-                            <li className="flex items-start gap-2">
-                                <span className="text-primary mt-0.5">✓</span>
-                                <span>Responsive and mobile-friendly</span>
-                            </li>
-                        </ul>
                     </div>
                     <DialogFooter>
                         <DialogClose asChild>
@@ -422,17 +408,6 @@ export function DialogDemo() {
             This is a beautiful dialog with smooth animations and dark theme support.
           </DialogDescription>
         </DialogHeader>
-        <div className="py-4">
-          <p className="text-sm text-muted-foreground">
-            Dialogs are perfect for displaying important information or confirmations.
-          </p>
-          <ul className="mt-4 space-y-2 text-sm">
-            <li>✓ Smooth animations</li>
-            <li>✓ Dark theme support</li>
-            <li>✓ Keyboard accessible</li>
-            <li>✓ Responsive design</li>
-          </ul>
-        </div>
         <DialogFooter>
           <DialogClose asChild>
             <Button type="button" variant="outline">Close Dialog</Button>
@@ -443,4 +418,4 @@ export function DialogDemo() {
   )
 }`
     }
-  ]
+]
