@@ -3,11 +3,15 @@
 
 @custom-variant dark (&:is(.light *));
 
+/* =======================
+   Theme Variables
+======================= */
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -16,11 +20,13 @@
   --color-sidebar-primary: var(--sidebar-primary);
   --color-sidebar-foreground: var(--sidebar-foreground);
   --color-sidebar: var(--sidebar);
-  --color-chart-5: var(--chart-5);
-  --color-chart-4: var(--chart-4);
-  --color-chart-3: var(--chart-3);
-  --color-chart-2: var(--chart-2);
+
   --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+
   --color-ring: var(--ring);
   --color-input: var(--input);
   --color-border: var(--border);
@@ -37,12 +43,16 @@
   --color-popover: var(--popover);
   --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
+
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
 }
 
+/* =======================
+   Light Mode Variables
+======================= */
 :root {
   --radius: 0.625rem;
   --background: oklch(1 0 0);
@@ -77,12 +87,15 @@
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
 
-  /* ✅ Gradient colors */
+  /* Gradient colors */
   --gradient-primary: linear-gradient(135deg, #ff7eb3 0%, #ff758c 100%);
   --gradient-secondary: linear-gradient(135deg, #7ebcff 0%, #758cff 100%);
   --gradient-accent: linear-gradient(135deg, #7effa1 0%, #75ff8c 100%);
 }
 
+/* =======================
+   Dark Mode Variables
+======================= */
 .dark {
   --background: oklch(0.145 0 0);
   --foreground: oklch(0.985 0 0);
@@ -116,13 +129,15 @@
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
 
-  /* ✅ Dark gradients */
+  /* Dark gradients */
   --gradient-primary: linear-gradient(135deg, #ff758c 0%, #ff7eb3 100%);
   --gradient-secondary: linear-gradient(135deg, #758cff 0%, #7ebcff 100%);
   --gradient-accent: linear-gradient(135deg, #75ff8c 0%, #7effa1 100%);
 }
 
-/* ✅ Gradient utility classes */
+/* =======================
+   Gradient Utility Classes
+======================= */
 .bg-gradient-primary {
   background-image: var(--gradient-primary);
 }
@@ -133,6 +148,9 @@
   background-image: var(--gradient-accent);
 }
 
+/* =======================
+   Base Styles
+======================= */
 @layer base {
   * {
     @apply border-border outline-ring/50;
