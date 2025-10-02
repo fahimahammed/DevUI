@@ -1,47 +1,29 @@
-name: Vercel Preview Deployment
-
+name: Deploy to Vercel (v2)
+env:
+  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+  VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+  VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
 on:
-  pull_request:
-    types: [opened, reopened, synchronize]
+  push:
+    branches:
+      - main
 
 jobs:
-  vercel-preview:
+  vercel-deploy:
     runs-on: ubuntu-latest
-
     steps:
-      # Checkout the PR code
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      # Setup Node.js
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-
-      # Install dependencies
-      - name: Install dependencies
-        run: npm ci
-
-      # Install Vercel CLI
+      - uses: actions/checkout@v2
       - name: Install Vercel CLI
-        run: npm install -g vercel
-
-      # Deploy to Vercel Preview
-      - name: Deploy to Vercel Preview
+        run: npm install --global vercel@latest pnpm
+      - name: Pull Vercel Environment Information
+        run: vercel pull --yes --environment=preview --token=$VERCEL_TOKEN
+      - name: Build Project Artifacts
+        run: vercel build --token=$VERCEL_TOKEN
+      - name: Deploy Preview to Vercel
         id: vercel
         run: |
-          vercel --token ${{ secrets.VERCEL_TOKEN }} --confirm --prod=false
-        env:
-          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+          DEPLOY_URL=$(vercel --prebuilt --token=$VERCEL_TOKEN --confirm --scope ${{ env.VERCEL_ORG_ID }} --prod=false)
+          echo "preview_url=$DEPLOY_URL" >> $GITHUB_OUTPUT
 
-      # Comment PR with the preview URL
-      - name: Comment PR with Preview URL
-        uses: peter-evans/create-or-update-comment@v5
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          issue-number: ${{ github.event.pull_request.number }}
-          body: |
-            🚀 Preview Deployment is ready!  
-            [Preview Link](${{ steps.vercel.outputs.url }})
+      - name: Show Preview URL
+        run: echo "Preview URL- ${{ steps.vercel.outputs.preview_url }}"
