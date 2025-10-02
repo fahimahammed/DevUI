@@ -1,8 +1,8 @@
-name: "PR Labeler for Hacktoberfest"
+name: "PR Labeler for Hacktoberfest (v2)"
 
 on:
   pull_request_target:
-    types: [opened, reopened, synchronize]
+    types: [opened, reopened, closed]
 
 jobs:
   add-labels:
@@ -16,12 +16,20 @@ jobs:
           repository: ${{ github.event.pull_request.head.repo.full_name }}
           ref: ${{ github.event.pull_request.head.ref }}
 
-      - name: Label PR for Hacktoberfest
+      - name: Add default label when PR is created
+        if: github.event.action == 'opened' || github.event.action == 'reopened'
         uses: actions-ecosystem/action-add-labels@v1
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           labels: |
-            good first issue
+            pr-opened
+
+      - name: Add Hacktoberfest labels when PR is merged
+        if: github.event.action == 'closed' && github.event.pull_request.merged == true
+        uses: actions-ecosystem/action-add-labels@v1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          labels: |
             hacktoberfest
             hacktoberfest_2025
             hacktoberfest-accepted
