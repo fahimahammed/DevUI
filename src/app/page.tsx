@@ -54,7 +54,7 @@ const Index = () => {
   const rightColumn = filteredComponents.filter((_, idx) => idx % 2 !== 0);
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-zinc-50">
       {/* Hero Section */}
       <section className="relative overflow-hidden border-b border-border">
         <div className="absolute inset-0 bg-gradient-primary opacity-5" />

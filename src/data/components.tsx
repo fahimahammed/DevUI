@@ -33,8 +33,9 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "@/components/ui/dialog";
-import { Progress } from "@/components/ui/Progress";
-import { Textarea } from "@/components/ui/Textarea";
+import { Progress } from "@/components/ui/progress"; // all lowercase
+import { Textarea } from "@/components/ui/textarea"; // all lowercase
+
 
 
 
@@ -533,6 +534,4 @@ export function TextareaDemo() {
   )
 }`
     }
-
-  ];
-
+]
