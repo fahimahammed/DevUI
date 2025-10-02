@@ -33,6 +33,7 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "@/components/ui/dialog";
+import { Progress } from "@/components/ui/progress";
 
 
 export const componentsData = [
@@ -440,6 +441,66 @@ export function DialogDemo() {
         </DialogFooter>
       </DialogContent>
     </Dialog>
+  )
+}`
+    },
+    {
+        id: "progress",
+        title: "Progress",
+        description: "Displays an indicator showing the completion progress of a task, typically displayed as a progress bar.",
+        category: "Display",
+        preview: (
+            <div className="w-full max-w-sm space-y-4">
+                <div className="space-y-2">
+                    <div className="flex justify-between text-sm">
+                        <span>Progress</span>
+                        <span>33%</span>
+                    </div>
+                    <Progress value={33} className="w-full" />
+                </div>
+                <div className="space-y-2">
+                    <div className="flex justify-between text-sm">
+                        <span>Loading</span>
+                        <span>75%</span>
+                    </div>
+                    <Progress value={75} className="w-full" />
+                </div>
+                <div className="space-y-2">
+                    <div className="flex justify-between text-sm">
+                        <span>Complete</span>
+                        <span>100%</span>
+                    </div>
+                    <Progress value={100} className="w-full" />
+                </div>
+            </div>
+        ),
+        code: `import { Progress } from "@/components/ui/progress"
+
+export function ProgressDemo() {
+  return (
+    <div className="w-full max-w-sm space-y-4">
+      <div className="space-y-2">
+        <div className="flex justify-between text-sm">
+          <span>Progress</span>
+          <span>33%</span>
+        </div>
+        <Progress value={33} className="w-full" />
+      </div>
+      <div className="space-y-2">
+        <div className="flex justify-between text-sm">
+          <span>Loading</span>
+          <span>75%</span>
+        </div>
+        <Progress value={75} className="w-full" />
+      </div>
+      <div className="space-y-2">
+        <div className="flex justify-between text-sm">
+          <span>Complete</span>
+          <span>100%</span>
+        </div>
+        <Progress value={100} className="w-full" />
+      </div>
+    </div>
   )
 }`
     }
