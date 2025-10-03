@@ -4,13 +4,11 @@ on:
   pull_request_target:
     types: [opened, synchronize, reopened]
 
-
-
-
 permissions:
   contents: read
   issues: write
   pull-requests: write
+  checks: write
 
 jobs:
   build:
@@ -77,3 +75,21 @@ jobs:
                 body
               });
             }
+
+      - name: Create PR Check
+        uses: actions/github-script@v7
+        env:
+          BUILD_FAILED: ${{ env.BUILD_FAILED }}
+        with:
+          script: |
+            const buildFailed = process.env.BUILD_FAILED === 'true';
+            const conclusion = buildFailed ? 'failure' : 'success';
+
+            await github.rest.checks.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              name: "PR Build Status",
+              head_sha: context.payload.pull_request.head.sha,
+              status: "completed",
+              conclusion
+            });
