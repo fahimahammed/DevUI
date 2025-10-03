@@ -22,6 +22,7 @@ interface ComponentCardProps {
     propsData?: PropData[];
     usageNotes?: string;
     installCommand?: string;
+    highlightQuery?: string;
 }
 
 export const ComponentCard = ({
@@ -32,7 +33,8 @@ export const ComponentCard = ({
     category,
     propsData,
     usageNotes,
-    installCommand
+    installCommand,
+    highlightQuery
 }: ComponentCardProps) => {
     const [activeTab, setActiveTab] = useState("preview");
     const [showDetails, setShowDetails] = useState(false);
@@ -45,7 +47,21 @@ export const ComponentCard = ({
                     <div className="flex-1">
                         <div className="flex flex-wrap items-center gap-2 mb-2">
                             <h3 className="text-xl sm:text-2xl font-bold text-foreground">
-                                {title}
+                                {highlightQuery ? (
+                                    <>
+                                        {title.split(new RegExp(`(${highlightQuery})`, "ig")).map((part, idx) => (
+                                            part.toLowerCase() === highlightQuery.toLowerCase() ? (
+                                                <mark key={idx} className="bg-primary/20 text-primary rounded px-0.5">
+                                                    {part}
+                                                </mark>
+                                            ) : (
+                                                <span key={idx}>{part}</span>
+                                            )
+                                        ))}
+                                    </>
+                                ) : (
+                                    title
+                                )}
                             </h3>
                             {category && (
                                 <span className="inline-flex items-center px-2.5 py-0.5 text-xs font-semibold rounded-full bg-primary/10 text-primary border border-primary/20">
@@ -137,7 +153,7 @@ export const ComponentCard = ({
             {/* Tabs Section - Enhanced */}
             <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
                 <div className="px-4 sm:px-5 lg:px-6 py-3 border-b border-border ">
-                    <TabsList className="bg-secondary/70 h-10 sm:h-11 p-1">
+                    <TabsList className="bg-zinc-100 h-10 sm:h-11 p-1">
                         <TabsTrigger
                             value="preview"
                             className="flex items-center gap-2 text-sm px-4 data-[state=active]:bg-card data-[state=active]:shadow-sm"
@@ -159,7 +175,7 @@ export const ComponentCard = ({
                     value="preview"
                     className="p-4 sm:p-6 lg:p-8 min-h-[200px] sm:min-h-[240px]"
                 >
-                    <div className="w-full flex items-center justify-center p-8 rounded-xl border-2 border-dashed border-border/50 bg-secondary/10 hover:border-border transition-colors">
+                    <div className="w-full flex items-center justify-center p-8 rounded-xl border-2 border-dashed border-border/50 bg-zinc-50 hover:border-border transition-colors">
                         <div className="scale-90 sm:scale-95 lg:scale-100 origin-center">
                             {preview}
                         </div>

@@ -9,6 +9,77 @@ export default function ThemeColorPicker() {
   const [primary, setPrimary] = useState<string>(DEFAULT_PRIMARY);
   const [secondary, setSecondary] = useState<string>(DEFAULT_SECONDARY);
 
+  function updateSecondaryForegroundVariables(color: string) {
+    const rgb = parseColorToRGB(color);
+    const foreground = isColorDark(rgb) ? "#ffffff" : "#000000";
+    document.documentElement.style.setProperty("--secondary-foreground", foreground);
+  }
+
+  function parseColorToRGB(color: string): { r: number; g: number; b: number } {
+    const value = color.trim().toLowerCase();
+
+    // Named color quick check for black/white fallbacks
+    if (value === "black") return { r: 0, g: 0, b: 0 };
+    if (value === "white") return { r: 255, g: 255, b: 255 };
+
+    // #rgb, #rgba, #rrggbb, #rrggbbaa
+    if (value.startsWith("#")) {
+      const hex = value.slice(1);
+      if (hex.length === 3 || hex.length === 4) {
+        const r = parseInt(hex[0] + hex[0], 16);
+        const g = parseInt(hex[1] + hex[1], 16);
+        const b = parseInt(hex[2] + hex[2], 16);
+        return { r, g, b };
+      }
+      if (hex.length === 6 || hex.length === 8) {
+        const r = parseInt(hex.slice(0, 2), 16);
+        const g = parseInt(hex.slice(2, 4), 16);
+        const b = parseInt(hex.slice(4, 6), 16);
+        return { r, g, b };
+      }
+    }
+
+    // rgb() / rgba()
+    const rgbMatch = value.match(/^rgba?\(([^)]+)\)$/);
+    if (rgbMatch) {
+      const parts = rgbMatch[1].split(",").map((p) => p.trim());
+      const r = clamp255(parseFloat(parts[0]));
+      const g = clamp255(parseFloat(parts[1]));
+      const b = clamp255(parseFloat(parts[2]));
+      return { r, g, b };
+    }
+
+    // Fallback: try letting the browser parse any other format
+    try {
+      const el = document.createElement("div");
+      el.style.color = value;
+      document.body.appendChild(el);
+      const cs = getComputedStyle(el).color;
+      document.body.removeChild(el);
+      const m = cs.match(/^rgb\((\d+)\s*,\s*(\d+)\s*,\s*(\d+)\)$/);
+      if (m) {
+        return { r: parseInt(m[1], 10), g: parseInt(m[2], 10), b: parseInt(m[3], 10) };
+      }
+    } catch { }
+
+    // Default safe value
+    return { r: 0, g: 0, b: 0 };
+  }
+
+  function clamp255(n: number) {
+    if (Number.isNaN(n)) return 0;
+    return Math.max(0, Math.min(255, Math.round(n)));
+  }
+
+  function isColorDark(rgb: { r: number; g: number; b: number }): boolean {
+    // WCAG relative luminance
+    const srgb = [rgb.r / 255, rgb.g / 255, rgb.b / 255];
+    const linear = srgb.map((c) => (c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4)));
+    const luminance = 0.2126 * linear[0] + 0.7152 * linear[1] + 0.0722 * linear[2];
+    // Threshold: choose white text when background is dark
+    return luminance <= 0.179; // standard contrast cutoff used in many systems
+  }
+
   useEffect(() => {
     try {
       const savedP = localStorage.getItem("devui:primary");
@@ -34,15 +105,19 @@ export default function ThemeColorPicker() {
       if (savedS) {
         setSecondary(savedS);
         document.documentElement.style.setProperty("--secondary", savedS);
+        updateSecondaryForegroundVariables(savedS);
       } else if (computedSecondary) {
         setSecondary(computedSecondary);
         document.documentElement.style.setProperty("--secondary", computedSecondary);
+        updateSecondaryForegroundVariables(computedSecondary);
       } else {
         document.documentElement.style.setProperty("--secondary", DEFAULT_SECONDARY);
+        updateSecondaryForegroundVariables(DEFAULT_SECONDARY);
       }
     } catch (e) {
       document.documentElement.style.setProperty("--primary", DEFAULT_PRIMARY);
       document.documentElement.style.setProperty("--secondary", DEFAULT_SECONDARY);
+      updateSecondaryForegroundVariables(DEFAULT_SECONDARY);
     }
   }, []);
 
@@ -57,6 +132,7 @@ export default function ThemeColorPicker() {
     try {
       document.documentElement.style.setProperty("--secondary", secondary);
       localStorage.setItem("devui:secondary", secondary);
+      updateSecondaryForegroundVariables(secondary);
     } catch { }
   }, [secondary]);
 
