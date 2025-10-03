@@ -1,8 +1,10 @@
 // src/app/layout.tsx
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import BackToTopButton from '@/components/ui/BackToTopButton';
 import "./globals.css";
 import ThemeColorPicker from "@/components/ui/ThemeColorPicker";
+import { ThemeProvider } from "next-themes";   // ⬅️ import
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -16,7 +18,8 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "DevUI",
-  description: "a modern, open-source component library showcase built with shadcn/ui components",
+  description:
+    "a modern, open-source component library showcase built with shadcn/ui components",
 };
 
 export default function RootLayout({
@@ -25,10 +28,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning> 
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <ThemeColorPicker />
-        {children}
+        {/* ✅ Wrap everything in ThemeProvider */}
+        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
+          <ThemeColorPicker />  
+          {children}
+          <BackToTopButton />
+        </ThemeProvider>
       </body>
     </html>
   );
