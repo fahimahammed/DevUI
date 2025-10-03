@@ -22,7 +22,7 @@ interface FileItem {
   id: string
   progress: number
   status: "pending" | "uploading" | "success" | "error"
-  error?: string
+  error?: string | null
 }
 
 const FileUpload = React.forwardRef<HTMLDivElement, FileUploadProps>(
