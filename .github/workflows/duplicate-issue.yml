@@ -1,0 +1,128 @@
+name: "Duplicate issue detector"
+
+on:
+  issues:
+    types: [opened, edited, reopened]
+
+permissions:
+  issues: write
+
+jobs:
+  detect-duplicate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Detect duplicate issue and label/comment
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const issue = context.payload.issue;
+            if (!issue || issue.pull_request) {
+              core.info("Not an issue or is a pull request — skipping.");
+              return;
+            }
+
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+            const title = issue.title || "";
+            const body = issue.body || "";
+
+            function normalize(text) {
+              return text
+                .toLowerCase()
+                .replace(/[^a-z0-9\s]/g, " ")
+                .split(/\s+/)
+                .filter(Boolean)
+                .filter(w => w.length > 2); // drop very short words
+            }
+
+            function jaccard(a, b) {
+              const sa = new Set(a);
+              const sb = new Set(b);
+              if (!sa.size && !sb.size) return 0;
+              const inter = [...sa].filter(x => sb.has(x)).length;
+              const union = new Set([...sa, ...sb]).size;
+              return union === 0 ? 0 : inter / union;
+            }
+
+            const titleTokens = normalize(title);
+            const bodyTokens = normalize(body);
+
+            // Fetch open issues (paginated)
+            let page = 1;
+            let candidates = [];
+            while (true) {
+              const res = await github.rest.issues.listForRepo({
+                owner,
+                repo,
+                state: "open",
+                per_page: 100,
+                page
+              });
+              if (!res.data.length) break;
+              candidates = candidates.concat(res.data);
+              if (res.data.length < 100) break;
+              page++;
+            }
+
+            // Exclude the current issue and PRs
+            candidates = candidates.filter(i => i.number !== issue.number && !i.pull_request);
+
+            let best = null;
+            let bestScore = 0;
+            for (const cand of candidates) {
+              const ct = normalize(cand.title || "");
+              const cb = normalize(cand.body || "");
+              const titleScore = jaccard(titleTokens, ct);
+              const bodyScore = jaccard(bodyTokens, cb);
+              const score = 0.7 * titleScore + 0.3 * bodyScore;
+              if (score > bestScore) {
+                bestScore = score;
+                best = { cand, score };
+              }
+            }
+
+            const THRESHOLD = 0.60;
+
+            if (best && bestScore >= THRESHOLD) {
+              const labelName = "duplicate";
+              // Ensure label exists (create if missing)
+              try {
+                await github.rest.issues.getLabel({ owner, repo, name: labelName });
+              } catch (err) {
+                await github.rest.issues.createLabel({
+                  owner,
+                  repo,
+                  name: labelName,
+                  color: "c5c5c5",
+                  description: "Issue is a duplicate of another issue"
+                });
+              }
+
+              // Add label to the new issue
+              await github.rest.issues.addLabels({
+                owner,
+                repo,
+                issue_number: issue.number,
+                labels: [labelName]
+              });
+
+              // Comment linking to original
+              const commentBody = [
+                `This issue appears to be a duplicate of #${best.cand.number}: ${best.cand.title}`,
+                "",
+                `Original issue: ${best.cand.html_url}`,
+                "",
+                "If you believe this is not a duplicate, please comment and maintainers will review."
+              ].join("\n");
+
+              await github.rest.issues.createComment({
+                owner,
+                repo,
+                issue_number: issue.number,
+                body: commentBody
+              });
+
+              core.info(`Marked issue #${issue.number} as duplicate of #${best.cand.number} (score=${bestScore.toFixed(2)})`);
+            } else {
+              core.info(`No duplicate found (best score ${bestScore.toFixed(2)})`);
+            }
