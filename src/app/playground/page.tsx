@@ -34,7 +34,7 @@ export default function PlaygroundPage() {
   const [theme, setTheme] = useState<"light" | "dark">("light");
 
   const handleCopy = () => {
-    navigator.clipboard.writeText(codeSnippets[selected]);
+    navigator.clipboard.writeText(codeSnippets[selected as keyof typeof codeSnippets]);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
@@ -81,7 +81,8 @@ export default function PlaygroundPage() {
         {/* Live preview */}
         <Card className={`mb-6 shadow-lg border-2 ${theme === "dark" ? "border-gray-700" : "border-gray-200"}`}>
           <CardContent className="p-8 md:p-12 flex justify-center items-center min-h-[200px]">
-            {componentsList[selected]}
+            {componentsList[selected as keyof typeof componentsList]}
+
           </CardContent>
         </Card>
 
