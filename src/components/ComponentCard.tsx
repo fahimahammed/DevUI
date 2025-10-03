@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 // NOTE: CodeBlock was missing, so we define a basic version here to ensure the file compiles.
@@ -6,15 +6,9 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Eye, Code2, Info, ChevronDown, ChevronUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Skeleton} from "@/components/ui/skeleton";
+import { useTheme } from "next-themes";
+import { CodeBlock } from "@/components/CodeBlock";
 
-// Basic CodeBlock component definition to resolve the import error
-const CodeBlock = ({ code }: { code: string }) => {
-    return (
-        <pre className="p-4 rounded-lg bg-gray-900 text-white overflow-x-auto text-sm font-mono border border-border">
-            <code>{code}</code>
-        </pre>
-    );
-};
 
 interface PropData {
     name: string;
@@ -51,6 +45,11 @@ export const ComponentCard = ({
 }: ComponentCardProps) => {
     const [activeTab, setActiveTab] = useState("preview");
     const [showDetails, setShowDetails] = useState(false);
+    const { resolvedTheme } = useTheme();
+    const [mounted, setMounted] = useState(false);
+
+    useEffect(() => setMounted(true), []);
+    const isDark = mounted && resolvedTheme === 'dark';
 
     // Conditional function to render the highlighted title
     const renderTitle = () => {
@@ -174,20 +173,38 @@ export const ComponentCard = ({
 
             <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
                 <div className="px-4 sm:px-5 lg:px-6 py-3 border-b border-border ">
-                    <TabsList className="bg-zinc-100 h-10 sm:h-11 p-1"> {/* Using bg-zinc-100 */}
+                    <TabsList className={`${isDark ? 'bg-zinc-900/30' : 'bg-zinc-100'} h-10 sm:h-11 p-1`}>
                         <TabsTrigger
                             value="preview"
-                            className="flex items-center gap-2 text-sm px-4 data-[state=active]:bg-card data-[state=active]:shadow-sm"
+                            className={`flex items-center gap-2 text-sm px-4 data-[state=active]:bg-card data-[state=active]:shadow-sm ${loading ? 'pointer-events-none opacity-80' : ''}`}
                         >
-                            <Eye className="h-4 w-4" />
-                            <span>Preview</span>
+                            {loading ? (
+                                <div className="flex items-center gap-2">
+                                    <Skeleton width={20} height={20} className="rounded-full" />
+                                    <Skeleton width={64} height={12} className="rounded-md" />
+                                </div>
+                            ) : (
+                                <>
+                                    <Eye className="h-4 w-4" />
+                                    <span>Preview</span>
+                                </>
+                            )}
                         </TabsTrigger>
                         <TabsTrigger
                             value="code"
-                            className="flex items-center gap-2 text-sm px-4 data-[state=active]:bg-card data-[state=active]:shadow-sm"
+                            className={`flex items-center gap-2 text-sm px-4 data-[state=active]:bg-card data-[state=active]:shadow-sm ${loading ? 'pointer-events-none opacity-80' : ''}`}
                         >
-                            <Code2 className="h-4 w-4" />
-                            <span>Code</span>
+                            {loading ? (
+                                <div className="flex items-center gap-2">
+                                    <Skeleton width={20} height={20} className="rounded-full" />
+                                    <Skeleton width={48} height={12} className="rounded-md" />
+                                </div>
+                            ) : (
+                                <>
+                                    <Code2 className="h-4 w-4" />
+                                    <span>Code</span>
+                                </>
+                            )}
                         </TabsTrigger>
                     </TabsList>
                 </div>
@@ -197,9 +214,9 @@ export const ComponentCard = ({
                     className="p-4 sm:p-6 lg:p-8 min-h-[200px] sm:min-h-[240px]"
                 >
                     {loading ? (
-                        <Skeleton width="100%" height="150px" rounded="xl" />
+                        <Skeleton width="100%" height="150px" rounded="xl" className={isDark ? 'bg-zinc-700' : 'bg-zinc-200'} />
                     ) : (
-                        <div className="w-full flex items-center justify-center p-8 rounded-xl border-2 border-dashed border-border/50 bg-zinc-50 hover:border-border transition-colors">
+                        <div className={`w-full flex items-center justify-center p-8 rounded-xl border-2 border-dashed border-border/50 ${isDark ? 'bg-zinc-900/30' : 'bg-zinc-50'} hover:border-border transition-colors`}>
                             <div className="scale-90 sm:scale-95 lg:scale-100 origin-center">
                                 {preview}
                             </div>
@@ -208,7 +225,7 @@ export const ComponentCard = ({
                 </TabsContent>
 
                 <TabsContent value="code" className="p-4 sm:p-5 lg:p-6">
-                    {loading ? <Skeleton width="100%" height="200px" /> : <CodeBlock code={code} />}
+                    {loading ? <Skeleton width="100%" height="200px" className={isDark ? 'bg-zinc-700' : 'bg-zinc-200'} /> : <CodeBlock code={code} />}
                 </TabsContent>
             </Tabs>
         </Card>
