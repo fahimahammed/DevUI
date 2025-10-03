@@ -57,6 +57,7 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
+import { FileUpload } from "@/components/ui/file-upload";
 
 export const componentsData = [
   {
@@ -927,6 +928,82 @@ export function DrawerDemo() {
         </DrawerFooter>
       </DrawerContent>
     </Drawer>
+  )
+}`,
+  },
+  {
+    id: "file-upload",
+    title: "File Upload",
+    description: "A versatile file upload component with drag & drop, progress tracking, and multiple variants.",
+    category: "Form",
+    preview: (
+      <div className="w-full max-w-md space-y-4">
+        <FileUpload
+          variant="compact"
+          accept="image/*,.pdf,.doc,.docx"
+          multiple={true}
+          maxFiles={3}
+          maxSize={5 * 1024 * 1024} // 5MB
+          onFileSelect={(files) => console.log("Selected files:", files)}
+          onFileUpload={async (files) => {
+            // Simulate upload
+            console.log("Uploading files:", files);
+            await new Promise((resolve) => setTimeout(resolve, 2000));
+          }}
+          showProgress={true}
+        />
+      </div>
+    ),
+    code: `import { FileUpload } from "@/components/ui/file-upload"
+
+export function FileUploadDemo() {
+  const handleFileSelect = (files: File[]) => {
+    console.log("Selected files:", files)
+  }
+
+  const handleFileUpload = async (files: File[]) => {
+    // Simulate upload process
+    console.log("Uploading files:", files)
+    await new Promise((resolve) => setTimeout(resolve, 2000))
+  }
+
+  return (
+    <div className="space-y-6">
+      {/* Compact Variant */}
+      <FileUpload
+        variant="compact"
+        accept="image/*,.pdf,.doc,.docx"
+        multiple={true}
+        maxFiles={3}
+        maxSize={5 * 1024 * 1024} // 5MB
+        onFileSelect={handleFileSelect}
+        onFileUpload={handleFileUpload}
+        showProgress={true}
+      />
+
+      {/* Default Dropzone Variant */}
+      <FileUpload
+        variant="default"
+        accept="image/*"
+        multiple={false}
+        maxSize={10 * 1024 * 1024} // 10MB
+        onFileSelect={handleFileSelect}
+        onFileUpload={handleFileUpload}
+      />
+
+      {/* Large Dropzone Variant */}
+      <FileUpload
+        variant="dropzone"
+        accept="*/*"
+        multiple={true}
+        maxFiles={5}
+        onFileSelect={handleFileSelect}
+      >
+        <p className="text-sm text-muted-foreground">
+          Drag and drop files here or click to browse
+        </p>
+      </FileUpload>
+    </div>
   )
 }`,
   },
