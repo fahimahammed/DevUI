@@ -58,6 +58,14 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer";
 import { FileUpload } from "@/components/ui/file-upload";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { FloatingActionButton } from "@/components/ui/floating-action-button";
+import { PlusIcon, HeartIcon, MessageCircleIcon } from "lucide-react";
 
 export const componentsData = [
   {
@@ -1006,5 +1014,195 @@ export function FileUploadDemo() {
     </div>
   )
 }`,
+  },
+  {
+    id: "tooltip",
+    title: "Tooltip",
+    description: "A popup that displays information related to an element when the element receives keyboard focus or the mouse hovers over it.",
+    category: "Overlay",
+    preview: (
+      <TooltipProvider>
+        <div className="flex gap-4 justify-center items-center">
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button variant="outline">Hover me</Button>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>This is a tooltip</p>
+            </TooltipContent>
+          </Tooltip>
+          
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button variant="secondary">Top</Button>
+            </TooltipTrigger>
+            <TooltipContent side="top">
+              <p>Tooltip on top</p>
+            </TooltipContent>
+          </Tooltip>
+          
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button variant="destructive">Bottom</Button>
+            </TooltipTrigger>
+            <TooltipContent side="bottom">
+              <p>Tooltip on bottom</p>
+            </TooltipContent>
+          </Tooltip>
+        </div>
+      </TooltipProvider>
+    ),
+    code: `import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip"
+import { Button } from "@/components/ui/button"
+
+export function TooltipDemo() {
+  return (
+    <TooltipProvider>
+      <div className="flex gap-4">
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button variant="outline">Hover me</Button>
+          </TooltipTrigger>
+          <TooltipContent>
+            <p>This is a tooltip</p>
+          </TooltipContent>
+        </Tooltip>
+        
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button variant="secondary">Top</Button>
+          </TooltipTrigger>
+          <TooltipContent side="top">
+            <p>Tooltip on top</p>
+          </TooltipContent>
+        </Tooltip>
+        
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button variant="destructive">Bottom</Button>
+          </TooltipTrigger>
+          <TooltipContent side="bottom">
+            <p>Tooltip on bottom</p>
+          </TooltipContent>
+        </Tooltip>
+      </div>
+    </TooltipProvider>
+  )
+}`,
+  },
+  {
+    id: "floating-action-button",
+    title: "Floating Action Button",
+    description: "A floating action button (FAB) represents the primary action of a screen. It appears in front of all screen content, typically as a circular shape with an icon in its center.",
+    category: "Form",
+    preview: (
+      <div className="relative h-64 w-full border rounded-lg bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800 overflow-hidden">
+        <div className="absolute inset-0 flex items-center justify-center">
+          <div className="text-center space-y-2">
+            <h3 className="font-semibold text-lg">FAB Demo</h3>
+            <p className="text-sm text-muted-foreground">
+              Floating buttons positioned around the container
+            </p>
+          </div>
+        </div>
+        
+        {/* Different positioned FABs for demo */}
+        <FloatingActionButton
+          size="default"
+          position="bottom-right"
+          onClick={() => alert("Bottom Right FAB clicked!")}
+        >
+          <PlusIcon className="h-6 w-6" />
+        </FloatingActionButton>
+        
+        <FloatingActionButton
+          size="sm"
+          position="top-right"
+          variant="secondary"
+          onClick={() => alert("Top Right FAB clicked!")}
+        >
+          <HeartIcon className="h-4 w-4" />
+        </FloatingActionButton>
+        
+        <FloatingActionButton
+          size="sm"
+          position="bottom-left"
+          variant="outline"
+          onClick={() => alert("Bottom Left FAB clicked!")}
+        >
+          <MessageCircleIcon className="h-4 w-4" />
+        </FloatingActionButton>
+      </div>
+    ),
+    code: `import { FloatingActionButton } from "@/components/ui/floating-action-button"
+import { PlusIcon, HeartIcon, MessageCircleIcon } from "lucide-react"
+
+export function FloatingActionButtonDemo() {
+  return (
+    <div className="relative h-64 w-full border rounded-lg overflow-hidden">
+      {/* Your main content here */}
+      <div className="p-8">
+        <h2>Your App Content</h2>
+        <p>The floating action buttons appear on top of this content.</p>
+      </div>
+      
+      {/* Primary action button */}
+      <FloatingActionButton
+        size="default"
+        position="bottom-right"
+        onClick={() => alert("Primary action!")}
+      >
+        <PlusIcon className="h-6 w-6" />
+      </FloatingActionButton>
+      
+      {/* Secondary action button */}
+      <FloatingActionButton
+        size="sm"
+        position="top-right"
+        variant="secondary"
+        onClick={() => alert("Secondary action!")}
+      >
+        <HeartIcon className="h-4 w-4" />
+      </FloatingActionButton>
+      
+      {/* Tertiary action button */}
+      <FloatingActionButton
+        size="sm"
+        position="bottom-left"
+        variant="outline"
+        onClick={() => alert("Message action!")}
+      >
+        <MessageCircleIcon className="h-4 w-4" />
+      </FloatingActionButton>
+    </div>
+  )
+}
+
+// Available positions: 
+// - bottom-right (default)
+// - bottom-left
+// - top-right  
+// - top-left
+// - bottom-center
+// - top-center
+
+// Available variants:
+// - default (primary color)
+// - destructive
+// - outline
+// - secondary
+// - ghost
+// - link
+
+// Available sizes:
+// - default (h-14 w-14)
+// - sm (h-12 w-12) 
+// - lg (h-16 w-16)
+// - icon (h-10 w-10)`,
   },
 ];
