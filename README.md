@@ -1,5 +1,30 @@
 # ✨ DevUI Components – Modern Shadcn Component Library Showcase
 
+<table align="center">
+    <thead align="center">
+        <tr>
+            <td><b>🌟 Stars</b></td>
+            <td><b>🍴 Forks</b></td>
+            <td><b>🐛 Issues</b></td>
+            <td><b>🔔 Open PRs</b></td>
+            <td><b>🔕 Closed PRs</b></td>
+            <td><b>🛠️ Languages</b></td>
+            <td><b>👥 Contributors</b></td>
+        </tr>
+     </thead>
+    <tbody>
+         <tr>
+            <td><img alt="Stars" src="https://img.shields.io/github/stars/fahimahammed/DevUI?style=flat&logo=github"/></td>
+            <td><img alt="Forks" src="https://img.shields.io/github/forks/fahimahammed/DevUI?style=flat&logo=github"/></td>
+            <td><img alt="Issues" src="https://img.shields.io/github/issues/fahimahammed/DevUI?style=flat&logo=github"/></td>
+            <td><img alt="Open PRs" src="https://img.shields.io/github/issues-pr/fahimahammed/DevUI?style=flat&logo=github"/></td>
+            <td><img alt="Closed PRs" src="https://img.shields.io/github/issues-pr-closed/fahimahammed/DevUI?style=flat&color=critical&logo=github"/></td>
+            <td><img alt="Languages Count" src="https://img.shields.io/github/languages/count/fahimahammed/DevUI?style=flat&color=green&logo=github"></td>
+            <td><img alt="Contributors Count" src="https://img.shields.io/github/contributors/fahimahammed/DevUI?style=flat&color=blue&logo=github"/></td>
+        </tr>
+    </tbody>
+</table>
+
 **DevUI Components** is a modern, open-source **component library showcase** built with **shadcn/ui components**. Perfect for developers who want to explore, copy, and reuse beautifully designed components in their React or Next.js projects. This library is **GitHub-ready** and perfect for Hacktoberfest 2025 contributions! 🚀
 
 ## 🌟 Features

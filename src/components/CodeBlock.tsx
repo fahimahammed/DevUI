@@ -101,7 +101,8 @@ export const CodeBlock = ({
             <div className="w-3 h-3 rounded-full bg-primary/40" />
             <div className="w-3 h-3 rounded-full bg-primary/20" />
           </div>
-          <span className="text-xs font-mono text-primary font-semibold uppercase tracking-wider">
+          {/* Language Label */}
+          <span className="text-xs font-mono text-muted-foreground uppercase tracking-wider font-semibold">
             {language}
           </span>
         </div>

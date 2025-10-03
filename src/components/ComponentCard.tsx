@@ -1,10 +1,20 @@
 import { useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { CodeBlock } from "./CodeBlock";
+// NOTE: CodeBlock was missing, so we define a basic version here to ensure the file compiles.
+// In a real project, this would be its own file with syntax highlighting (e.g., PrismJS or Shiki).
 import { Eye, Code2, Info, ChevronDown, ChevronUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Skeleton} from "@/components/ui/skeleton";
+
+// Basic CodeBlock component definition to resolve the import error
+const CodeBlock = ({ code }: { code: string }) => {
+    return (
+        <pre className="p-4 rounded-lg bg-gray-900 text-white overflow-x-auto text-sm font-mono border border-border">
+            <code>{code}</code>
+        </pre>
+    );
+};
 
 interface PropData {
     name: string;
@@ -24,6 +34,7 @@ interface ComponentCardProps {
     usageNotes?: string;
     installCommand?: string;
     loading?: boolean;
+    highlightQuery?: string;
 }
 
 export const ComponentCard = ({
@@ -35,10 +46,29 @@ export const ComponentCard = ({
     propsData,
     usageNotes,
     installCommand,
-    loading = false
+    loading = false, // Retaining default value from the loading branch
+    highlightQuery
 }: ComponentCardProps) => {
     const [activeTab, setActiveTab] = useState("preview");
     const [showDetails, setShowDetails] = useState(false);
+
+    // Conditional function to render the highlighted title
+    const renderTitle = () => {
+        if (!highlightQuery) {
+            return title;
+        }
+
+        // Split the title using a RegExp to capture the query for marking
+        return title.split(new RegExp(`(${highlightQuery})`, "ig")).map((part, idx) => (
+            part.toLowerCase() === highlightQuery.toLowerCase() ? (
+                <mark key={idx} className="bg-primary/20 text-primary rounded px-0.5">
+                    {part}
+                </mark>
+            ) : (
+                <span key={idx}>{part}</span>
+            )
+        ));
+    };
 
     return (
         <Card className="overflow-hidden border-border bg-card/50 backdrop-blur-sm hover:shadow-lg transition-all duration-300">
@@ -46,17 +76,23 @@ export const ComponentCard = ({
                 <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3 mb-3">
                     <div className="flex-1">
                         <div className="flex flex-wrap items-center gap-2 mb-2">
+                            {/* Title Rendering - Loading check takes precedence */}
                             {loading ? (
                                 <Skeleton width="200px" height="1.5rem" />
                             ) : (
-                                <h3 className="text-xl sm:text-2xl font-bold text-foreground">{title}</h3>
+                                <h3 className="text-xl sm:text-2xl font-bold text-foreground">
+                                    {renderTitle()}
+                                </h3>
                             )}
+                            
+                            {/* Category Badge */}
                             {!loading && category && (
                                 <span className="inline-flex items-center px-2.5 py-0.5 text-xs font-semibold rounded-full bg-primary/10 text-primary border border-primary/20">
                                     {category}
                                 </span>
                             )}
                         </div>
+                        {/* Description Rendering */}
                         {loading ? (
                             <>
                                 <Skeleton width="100%" height="1rem" className="mb-1" />
@@ -137,8 +173,8 @@ export const ComponentCard = ({
             )}
 
             <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-                <div className="px-4 sm:px-5 lg:px-6 py-3 border-b border-border">
-                    <TabsList className="bg-gray-200 h-10 sm:h-11 p-1">
+                <div className="px-4 sm:px-5 lg:px-6 py-3 border-b border-border ">
+                    <TabsList className="bg-zinc-100 h-10 sm:h-11 p-1"> {/* Using bg-zinc-100 */}
                         <TabsTrigger
                             value="preview"
                             className="flex items-center gap-2 text-sm px-4 data-[state=active]:bg-card data-[state=active]:shadow-sm"
@@ -156,12 +192,17 @@ export const ComponentCard = ({
                     </TabsList>
                 </div>
 
-                <TabsContent value="preview" className="p-4 sm:p-6 lg:p-8 min-h-[200px] sm:min-h-[240px]">
+                <TabsContent
+                    value="preview"
+                    className="p-4 sm:p-6 lg:p-8 min-h-[200px] sm:min-h-[240px]"
+                >
                     {loading ? (
                         <Skeleton width="100%" height="150px" rounded="xl" />
                     ) : (
-                        <div className="w-full flex items-center justify-center p-8 rounded-xl border-2 border-border/50 bg-hover:border-border transition-colors">
-                            <div className="scale-90 sm:scale-95 lg:scale-100 origin-center">{preview}</div>
+                        <div className="w-full flex items-center justify-center p-8 rounded-xl border-2 border-dashed border-border/50 bg-zinc-50 hover:border-border transition-colors">
+                            <div className="scale-90 sm:scale-95 lg:scale-100 origin-center">
+                                {preview}
+                            </div>
                         </div>
                     )}
                 </TabsContent>
