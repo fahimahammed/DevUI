@@ -112,6 +112,45 @@
   --sidebar-ring: oklch(0.556 0 0);
 }
 
+/* --- Skeleton Shimmer Animation --- */
+
+/* Keyframes for the visual wave effect */
+@keyframes shimmer {
+  0% {
+    background-position: -400% 0;
+  }
+  100% {
+    background-position: 400% 0;
+  }
+}
+
+/* CSS Variables for Theme-Aware Colors */
+:root {
+  /* Light Theme Colors (e.g., matching a background of gray-50/100) */
+  --skeleton-bg-start: #e5e7eb; /* gray-200 */
+  --skeleton-bg-shimmer: #f3f4f6; /* gray-100 */
+}
+
+.dark {
+  /* Dark Theme Colors (e.g., matching a background of gray-900/800) */
+  --skeleton-bg-start: #374151; /* gray-700 */
+  --skeleton-bg-shimmer: #4b5563; /* gray-600 */
+}
+
+/* Base class applied to the skeleton element */
+.skeleton-shimmer {
+  /* Adjust color stops to be slightly wider for a smoother gradient */
+  background: linear-gradient(
+    90deg,
+    var(--skeleton-bg-start) 0%,
+    var(--skeleton-bg-shimmer) 20%,
+    var(--skeleton-bg-start) 40%,
+    var(--skeleton-bg-start) 100%
+  );
+  background-size: 200% 100%; /* Important for the movement effect */
+  animation: shimmer 1.5s infinite cubic-bezier(0.4, 0, 0.2, 1);
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
@@ -166,6 +205,7 @@
     @apply gap-4 sm:gap-6 lg:gap-8;
   }
 
+  /* Responsive gap utilities */
   .gap-responsive-sm {
     @apply gap-2 sm:gap-3 lg:gap-4;
   }
