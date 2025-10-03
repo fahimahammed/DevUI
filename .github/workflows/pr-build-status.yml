@@ -4,10 +4,10 @@ on:
   pull_request:
     types: [opened, synchronize, reopened]
 
-# Required for posting comments from forks
 permissions:
   contents: read
   pull-requests: write
+  issues: write
 
 jobs:
   build:
@@ -54,4 +54,6 @@ jobs:
           message: |
             ## ${{ steps.result.outputs.emoji }} Build Status: **${{ steps.result.outputs.status }}**
             
-            ${{ steps.result.outputs.status == 'failure' && format('### Error Logs\n```\n{0}\n```\n\n💡 *Tip: Check the full logs in the [Actions tab](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})*', steps.result.outputs.logs) || '🎉 All checks passed successfully!' }}
+            **Commit:** `${{ github.sha }}`
+            
+            ${{ steps.result.outputs.status == 'failure' && format('### 📋 Error Logs\n```\n{0}\n```\n\n💡 *See full logs in the [Actions tab](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})*', steps.result.outputs.logs) || '🎉 All checks passed successfully!' }}
