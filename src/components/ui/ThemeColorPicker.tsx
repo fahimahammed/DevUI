@@ -185,7 +185,7 @@ export default function ThemeColorPicker() {
       }
     `}</style>
 
-      <div className="fixed top-3 right-3 z-50">
+      <div className="fixed top-16 right-6 z-50">
         <div
           className="picker-container relative flex items-center gap-2 p-2 rounded-xl backdrop-blur-lg shadow-md transition-all duration-500 hover:shadow-lg hover:-translate-y-0.5"
           style={{
