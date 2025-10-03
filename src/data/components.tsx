@@ -1,3 +1,5 @@
+// src/data/components.tsx
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
@@ -66,6 +68,10 @@ import {
 } from "@/components/ui/tooltip";
 import { FloatingActionButton } from "@/components/ui/floating-action-button";
 import { PlusIcon, HeartIcon, MessageCircleIcon } from "lucide-react";
+// REMOVED: import React, { useState } from "react";
+// ADDED: Import the component that now correctly encapsulates useState:
+import { SliderDemo } from "@/components/ui/sliderDemo";
+
 
 export const componentsData = [
   {
@@ -174,16 +180,22 @@ export function SwitchDemo() {
     description:
       "An input where the user selects a value from within a given range.",
     category: "Form",
-    preview: (
-      <div className="w-full max-w-sm">
-        <Slider defaultValue={[50]} max={100} step={1} />
-      </div>
-    ),
+    // FIX: Using the separate functional component <SliderDemo />
+    preview: <SliderDemo />, 
+
+    // Code snippet reflecting the correct controlled usage for users
     code: `import { Slider } from "@/components/ui/slider"
+import { useState } from "react"
 
 export function SliderDemo() {
+  const [value, setValue] = useState([50]);
   return (
-    <Slider defaultValue={[50]} max={100} step={1} />
+    <Slider 
+      value={value} 
+      onValueChange={setValue} 
+      max={100} 
+      step={1} 
+    />
   )
 }`,
   },
@@ -713,7 +725,7 @@ export function ToastDemo() {
         </Button>
         <Toaster position="bottom-right" richColors closeButton />
     </div>
-}`,
+  )`,
   },
   {
     id: "sidebar",

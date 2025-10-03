@@ -176,7 +176,7 @@ export const ComponentCard = ({
                     className="p-4 sm:p-6 lg:p-8 min-h-[200px] sm:min-h-[240px]"
                 >
                     <div className="w-full flex items-center justify-center p-8 rounded-xl border-2 border-dashed border-border/50 bg-zinc-50 hover:border-border transition-colors">
-                        <div className="scale-90 sm:scale-95 lg:scale-100 origin-center">
+                        <div className="origin-center">
                             {preview}
                         </div>
                     </div>
