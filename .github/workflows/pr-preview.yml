@@ -1,0 +1,104 @@
+name: PR Preview with Vercel
+
+on:
+  # For running tests on PR code (runs in PR context)
+  pull_request:
+    types: [opened, synchronize, reopened]
+  # For accessing secrets and posting comments (runs in base repo context)
+  pull_request_target:
+    types: [opened, synchronize, reopened]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  # Test job - runs PR code (safe because no secrets used here)
+  test-pr:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout PR code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run tests
+        run: npm test
+
+  # Preview job - access secrets and post comments (secure because we don't checkout PR code)
+  post-preview:
+    # Only run this job for pull_request_target events (secure context)
+    if: github.event_name == 'pull_request_target'
+    runs-on: ubuntu-latest
+    steps:
+      # ⚠️ IMPORTANT: We do NOT checkout the PR code in this job!
+      # This job only queries the Vercel API and posts comments
+      
+      - name: Wait for Vercel deployment
+        id: vercel-deployment
+        run: |
+          echo "Waiting for Vercel to deploy PR #${{ github.event.pull_request.number }} from ${{ github.event.pull_request.head.label }}..."
+          echo "Looking for deployment of commit: ${{ github.event.pull_request.head.sha }}"
+          
+          # Wait up to 5 minutes (30 attempts × 10 seconds)
+          for i in {1..30}; do
+            echo "Checking deployment status (attempt $i/30)..."
+            
+            # Get deployments for this commit using maintainer's token (safe in pull_request_target)
+            DEPLOYMENTS=$(curl -s \
+              -H "Authorization: Bearer ${{ secrets.VERCEL_TOKEN }}" \
+              "https://api.vercel.com/v6/deployments?projectId=${{ secrets.VERCEL_PROJECT_ID }}&gitSource.sha=${{ github.event.pull_request.head.sha }}&limit=1")
+            
+            # Check if deployment exists and is ready
+            DEPLOYMENT_URL=$(echo "$DEPLOYMENTS" | jq -r '.deployments[0].url // empty')
+            DEPLOYMENT_STATE=$(echo "$DEPLOYMENTS" | jq -r '.deployments[0].readyState // empty')
+            
+            if [ "$DEPLOYMENT_STATE" = "READY" ] && [ -n "$DEPLOYMENT_URL" ]; then
+              echo "✅ Deployment found: https://$DEPLOYMENT_URL"
+              echo "deployment_url=https://$DEPLOYMENT_URL" >> $GITHUB_OUTPUT
+              break
+            elif [ "$DEPLOYMENT_STATE" = "ERROR" ]; then
+              echo "⚠️ Deployment failed. Check Vercel dashboard."
+              echo "deployment_state=ERROR" >> $GITHUB_OUTPUT
+              break
+            fi
+            
+            # If we've reached the last attempt, use fallback URL
+            if [ $i -eq 30 ]; then
+              echo "⚠️ No ready deployment found after waiting. Using fallback URL."
+              FALLBACK_URL="https://${{ secrets.VERCEL_PROJECT_NAME }}-git-${PR_REF/\//-}-${{ github.repository_owner }}.vercel.app"
+              echo "deployment_url=$FALLBACK_URL" >> $GITHUB_OUTPUT
+              echo "deployment_state=UNKNOWN" >> $GITHUB_OUTPUT
+            fi
+            
+            sleep 10
+          done
+        env:
+          PR_REF: ${{ github.event.pull_request.head.ref }}
+
+      # Comment on PR with the preview URL (runs whether deployment was found or not)
+      - name: Comment PR with Vercel Preview URL
+        uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          header: pr-preview
+          number: ${{ github.event.pull_request.number }}
+          message: |
+            ## 🚀 Vercel PR Preview
+            
+            Your PR has been automatically deployed by Vercel:
+            
+            **Preview URL:** ${{ steps.vercel-deployment.outputs.deployment_url }}
+            
+            > This preview updates automatically when you push new commits to this PR.
+            > 
+            > **Note for fork contributors:** First-time deployments may take a few extra minutes to appear.
+            
+            ${{ steps.vercel-deployment.outputs.deployment_state == 'ERROR' && '⚠️ **Warning:** Vercel reported an error with this deployment. Please check the Vercel dashboard.' || '' }}
