@@ -185,9 +185,9 @@ export default function ThemeColorPicker() {
       }
     `}</style>
 
-      <div className="fixed top-16 right-6 z-50">
+      <div className="fixed top-19 right-6 z-50">
         <div
-          className="picker-container relative flex items-center gap-2 p-2 rounded-xl backdrop-blur-lg shadow-md transition-all duration-500 hover:shadow-lg hover:-translate-y-0.5"
+          className="picker-container relative flex items-center gap-2 p-2 rounded-xl backdrop-blur-lg border transition-all duration-500 hover:shadow-lg hover:-translate-y-0.5"
           style={{
             background: 'linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(250,250,255,0.95) 100%)',
           }}
@@ -220,25 +220,25 @@ export default function ThemeColorPicker() {
             {/* Color Pickers */}
             <div className="flex items-center gap-2">
               {/* Primary */}
-              <div className="relative rounded-lg overflow-hidden">
+              <div className="relative rounded-lg overflow-hidden scale-90">
                 <div className="absolute inset-0 shimmer-bg rounded-lg pointer-events-none" />
                 <input
                   type="color"
                   value={primary}
                   onChange={(e) => setPrimary(e.target.value)}
-                  className="relative w-10 h-10 border border-purple-300/50 rounded-lg cursor-pointer transition-all duration-300 hover:scale-110 hover:border-purple-400 hover:shadow-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-500/50 focus-visible:ring-offset-1 active:scale-95"
+                  className="relative w-10 h-10 border border-purple-300/50 rounded-lg cursor-pointer transition-all duration-300 scale-130 hover:border-purple-400 hover:shadow-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-500/50 focus-visible:ring-offset-1 active:scale-95"
                   style={{ boxShadow: `0 3px 8px -3px ${primary}60` }}
                 />
               </div>
 
               {/* Secondary */}
-              <div className="relative rounded-lg overflow-hidden">
+              <div className="relative rounded-lg overflow-hidden scale-75">
                 <div className="absolute inset-0 shimmer-bg rounded-lg pointer-events-none" />
                 <input
                   type="color"
                   value={secondary}
                   onChange={(e) => setSecondary(e.target.value)}
-                  className="relative w-10 h-10 border border-cyan-300/50 rounded-lg cursor-pointer transition-all duration-300 hover:scale-110 hover:border-cyan-400 hover:shadow-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500/50 focus-visible:ring-offset-1 active:scale-95"
+                  className="relative w-10 h-10 border border-cyan-300/50 rounded-lg cursor-pointer transition-all duration-300  scale-130 hover:border-cyan-400 hover:shadow-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500/50 focus-visible:ring-offset-1 active:scale-95"
                   style={{ boxShadow: `0 3px 8px -3px ${secondary}60` }}
                 />
               </div>
@@ -247,7 +247,7 @@ export default function ThemeColorPicker() {
             {/* Reset */}
             <button
               onClick={reset}
-              className="reset-btn-ripple group relative inline-flex items-center gap-2 text-sm sm:text-base px-4 py-2 rounded-xl border border-purple-300/50 text-white shadow-md transition-all duration-300 hover:scale-105 hover:shadow-lg active:scale-95 focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-500/50 focus-visible:ring-offset-1 overflow-hidden"
+              className="reset-btn-ripple group relative inline-flex items-center gap-2 text-sm sm:text-base px-4 py-2 rounded-sm border border-purple-300/50 text-white shadow-md transition-all duration-300  hover:shadow-lg active:scale-95 focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-500/50 focus-visible:ring-offset-1 overflow-hidden"
               style={{
                 background: `linear-gradient(135deg, ${primary}dd 0%, ${secondary}dd 100%)`,
                 boxShadow: `0 4px 12px -4px ${primary}50, 0 4px 12px -4px ${secondary}50`,
