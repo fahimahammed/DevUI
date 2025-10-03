@@ -58,6 +58,14 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer";
 import { FileUpload } from "@/components/ui/file-upload";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { FloatingActionButton } from "@/components/ui/floating-action-button";
+import { PlusIcon, HeartIcon, MessageCircleIcon } from "lucide-react";
 
 export const componentsData = [
   {
