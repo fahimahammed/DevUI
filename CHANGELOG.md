@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.2.0](https://github.com/fahimahammed/DevUI/compare/devui-v1.1.0...devui-v1.2.0) (2025-10-04)
+
+
+### Features
+
+* Add Accordion component with expandable panels ([#176](https://github.com/fahimahammed/DevUI/issues/176)) ([de409f7](https://github.com/fahimahammed/DevUI/commit/de409f7984f47bd9f25f7d46043776447ea9c97d))
+
+
+### Bug Fixes
+
+* ci updated ([df8dd86](https://github.com/fahimahammed/DevUI/commit/df8dd86871d1661e07e2d54b6b74f4fc7cd10a77))
+* conflict issue ([6f36946](https://github.com/fahimahammed/DevUI/commit/6f36946ef078d341d17d7192be6d226b6dc04e74))
+* merge conflict ([15b8178](https://github.com/fahimahammed/DevUI/commit/15b8178a478a0151e6c911fd5fc0bed791d364f4))
+
 ## [1.1.0](https://github.com/fahimahammed/DevUI/compare/devui-v1.0.0...devui-v1.1.0) (2025-10-03)
 
 
