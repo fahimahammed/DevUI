@@ -266,7 +266,7 @@ const Index = () => {
                       <ComponentCard
                         {...component}
                         highlightQuery={debouncedQuery}
-                        status={component.status} // <-- Added
+                        status={component.status || "Stable"} // default value added
                       />
                     </div>
                   );
@@ -286,7 +286,7 @@ const Index = () => {
                       <ComponentCard
                         {...component}
                         highlightQuery={debouncedQuery}
-                        status={component.status} // <-- Added
+                        status={component.status || "Stable"} // default value added
                       />
                     </div>
                   );

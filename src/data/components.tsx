@@ -1,5 +1,5 @@
 // src/data/components.tsx
-
+import React from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
@@ -72,14 +72,23 @@ import { PlusIcon, HeartIcon, MessageCircleIcon } from "lucide-react";
 // ADDED: Import the component that now correctly encapsulates useState:
 import { SliderDemo } from "@/components/ui/sliderDemo";
 
+export type ComponentData = {
+  id: string;
+  title: string;
+  description: string;
+  category: string;
+  status: "Beta" | "Stable" | undefined;     // this fixes the build error
+  preview: React.ReactNode;
+  code: string;
+};
 
-
-export const componentsData = [
+export const componentsData: ComponentData[] = [
   {
     id: "button",
     title: "Button",
     description: "Displays a button or a component that looks like a button.",
     category: "Form",
+    status: "Stable", // ✅ add this line
     preview: (
       <div className="flex gap-4 flex-wrap justify-center">
         <Button>Default</Button>
@@ -107,6 +116,7 @@ export function ButtonDemo() {
     description:
       "Displays a form input field or a component that looks like an input field.",
     category: "Form",
+    status: "Stable", // ✅ add this line
     preview: (
       <div className="w-full max-w-sm space-y-4">
         <Input placeholder="Enter your email..." type="email" />
@@ -129,6 +139,7 @@ export function InputDemo() {
     title: "Badge",
     description: "Displays a badge or a component that looks like a badge.",
     category: "Display",
+    status: "Stable", // ✅ add this line
     preview: (
       <div className="flex gap-2 flex-wrap justify-center">
         <Badge>Default</Badge>
@@ -156,6 +167,7 @@ export function BadgeDemo() {
     description:
       "A control that allows the user to toggle between checked and not checked.",
     category: "Form",
+    status: "Stable", // ✅ add this line
     preview: (
       <div className="flex items-center space-x-2">
         <Switch id="airplane-mode" />
@@ -181,6 +193,7 @@ export function SwitchDemo() {
     description:
       "An input where the user selects a value from within a given range.",
     category: "Form",
+    status: "Stable", // ✅ add this line
     // FIX: Using the separate functional component <SliderDemo />
     preview: <SliderDemo />,
 
@@ -206,6 +219,7 @@ export function SliderDemo() {
     description:
       "A control that allows the user to toggle between checked and not checked.",
     category: "Form",
+    status: "Stable", // ✅ add this line
     preview: (
       <div className="flex items-center space-x-2">
         <Checkbox id="terms" />
@@ -231,6 +245,7 @@ export function CheckboxDemo() {
     description:
       "A modal dialog that interrupts the user with important content.",
     category: "Overlay",
+    status: "Stable", // ✅ add this line
     preview: (
       <AlertDialog>
         <AlertDialogTrigger asChild>
@@ -291,6 +306,7 @@ export function AlertDialogDemo() {
     description:
       "A date field component that allows users to enter and edit date.",
     category: "Form",
+    status: "Stable", // ✅ add this line
     preview: (
       <div className="rounded-lg border border-border p-4 bg-card">
         <Calendar mode="single" className="pointer-events-auto" />
@@ -318,6 +334,7 @@ export function CalendarDemo() {
     description:
       "A group of radio buttons that allows the user to select one option from a set.",
     category: "Form",
+    status: "Stable", // ✅ add this line
     preview: (
       <div className="flex flex-col space-y-2">
         <div className="flex items-center space-x-2">
@@ -380,6 +397,7 @@ export function CalendarDemo() {
     description:
       "Fully accessible dropdown with keyboard navigation, dark theme support, and smooth animations. Navigate with arrows, search by typing.",
     category: "Form",
+    status: "Stable", // ✅ add this line
     preview: (
       <div className="w-full max-w-sm pointer-events-auto">
         <Select>
@@ -435,6 +453,7 @@ export function SelectDemo() {
     description:
       "A modal dialog with smooth animations, dark theme support, and responsive design. Fully accessible with keyboard navigation.",
     category: "Overlay",
+    status: "Stable", // ✅ add this line
     preview: (
       <Dialog>
         <DialogTrigger asChild>
@@ -535,6 +554,7 @@ export function DialogDemo() {
     description:
       "Displays an indicator showing the completion progress of a task, typically displayed as a progress bar.",
     category: "Display",
+    status: "Stable", // ✅ add this line
     preview: (
       <div className="w-full max-w-sm space-y-4">
         <div className="space-y-2">
@@ -596,6 +616,7 @@ export function ProgressDemo() {
     description:
       "A multi-line text input component for longer text content like comments, descriptions, or messages.",
     category: "Form",
+    status: "Stable", // ✅ add this line
     preview: (
       <div className="w-full max-w-sm space-y-4">
         <div className="space-y-2">
@@ -651,6 +672,7 @@ export function TextareaDemo() {
     description:
       "Interactive chat demo with animations, theming and code snippet handling.",
     category: "Widgets",
+    status: "Stable", // ✅ add this line
     preview: (
       <ChatBox
         header={{ title: "AI Assistant", subtitle: "Powered by DevUI " }}
@@ -668,6 +690,7 @@ export function TextareaDemo() {
     description:
       "A brief message that appears temporarily to inform users of an action or event.",
     category: "Feedback",
+    status: "Stable", // ✅ add this line
     preview: (
       <>
         <div className="grid grid-cols-2 gap-2">
@@ -734,6 +757,7 @@ export function ToastDemo() {
     description:
       "A responsive sidebar navigation with expand/collapse states, nested menu items, and smooth animations. Features hamburger menu for mobile.",
     category: "Navigation",
+    status: "Stable", // ✅ add this line
     preview: (
       <div className="w-full h-64 border rounded-lg overflow-hidden bg-background">
         <div className="text-center p-8 space-y-4">
@@ -817,6 +841,7 @@ export function SidebarDemo() {
     title: "MenuBar",
     description: "A horizontal menu bar for navigation or grouped actions.",
     category: "Navigation",
+    status: "Stable", // ✅ add this line
     preview: (
       <div className="flex justify-center">
         <Menubar>
@@ -886,6 +911,7 @@ export function MenuBarDemo() {
     title: "Drawer",
     description: "A panel that slides in from the side of the screen.",
     category: "Overlay",
+    status: "Stable", // ✅ add this line
     preview: (
       <Drawer>
         <DrawerTrigger asChild>
@@ -958,6 +984,7 @@ export function DrawerDemo() {
     title: "File Upload",
     description: "A versatile file upload component with drag & drop, progress tracking, and multiple variants.",
     category: "Form",
+    status: "Stable", // ✅ add this line
     preview: (
       <div className="w-full max-w-md space-y-4">
         <FileUpload
