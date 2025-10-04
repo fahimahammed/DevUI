@@ -72,8 +72,6 @@ import { PlusIcon, HeartIcon, MessageCircleIcon } from "lucide-react";
 // ADDED: Import the component that now correctly encapsulates useState:
 import { SliderDemo } from "@/components/ui/sliderDemo";
 
-
-
 export const componentsData = [
   {
     id: "button",
@@ -956,7 +954,8 @@ export function DrawerDemo() {
   {
     id: "file-upload",
     title: "File Upload",
-    description: "A versatile file upload component with drag & drop, progress tracking, and multiple variants.",
+    description:
+      "A versatile file upload component with drag & drop, progress tracking, and multiple variants.",
     category: "Form",
     preview: (
       <div className="w-full max-w-md space-y-4">
@@ -1025,6 +1024,73 @@ export function FileUploadDemo() {
           Drag and drop files here or click to browse
         </p>
       </FileUpload>
+    </div>
+  )
+}`,
+  },
+  {
+    id: "tooltip",
+    title: "Tooltip",
+    description:
+      "A popup that appears when hovering or focusing on an element, providing additional information.",
+    category: "Feedback",
+    preview: (
+      <div className="flex justify-center gap-6">
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button>Hover me</Button>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p className="text-blue-600 text-xl">This is a tooltip</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button variant="secondary">Info</Button>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p className="text-red-600 text-xl">More info here</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+      </div>
+    ),
+    code: `import {
+  Tooltip,
+  TooltipTrigger,
+  TooltipContent,
+  TooltipProvider,
+} from "@/components/ui/tooltip"
+import { Button } from "@/components/ui/button"
+
+export function TooltipDemo() {
+  return (
+    <div className="flex gap-6">
+      <TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button>Hover me</Button>
+          </TooltipTrigger>
+          <TooltipContent>
+            <p>This is a tooltip</p>
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
+
+      <TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button variant="secondary">Info</Button>
+          </TooltipTrigger>
+          <TooltipContent>
+            <p>More info here</p>
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
     </div>
   )
 }`,
