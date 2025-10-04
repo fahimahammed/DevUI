@@ -10,6 +10,7 @@ jobs:
     outputs:
       build-status: ${{ steps.build.outcome }}
       lint-status: ${{ steps.lint.outcome }}
+      lint-results: ${{ steps.lint-results.outputs.results }}
 
     steps:
       # Checkout code
@@ -32,10 +33,22 @@ jobs:
         id: build
         run: npm run build
 
-      # Run lint (allow failure to continue workflow)
+      # Run lint and capture output
       - name: Run lint
         id: lint
-        run: npm run lint || true
+        run: npx biome check --formatter=json . > lint-results.json || true
+        continue-on-error: true
+        
+      # Process lint results
+      - name: Process lint results
+        id: lint-results
+        if: always()
+        run: |
+          if [ -f lint-results.json ] && [ -s lint-results.json ]; then
+            echo "results=$(cat lint-results.json | jq -c .)" >> $GITHUB_OUTPUT
+          else
+            echo "results={}" >> $GITHUB_OUTPUT
+          fi
 
   comment-pr:
     needs: build-and-test
@@ -50,16 +63,74 @@ jobs:
             if (context.payload.pull_request.head.repo.full_name === context.repo.repo) {
               const buildOutcome = '${{ needs.build-and-test.outputs.build-status }}';
               const lintOutcome = '${{ needs.build-and-test.outputs.lint-status }}';
+              let lintResults = {};
+              
+              try {
+                const lintResultsStr = '${{ needs.build-and-test.outputs.lint-results }}';
+                if (lintResultsStr && lintResultsStr !== '{}') {
+                  lintResults = JSON.parse(lintResultsStr);
+                }
+              } catch (error) {
+                console.log('Error parsing lint results:', error);
+              }
 
               const buildStatus = buildOutcome === 'success' ? '✅ Success' : '❌ Failed';
               const lintStatus = lintOutcome === 'success' ? '✅ Success' : '❌ Failed';
+              
+              // Create a summary status for quick visibility
+              const overallStatus = buildOutcome === 'success' && lintOutcome === 'success' 
+                ? '✅ All checks passed!'
+                : '❌ Some checks failed. Please review the details below.';
+              
+              let lintDetailsSection = '';
+              
+              // Process lint results if available
+              if (lintResults && lintResults.diagnostics && lintResults.diagnostics.length > 0) {
+                const issues = lintResults.diagnostics;
+                lintDetailsSection = `
+                ### Lint Issues Found
+                
+                | File | Line | Message | Suggested Fix |
+                |------|------|---------|---------------|
+                `;
+                
+                // Add up to 10 issues to avoid extremely long comments
+                const maxIssuesToShow = Math.min(issues.length, 10);
+                for (let i = 0; i < maxIssuesToShow; i++) {
+                  const issue = issues[i];
+                  const filePath = issue.location?.file || 'Unknown';
+                  const fileName = filePath.split('/').pop();
+                  const line = issue.location?.start?.line || 'N/A';
+                  const message = issue.message || 'Unknown issue';
+                  
+                  // Extract suggested fix if available
+                  let suggestedFix = 'No automatic fix available';
+                  if (issue.suggestions && issue.suggestions.length > 0) {
+                    suggestedFix = `\`${issue.suggestions[0].text}\``;
+                  }
+                  
+                  lintDetailsSection += `| ${fileName} | ${line} | ${message} | ${suggestedFix} |\n`;
+                }
+                
+                if (issues.length > maxIssuesToShow) {
+                  lintDetailsSection += `\n*...and ${issues.length - maxIssuesToShow} more issues*\n`;
+                }
+                
+                lintDetailsSection += `\n<details>\n<summary>How to fix these issues locally</summary>\n\n\`\`\`bash\nnpm run format\n\`\`\`\n\nThis will automatically fix many formatting issues. For other issues, please follow the suggestions in the table above.\n</details>\n`;
+              }
 
               const body = `
-                    | Check | Status |
-                    |-------|--------|
-                    | Build | ${buildStatus} |
-                    | Lint  | ${lintStatus} |
-                    `;
+              # ${overallStatus}
+              
+              ## Code Quality Check Results
+              
+              | Check | Status |
+              |-------|--------|
+              | Build | ${buildStatus} |
+              | Lint  | ${lintStatus} |
+              
+              ${lintDetailsSection}
+              `;
 
               await github.rest.issues.createComment({
                 issue_number: context.issue.number,
