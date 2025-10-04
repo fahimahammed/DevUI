@@ -2,7 +2,7 @@
 import { useState, useMemo, useEffect } from "react";
 import { ComponentCard } from "@/components/ComponentCard";
 import { componentsData } from "@/data/components";
-import { Input } from "@/components/ui/input";
+// ❌ We are removing the Input component from here as it's moving to the Header
 import { Badge } from "@/components/ui/badge";
 import {
   Github,
@@ -18,6 +18,7 @@ import Link from "next/link";
 import Header from "@/components/Header";
 
 const Index = () => {
+  // ✅ This logic STAYS here. This page will control the search.
   const [searchQuery, setSearchQuery] = useState("");
   const [debouncedQuery, setDebouncedQuery] = useState("");
 
@@ -27,7 +28,7 @@ const Index = () => {
   }, [searchQuery]);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
-  // First apply search-only filtering (case-insensitive)
+  // This logic is all correct and stays here
   const searchFilteredComponents = useMemo(() => {
     const searchLower = debouncedQuery.toLowerCase().trim();
     if (!searchLower) return componentsData;
@@ -41,7 +42,6 @@ const Index = () => {
     });
   }, [debouncedQuery]);
 
-  // Get categories with counts based on current search results
   const categories = useMemo(() => {
     const categoryMap = new Map<string, number>();
     searchFilteredComponents.forEach((component) => {
@@ -58,7 +58,6 @@ const Index = () => {
     }));
   }, [searchFilteredComponents]);
 
-  // Enhanced filtering with better search
   const filteredComponents = useMemo(() => {
     return searchFilteredComponents.filter((component) => {
       const matchesCategory =
@@ -67,7 +66,6 @@ const Index = () => {
     });
   }, [searchFilteredComponents, selectedCategory]);
 
-  // Clear all filters
   const clearFilters = () => {
     setSearchQuery("");
     setSelectedCategory(null);
@@ -77,15 +75,17 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      {/* ✅ We will now pass the search state and function to the Header */}
+      <Header searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
 
-      <Header />
-      {/* Hero Section - Modern & Clean */}
+      {/* Hero Section */}
       <section
         id="main-content"
         className="relative overflow-hidden border-b border-border/50"
       >
-        {/* Animated Background */}
-        <div className="absolute inset-0 bg-grid-pattern opacity-[0.02] dark:opacity-[0.05]" />
+        {/* ... (Hero section content remains exactly the same) ... */}
+         {/* Animated Background */}
+         <div className="absolute inset-0 bg-grid-pattern opacity-[0.02] dark:opacity-[0.05]" />
         <div className="absolute inset-0">
           <div className="absolute top-20 left-20 w-72 h-72 bg-primary/10 dark:bg-primary/5 rounded-full blur-[100px] animate-glow float-animation" />
           <div
@@ -206,49 +206,15 @@ const Index = () => {
         <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-border to-transparent" />
       </section>
 
-      {/* Search & Filters - Engaging Animated Search */}
+      {/* Filters Section */}
       <section className="container mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-16">
         <div className="max-w-5xl mx-auto space-y-6">
-          {/* Search Bar */}
-          <div className="relative group">
-            {/* Animated Glow Background */}
-            <div className="absolute inset-0 bg-gradient-to-r from-primary/30 to-accent/30 rounded-xl blur-2xl opacity-0 group-focus-within:opacity-100 transition-opacity duration-500 animate-fade-in" />
+          
+          {/* ❌ THE SEARCH BAR UI HAS BEEN REMOVED FROM HERE */}
 
-            <div className="relative">
-              {/* Search Icon */}
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-6 w-6 text-primary pointer-events-none" />
-
-              {/* Input Field */}
-              <div className="relative">
-
-              <Input
-                type="text"
-                placeholder="Search components by name, category, or description..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-14 lg:text-lg font-normal pr-12 h-16 bg-card/60 dark:bg-card/30 backdrop-blur-md border  transition-all duration-300 rounded-xl hover:shadow-lg  focus:shadow-lg focus:shadow-primary/20 focus-ring animate-fade-in"
-              >
-                
-
-              </Input>
-                <Search className="top-1/3 left-5 absolute text-zinc-500"/>
-                </div>
-
-              {/* Clear Button */}
-              {searchQuery && (
-                <button
-                  onClick={() => setSearchQuery("")}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 hover:text-foreground transition-all duration-200 p-1 hover:bg-muted/50 rounded-md focus-ring animate-fade-in"
-                  aria-label="Clear search"
-                >
-                  <X className="h-4 w-4" />
-                </button>
-              )}
-            </div>
-          </div>
-
-          {/* Filter Header */}
+          {/* Filter Header and Category Badges stay here */}
           <div className="flex items-center justify-between flex-wrap gap-4">
+            {/* ... (Filter header content remains exactly the same) ... */}
             <div className="flex items-center gap-3">
               <Filter className="h-5 w-5 text-primary animate-fade-in" />
               <span className="text-base font-semibold text-foreground animate-fade-in">
@@ -274,8 +240,8 @@ const Index = () => {
             )}
           </div>
 
-          {/* Category Badges */}
           <div className="flex flex-wrap gap-3" id="component-categories">
+            {/* ... (Category badges remain exactly the same) ... */}
             <Badge
               variant={selectedCategory === null ? "default" : "outline"}
               className="cursor-pointer transition-transform duration-200 hover:scale-105 text-sm sm:text-base px-4 py-2 rounded-full animate-fade-in"
@@ -297,8 +263,9 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Components Grid - Masonry Layout */}
+      {/* Components Grid Section */}
       <section className="container mx-auto px-4 sm:px-6 lg:px-8 pb-20 sm:pb-24 lg:pb-32">
+        {/* ... (The entire component grid display logic remains exactly the same) ... */}
         <div className="max-w-6xl mx-auto">
           {filteredComponents.length > 0 ? (
             <div className="grid gap-6 sm:gap-8 grid-cols-1 lg:grid-cols-2">
@@ -362,6 +329,7 @@ const Index = () => {
         </div>
       </section>
 
+      {/* ... (Rest of the page and footer remain the same) ... */}
       <section className="flex justify-evenly items-center">
 
         <h1 className="text-5xl sm:text-6xl md:text-5xl lg:text-7xl min-h-[30vh] font-bold tracking-tight animate-fade-up px-4 mb-10 w-1/2">
