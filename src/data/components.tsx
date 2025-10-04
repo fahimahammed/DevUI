@@ -59,10 +59,12 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
+
 import { FileUpload } from "@/components/ui/file-upload";
 // REMOVED: import React, { useState } from "react";
 // ADDED: Import the component that now correctly encapsulates useState:
 import { SliderDemo } from "@/components/ui/sliderDemo";
+import Accordion from "@/components/ui/Accordion";
 
 export const componentsData = [
   {
@@ -1078,4 +1080,34 @@ export function SonnerDemo() {
   )
 }`,
   },
+  {
+  id: "accordion",
+  title: "Accordion",
+  description: "A vertically stacked set of expandable panels that reveal hidden content.",
+  category: "Display",
+  preview: <Accordion/>,
+  code: `import Accordion from "@/components/ui/Accordion"
+
+import Accordion from "@/components/ui/Accordion"
+
+export function AccordionDemo() {
+  const items = [
+    {
+      title: "✨ What is DevUI?",
+      content: "DevUI is a modern, open-source component library to build beautiful apps faster."
+    },
+    {
+      title: "🤝 Can I contribute?",
+      content: "Yes! Fork our GitHub repo, submit your PR, and join our awesome community."
+    },
+    {
+      title: "💜 Is it free?",
+      content: "Absolutely! DevUI is free under the MIT license. Use it anywhere without limits."
+    }
+  ]
+
+  return <Accordion items={items} />
+}`,
+},
+
 ];

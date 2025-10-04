@@ -225,10 +225,12 @@ export const ComponentCard = ({
                 </TabsContent>
 
                 <TabsContent value="code" className="p-4 sm:p-5 lg:p-6">
-                    <CodeBlock code={code} componentName={title} />
-                    {loading ? <Skeleton width="100%" height="200px" /> : <CodeBlock code={code} />}
-                    {loading ? <Skeleton width="100%" height="200px" className={isDark ? 'bg-zinc-700' : 'bg-zinc-200'} /> : <CodeBlock code={code} />}
-                </TabsContent>
+    {loading ? (
+        <Skeleton width="100%" height="200px" className={isDark ? 'bg-zinc-700' : 'bg-zinc-200'} />
+    ) : (
+        <CodeBlock code={code} componentName={title} />
+    )}
+</TabsContent>
             </Tabs>
         </Card>
     );
