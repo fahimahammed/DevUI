@@ -1,8 +1,5 @@
 on:
-  push:
-    branches:
-      - stage
-      - main
+  workflow_dispatch: 
 
 permissions:
   contents: write
@@ -18,6 +15,5 @@ jobs:
         with:
           token: ${{ secrets.GH_TOKEN }}
           config-file: release-please-config.json
-          manifest-file: .release-please-manifest.json
-          default-branch: main               
+          manifest-file: .release-please-manifest.json            
           target-branch: main
