@@ -190,8 +190,11 @@ function CalendarDayButton({
       ref={ref}
       variant="ghost"
       size="icon"
+
+
       // Use deterministic date format to fix hydration error
       data-day={day.date.toISOString().split("T")[0]}
+
       data-selected-single={
         modifiers.selected &&
         !modifiers.range_start &&

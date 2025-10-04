@@ -6,21 +6,25 @@ import { Check, Copy } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { useTheme } from "next-themes";
+import useAnalytics from "@/lib/useAnalytics";
 
 interface CodeBlockProps {
   code: string;
   language?: string;
+  componentName?: string;
   showLineNumbers?: boolean;
 }
 
 export const CodeBlock = ({
   code,
+  componentName,
   language = "tsx",
   showLineNumbers = true,
 }: CodeBlockProps) => {
   const [copied, setCopied] = useState(false);
+  const { logEvent } = useAnalytics(componentName || 'CodeBlock');
+  const { theme, resolvedTheme } = useTheme();
   const [highlightedCode, setHighlightedCode] = useState<string>("");
-  const { resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
   // Calculate line count and create line numbers array
@@ -83,6 +87,10 @@ export const CodeBlock = ({
     try {
       await navigator.clipboard.writeText(code);
       setCopied(true);
+      logEvent('copy'); // Log the copy event with componentName
+      toast.success("Code copied to clipboard!", {
+        duration: 2000,
+      });
       toast.success("Code copied to clipboard!");
       setTimeout(() => setCopied(false), 2000);
     } catch (err) {
