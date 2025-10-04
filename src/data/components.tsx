@@ -1,3 +1,5 @@
+// src/data/components.tsx
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
@@ -57,6 +59,22 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
+<<<<<<< HEAD
+=======
+import { FileUpload } from "@/components/ui/file-upload";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { FloatingActionButton } from "@/components/ui/floating-action-button";
+import { PlusIcon, HeartIcon, MessageCircleIcon } from "lucide-react";
+// REMOVED: import React, { useState } from "react";
+// ADDED: Import the component that now correctly encapsulates useState:
+import { SliderDemo } from "@/components/ui/sliderDemo";
+
+>>>>>>> b3c759b3e5b6df2a29e2b86d5e4853449a67805c
 
 export const componentsData = [
   {
@@ -165,16 +183,22 @@ export function SwitchDemo() {
     description:
       "An input where the user selects a value from within a given range.",
     category: "Form",
-    preview: (
-      <div className="w-full max-w-sm">
-        <Slider defaultValue={[50]} max={100} step={1} />
-      </div>
-    ),
+    // FIX: Using the separate functional component <SliderDemo />
+    preview: <SliderDemo />,
+
+    // Code snippet reflecting the correct controlled usage for users
     code: `import { Slider } from "@/components/ui/slider"
+import { useState } from "react"
 
 export function SliderDemo() {
+  const [value, setValue] = useState([50]);
   return (
-    <Slider defaultValue={[50]} max={100} step={1} />
+    <Slider 
+      value={value} 
+      onValueChange={setValue} 
+      max={100} 
+      step={1} 
+    />
   )
 }`,
   },
@@ -704,7 +728,7 @@ export function ToastDemo() {
         </Button>
         <Toaster position="bottom-right" richColors closeButton />
     </div>
-}`,
+  )`,
   },
   {
     id: "sidebar",
@@ -739,6 +763,7 @@ export function ToastDemo() {
 } from '@/components/ui/sidebar';
 import { Home, Settings, User } from 'lucide-react';
 
+];
 const navigationItems: MenuItem[] = [
   {
     id: 'home',
@@ -930,4 +955,83 @@ export function DrawerDemo() {
   )
 }`,
   },
+<<<<<<< HEAD
+=======
+  {
+    id: "file-upload",
+    title: "File Upload",
+    description: "A versatile file upload component with drag & drop, progress tracking, and multiple variants.",
+    category: "Form",
+    preview: (
+      <div className="w-full max-w-md space-y-4">
+        <FileUpload
+          variant="compact"
+          accept="image/*,.pdf,.doc,.docx"
+          multiple={true}
+          maxFiles={3}
+          maxSize={5 * 1024 * 1024} // 5MB
+          onFileSelect={(files) => console.log("Selected files:", files)}
+          onFileUpload={async (files) => {
+            // Simulate upload
+            console.log("Uploading files:", files);
+            await new Promise((resolve) => setTimeout(resolve, 2000));
+          }}
+          showProgress={true}
+        />
+      </div>
+    ),
+    code: `import { FileUpload } from "@/components/ui/file-upload"
+
+export function FileUploadDemo() {
+  const handleFileSelect = (files: File[]) => {
+    console.log("Selected files:", files)
+  }
+
+  const handleFileUpload = async (files: File[]) => {
+    // Simulate upload process
+    console.log("Uploading files:", files)
+    await new Promise((resolve) => setTimeout(resolve, 2000))
+  }
+
+  return (
+    <div className="space-y-6">
+      {/* Compact Variant */}
+      <FileUpload
+        variant="compact"
+        accept="image/*,.pdf,.doc,.docx"
+        multiple={true}
+        maxFiles={3}
+        maxSize={5 * 1024 * 1024} // 5MB
+        onFileSelect={handleFileSelect}
+        onFileUpload={handleFileUpload}
+        showProgress={true}
+      />
+
+      {/* Default Dropzone Variant */}
+      <FileUpload
+        variant="default"
+        accept="image/*"
+        multiple={false}
+        maxSize={10 * 1024 * 1024} // 10MB
+        onFileSelect={handleFileSelect}
+        onFileUpload={handleFileUpload}
+      />
+
+      {/* Large Dropzone Variant */}
+      <FileUpload
+        variant="dropzone"
+        accept="*/*"
+        multiple={true}
+        maxFiles={5}
+        onFileSelect={handleFileSelect}
+      >
+        <p className="text-sm text-muted-foreground">
+          Drag and drop files here or click to browse
+        </p>
+      </FileUpload>
+    </div>
+  )
+}`,
+  },
+>>>>>>> b3c759b3e5b6df2a29e2b86d5e4853449a67805c
 ];

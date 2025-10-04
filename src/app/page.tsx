@@ -19,12 +19,32 @@ import Header from "@/components/Header";
 
 const Index = () => {
   const [searchQuery, setSearchQuery] = useState("");
+  const [debouncedQuery, setDebouncedQuery] = useState("");
+
+  useEffect(() => {
+    const handle = setTimeout(() => setDebouncedQuery(searchQuery), 250);
+    return () => clearTimeout(handle);
+  }, [searchQuery]);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
-  // Get all unique categories with counts
+  // First apply search-only filtering (case-insensitive)
+  const searchFilteredComponents = useMemo(() => {
+    const searchLower = debouncedQuery.toLowerCase().trim();
+    if (!searchLower) return componentsData;
+    return componentsData.filter((component) => {
+      return (
+        component.title.toLowerCase().includes(searchLower) ||
+        component.description.toLowerCase().includes(searchLower) ||
+        component.category?.toLowerCase().includes(searchLower) ||
+        component.id.toLowerCase().includes(searchLower)
+      );
+    });
+  }, [debouncedQuery]);
+
+  // Get categories with counts based on current search results
   const categories = useMemo(() => {
     const categoryMap = new Map<string, number>();
-    componentsData.forEach((component) => {
+    searchFilteredComponents.forEach((component) => {
       if (component.category) {
         categoryMap.set(
           component.category,
@@ -36,27 +56,16 @@ const Index = () => {
       name,
       count,
     }));
-  }, []);
+  }, [searchFilteredComponents]);
 
   // Enhanced filtering with better search
   const filteredComponents = useMemo(() => {
-    return componentsData.filter((component) => {
-      const searchLower = searchQuery.toLowerCase().trim();
-
-      // Enhanced search: title, description, category, and id
-      const matchesSearch =
-        !searchLower ||
-        component.title.toLowerCase().includes(searchLower) ||
-        component.description.toLowerCase().includes(searchLower) ||
-        component.category?.toLowerCase().includes(searchLower) ||
-        component.id.toLowerCase().includes(searchLower);
-
+    return searchFilteredComponents.filter((component) => {
       const matchesCategory =
         !selectedCategory || component.category === selectedCategory;
-
-      return matchesSearch && matchesCategory;
+      return matchesCategory;
     });
-  }, [searchQuery, selectedCategory]);
+  }, [searchFilteredComponents, selectedCategory]);
 
   // Clear all filters
   const clearFilters = () => {
@@ -210,13 +219,20 @@ const Index = () => {
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-6 w-6 text-primary pointer-events-none" />
 
               {/* Input Field */}
+              <div className="relative">
+
               <Input
-                type="search"
+                type="text"
                 placeholder="Search components by name, category, or description..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-14 pr-12 h-16 text-lg sm:text-xl font-semibold bg-card/60 dark:bg-card/30 backdrop-blur-md border border-transparent focus:border-transparent transition-all duration-300 rounded-xl shadow-md hover:shadow-lg focus:shadow-lg focus:shadow-primary/20 focus-ring animate-fade-in"
-              />
+                className="pl-14 lg:text-lg font-normal pr-12 h-16 bg-card/60 dark:bg-card/30 backdrop-blur-md border  transition-all duration-300 rounded-xl hover:shadow-lg  focus:shadow-lg focus:shadow-primary/20 focus-ring animate-fade-in"
+              >
+                
+
+              </Input>
+                <Search className="top-1/3 left-5 absolute text-zinc-500"/>
+                </div>
 
               {/* Clear Button */}
               {searchQuery && (
@@ -265,7 +281,7 @@ const Index = () => {
               className="cursor-pointer transition-transform duration-200 hover:scale-105 text-sm sm:text-base px-4 py-2 rounded-full animate-fade-in"
               onClick={() => setSelectedCategory(null)}
             >
-              All ({componentsData.length})
+              All ({searchFilteredComponents.length})
             </Badge>
             {categories.map(({ name, count }) => (
               <Badge
@@ -296,7 +312,7 @@ const Index = () => {
                       className="animate-fade-in"
                       style={{ animationDelay: `${index * 0.05}s` }}
                     >
-                      <ComponentCard {...component} />
+                      <ComponentCard {...component} highlightQuery={debouncedQuery} />
                     </div>
                   );
                 })}
@@ -311,7 +327,7 @@ const Index = () => {
                       className="animate-fade-in"
                       style={{ animationDelay: `${index * 0.05}s` }}
                     >
-                      <ComponentCard {...component} />
+                      <ComponentCard {...component} highlightQuery={debouncedQuery} />
                     </div>
                   );
                 })}
@@ -345,6 +361,21 @@ const Index = () => {
           )}
         </div>
       </section>
+
+      <section className="flex justify-evenly items-center">
+
+        <h1 className="text-5xl sm:text-6xl md:text-5xl lg:text-7xl min-h-[30vh] font-bold tracking-tight animate-fade-up px-4 mb-10 w-1/2">
+              <span className="gradient-text">Wanna Build More</span>
+              <br />
+              <span className="text-foreground">Components? </span>
+        </h1>
+        <a href="" className="bg-zinc-900 px-6 rotate-[13deg] py-2 rounded-full -translate-9">
+        <div className=" text-2xl text-white">
+          Contribute it Here
+        </div>
+        </a>
+      </section>
+
 
       {/* Footer - Clean & Modern */}
       <footer className="border-t border-border/50 bg-card/30 backdrop-blur-sm">

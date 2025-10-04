@@ -31,6 +31,8 @@ const Header = () => {
     { name: "Components", href: "#components", icon: Code2 },
     { name: "About", href: "/about", icon: Users },
     { name: "Docs", href: "#docs", icon: BookOpen },
+    { name: "Analytics", href: "/analytics", icon: Star },
+
   ];
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
