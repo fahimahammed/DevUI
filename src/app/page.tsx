@@ -1,5 +1,5 @@
 "use client";
-  import { useState, useMemo, useEffect } from "react";
+  import { useState, useMemo, useEffect, Suspense } from "react";
   import dynamic from "next/dynamic";
   import { useRouter, useSearchParams, usePathname } from "next/navigation";
   // Client-only to avoid SSR hydration mismatches in interactive previews
@@ -449,11 +449,15 @@
                 License.
               </p>
             </div>
-          </div>
-        </div>
       </footer>
     </div>
   );
 };
 
-export default Index;
+export default function Page() {
+  return (
+    <Suspense fallback={<div className="min-h-screen" />}> 
+      <Index />
+    </Suspense>
+  );
+}
