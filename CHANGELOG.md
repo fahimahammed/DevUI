@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.3.0](https://github.com/fahimahammed/DevUI/compare/devui-v1.2.0...devui-v1.3.0) (2025-10-05)
+
+
+### Features
+
+* Feat/theme switcher 17 ([#156](https://github.com/fahimahammed/DevUI/issues/156)) ([d340933](https://github.com/fahimahammed/DevUI/commit/d3409330a13143c35658e38701189f0e6d3e433b))
+* Feature/ai powered snippet ([#177](https://github.com/fahimahammed/DevUI/issues/177)) ([1f4d4fa](https://github.com/fahimahammed/DevUI/commit/1f4d4fac3293eadd469ab24917a50a03f23b77e0))
+* Tooltip ([#172](https://github.com/fahimahammed/DevUI/issues/172)) ([c0bb4f1](https://github.com/fahimahammed/DevUI/commit/c0bb4f1c23832e989d9d2ca7c4f716355bee03eb))
+
+
+### Bug Fixes
+
+* fix merge conflict ([78028f8](https://github.com/fahimahammed/DevUI/commit/78028f8dd2a5b0b20c26c3f88aece464881f3ffc))
+
 ## [1.2.0](https://github.com/fahimahammed/DevUI/compare/devui-v1.1.0...devui-v1.2.0) (2025-10-04)
 
 
