@@ -1,62 +1,82 @@
 "use client";
-import { useState, useMemo, useEffect } from "react";
-import { ComponentSnippetCard } from "@/components/ComponentSnippetCard";
-import { componentsData } from "@/data/components";
-// ❌ We are removing the Input component from here as it's moving to the Header
-import { Badge } from "@/components/ui/badge";
-import {
-  Github,
-  Search,
-  Sparkles,
-  Filter,
-  X,
-  Code2,
-  Users,
-} from "lucide-react";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
-import Header from "@/components/Header";
+  import { useState, useMemo, useEffect } from "react";
+  import dynamic from "next/dynamic";
+  import { useRouter, useSearchParams, usePathname } from "next/navigation";
+  // Client-only to avoid SSR hydration mismatches in interactive previews
+  const ComponentSnippetCard = dynamic(
+    () => import("@/components/ComponentSnippetCard").then((m) => m.ComponentSnippetCard),
+    { ssr: false }
+  );
+  import { componentsData } from "@/data/components";
+  // ❌ We are removing the Input component from here as it's moving to the Header
+  import { Badge } from "@/components/ui/badge";
+  import {
+    Github,
+    Search,
+    Sparkles,
+    Filter,
+    X,
+    Code2,
+    Users,
+  } from "lucide-react";
+  import { Button } from "@/components/ui/button";
+  import Link from "next/link";
+  import Header from "@/components/Header";
 
-const Index = () => {
-  // ✅ This logic STAYS here. This page will control the search.
-  const [searchQuery, setSearchQuery] = useState("");
-  const [debouncedQuery, setDebouncedQuery] = useState("");
+  const Index = () => {
+    // ✅ This logic STAYS here. This page will control the search.
+    const [searchQuery, setSearchQuery] = useState("");
+    const [debouncedQuery, setDebouncedQuery] = useState("");
+    const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
-  useEffect(() => {
-    const handle = setTimeout(() => setDebouncedQuery(searchQuery), 250);
-    return () => clearTimeout(handle);
-  }, [searchQuery]);
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+    // Shareable filters via URL (?q=...&cat=...)
+    const router = useRouter();
+    const searchParams = useSearchParams();
+    const pathname = usePathname();
 
-  // This logic is all correct and stays here
-  const searchFilteredComponents = useMemo(() => {
-    const searchLower = debouncedQuery.toLowerCase().trim();
-    if (!searchLower) return componentsData;
-    return componentsData.filter((component) => {
-      return (
-        component.title.toLowerCase().includes(searchLower) ||
-        component.description.toLowerCase().includes(searchLower) ||
-        component.category?.toLowerCase().includes(searchLower) ||
-        component.id.toLowerCase().includes(searchLower)
-      );
-    });
-  }, [debouncedQuery]);
+    useEffect(() => {
+      const handle = setTimeout(() => setDebouncedQuery(searchQuery), 250);
+      return () => clearTimeout(handle);
+    }, [searchQuery]);
 
-  const categories = useMemo(() => {
-    const categoryMap = new Map<string, number>();
-    searchFilteredComponents.forEach((component) => {
-      if (component.category) {
-        categoryMap.set(
-          component.category,
-          (categoryMap.get(component.category) || 0) + 1
+    useEffect(() => {
+      const urlQ = (searchParams.get("q") || "").trim();
+      const urlCat = (searchParams.get("cat") || "").trim();
+      // Only update state if different to avoid loops
+      if (urlQ !== searchQuery) setSearchQuery(urlQ);
+      if ((urlCat || null) !== selectedCategory) setSelectedCategory(urlCat || null);
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [searchParams]);
+    
+    // This logic is all correct and stays here
+    const searchFilteredComponents = useMemo(() => {
+      const searchLower = debouncedQuery.toLowerCase().trim();
+      if (!searchLower) return componentsData;
+      return componentsData.filter((component) => {
+        return (
+          component.title.toLowerCase().includes(searchLower) ||
+          component.description.toLowerCase().includes(searchLower) ||
+          component.category?.toLowerCase().includes(searchLower) ||
+          component.id.toLowerCase().includes(searchLower)
         );
-      }
-    });
-    return Array.from(categoryMap.entries()).map(([name, count]) => ({
-      name,
-      count,
-    }));
-  }, [searchFilteredComponents]);
+      });
+    }, [debouncedQuery]);
+
+    const categories = useMemo(() => {
+      const categoryMap = new Map<string, number>();
+      searchFilteredComponents.forEach((component) => {
+        if (component.category) {
+          categoryMap.set(
+            component.category,
+            (categoryMap.get(component.category) || 0) + 1
+          );
+        }
+      });
+      return Array.from(categoryMap.entries()).map(([name, count]) => ({
+        name,
+        count,
+      }));
+    }, [searchFilteredComponents]);
 
   const filteredComponents = useMemo(() => {
     return searchFilteredComponents.filter((component) => {
@@ -65,6 +85,26 @@ const Index = () => {
       return matchesCategory;
     });
   }, [searchFilteredComponents, selectedCategory]);
+
+  // Keep URL in sync when filters change
+  useEffect(() => {
+    if (!pathname) return;
+    const currentQ = searchParams.get("q") || "";
+    const currentCat = searchParams.get("cat") || "";
+    const nextQ = debouncedQuery.trim();
+    const nextCat = (selectedCategory || "").trim();
+
+    if (currentQ === nextQ && currentCat === nextCat) return; // no-op
+
+    const params = new URLSearchParams(searchParams.toString());
+    // Update or delete params for clean URLs
+    if (nextQ) params.set("q", nextQ); else params.delete("q");
+    if (nextCat) params.set("cat", nextCat); else params.delete("cat");
+
+    const query = params.toString();
+    const url = query ? `${pathname}?${query}` : pathname;
+    router.replace(url, { scroll: false });
+  }, [debouncedQuery, selectedCategory, pathname, router, searchParams]);
 
   const clearFilters = () => {
     setSearchQuery("");
