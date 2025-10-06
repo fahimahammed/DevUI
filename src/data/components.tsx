@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
@@ -71,7 +70,6 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 
-
 export const componentsData = [
   {
     id: "button",
@@ -99,14 +97,25 @@ export function ButtonDemo() {
   )
 }`,
     propsData: [
-      { name: "variant", type: '"default" | "secondary" | "outline" | "destructive"', description: "Button style variant.", default: "default" },
-      { name: "size", type: '"sm" | "default" | "lg"', description: "Button size.", default: "default" },
+      {
+        name: "variant",
+        type: '"default" | "secondary" | "outline" | "destructive"',
+        description: "Button style variant.",
+        default: "default",
+      },
+      {
+        name: "size",
+        type: '"sm" | "default" | "lg"',
+        description: "Button size.",
+        default: "default",
+      },
     ],
   },
   {
     id: "input",
     title: "Input",
-    description: "Displays a form input field or a component that looks like an input field.",
+    description:
+      "Displays a form input field or a component that looks like an input field.",
     category: "Form",
     preview: (
       <div className="w-full max-w-sm space-y-4">
@@ -125,8 +134,18 @@ export function InputDemo() {
   )
 }`,
     propsData: [
-      { name: "type", type: "string", description: "Input type (e.g., text, email, password).", default: "text" },
-      { name: "placeholder", type: "string", description: "Placeholder text.", default: "" },
+      {
+        name: "type",
+        type: "string",
+        description: "Input type (e.g., text, email, password).",
+        default: "text",
+      },
+      {
+        name: "placeholder",
+        type: "string",
+        description: "Placeholder text.",
+        default: "",
+      },
     ],
   },
   {
@@ -155,13 +174,19 @@ export function BadgeDemo() {
   )
 }`,
     propsData: [
-      { name: "variant", type: '"default" | "secondary" | "destructive" | "outline"', description: "Badge style variant.", default: "default" },
+      {
+        name: "variant",
+        type: '"default" | "secondary" | "destructive" | "outline"',
+        description: "Badge style variant.",
+        default: "default",
+      },
     ],
   },
   {
     id: "switch",
     title: "Switch",
-    description: "A control that allows the user to toggle between checked and not checked.",
+    description:
+      "A control that allows the user to toggle between checked and not checked.",
     category: "Form",
     preview: (
       <div className="flex items-center space-x-2">
@@ -182,14 +207,25 @@ export function SwitchDemo() {
   )
 }`,
     propsData: [
-      { name: "checked", type: "boolean", description: "Switch state.", default: "false" },
-      { name: "id", type: "string", description: "Unique identifier for the switch.", required: true },
+      {
+        name: "checked",
+        type: "boolean",
+        description: "Switch state.",
+        default: "false",
+      },
+      {
+        name: "id",
+        type: "string",
+        description: "Unique identifier for the switch.",
+        required: true,
+      },
     ],
   },
   {
     id: "slider",
     title: "Slider",
-    description: "An input where the user selects a value from within a given range.",
+    description:
+      "An input where the user selects a value from within a given range.",
     category: "Form",
     preview: <SliderDemo />,
     code: `import { Slider } from "@/components/ui/slider"
@@ -207,16 +243,32 @@ export function SliderDemo() {
   )
 }`,
     propsData: [
-      { name: "value", type: "number[]", description: "Current value(s) of the slider.", required: true },
-      { name: "onValueChange", type: "(value: number[]) => void", description: "Callback for value changes.", required: true },
-      { name: "max", type: "number", description: "Maximum value.", default: "100" },
+      {
+        name: "value",
+        type: "number[]",
+        description: "Current value(s) of the slider.",
+        required: true,
+      },
+      {
+        name: "onValueChange",
+        type: "(value: number[]) => void",
+        description: "Callback for value changes.",
+        required: true,
+      },
+      {
+        name: "max",
+        type: "number",
+        description: "Maximum value.",
+        default: "100",
+      },
       { name: "step", type: "number", description: "Step size.", default: "1" },
     ],
   },
   {
     id: "calendar",
     title: "Calendar",
-    description: "A date field component that allows users to enter and edit date.",
+    description:
+      "A date field component that allows users to enter and edit date.",
     category: "Form",
     preview: (
       <div className="rounded-lg border border-border bg-card">
@@ -239,15 +291,31 @@ export function CalendarDemo() {
   )
 }`,
     propsData: [
-      { name: "mode", type: '"single" | "multiple" | "range"', description: "Selection mode.", default: "single" },
-      { name: "selected", type: "Date | Date[] | undefined", description: "Selected date(s).", default: "undefined" },
-      { name: "onSelect", type: "(date: Date | Date[] | undefined) => void", description: "Callback for date selection.", default: "undefined" },
+      {
+        name: "mode",
+        type: '"single" | "multiple" | "range"',
+        description: "Selection mode.",
+        default: "single",
+      },
+      {
+        name: "selected",
+        type: "Date | Date[] | undefined",
+        description: "Selected date(s).",
+        default: "undefined",
+      },
+      {
+        name: "onSelect",
+        type: "(date: Date | Date[] | undefined) => void",
+        description: "Callback for date selection.",
+        default: "undefined",
+      },
     ],
   },
   {
     id: "checkbox",
     title: "Checkbox",
-    description: "A control that allows the user to toggle between checked and not checked.",
+    description:
+      "A control that allows the user to toggle between checked and not checked.",
     category: "Form",
     preview: (
       <div className="flex items-center space-x-2">
@@ -268,14 +336,25 @@ export function CheckboxDemo() {
   )
 }`,
     propsData: [
-      { name: "checked", type: "boolean", description: "Checkbox state.", default: "false" },
-      { name: "id", type: "string", description: "Unique identifier for the checkbox.", required: true },
+      {
+        name: "checked",
+        type: "boolean",
+        description: "Checkbox state.",
+        default: "false",
+      },
+      {
+        name: "id",
+        type: "string",
+        description: "Unique identifier for the checkbox.",
+        required: true,
+      },
     ],
   },
   {
     id: "alert-dialog",
     title: "Alert Dialog",
-    description: "A modal dialog that interrupts the user with important content.",
+    description:
+      "A modal dialog that interrupts the user with important content.",
     category: "Overlay",
     preview: (
       <AlertDialog>
@@ -331,14 +410,25 @@ export function AlertDialogDemo() {
   )
 }`,
     propsData: [
-      { name: "open", type: "boolean", description: "Controls dialog visibility.", required: true },
-      { name: "onOpenChange", type: "(open: boolean) => void", description: "Callback for open state changes.", default: "undefined" },
+      {
+        name: "open",
+        type: "boolean",
+        description: "Controls dialog visibility.",
+        required: true,
+      },
+      {
+        name: "onOpenChange",
+        type: "(open: boolean) => void",
+        description: "Callback for open state changes.",
+        default: "undefined",
+      },
     ],
   },
   {
     id: "select",
     title: "Select",
-    description: "Fully accessible dropdown with keyboard navigation, dark theme support, and smooth animations.",
+    description:
+      "Fully accessible dropdown with keyboard navigation, dark theme support, and smooth animations.",
     category: "Form",
     preview: (
       <div className="w-full max-w-sm pointer-events-auto">
@@ -381,14 +471,25 @@ export function SelectDemo() {
   )
 }`,
     propsData: [
-      { name: "value", type: "string", description: "Selected value.", default: "undefined" },
-      { name: "onValueChange", type: "(value: string) => void", description: "Callback for value changes.", default: "undefined" },
+      {
+        name: "value",
+        type: "string",
+        description: "Selected value.",
+        default: "undefined",
+      },
+      {
+        name: "onValueChange",
+        type: "(value: string) => void",
+        description: "Callback for value changes.",
+        default: "undefined",
+      },
     ],
   },
   {
     id: "dialog",
     title: "Dialog",
-    description: "A modal dialog with smooth animations, dark theme support, and responsive design.",
+    description:
+      "A modal dialog with smooth animations, dark theme support, and responsive design.",
     category: "Overlay",
     preview: (
       <Dialog>
@@ -483,14 +584,25 @@ export function DialogDemo() {
   )
 }`,
     propsData: [
-      { name: "open", type: "boolean", description: "Controls dialog visibility.", required: true },
-      { name: "onOpenChange", type: "(open: boolean) => void", description: "Callback for open state changes.", default: "undefined" },
+      {
+        name: "open",
+        type: "boolean",
+        description: "Controls dialog visibility.",
+        required: true,
+      },
+      {
+        name: "onOpenChange",
+        type: "(open: boolean) => void",
+        description: "Callback for open state changes.",
+        default: "undefined",
+      },
     ],
   },
   {
     id: "progress",
     title: "Progress",
-    description: "Displays an indicator showing the completion progress of a task.",
+    description:
+      "Displays an indicator showing the completion progress of a task.",
     category: "Display",
     preview: (
       <div className="w-full max-w-sm space-y-4">
@@ -547,8 +659,18 @@ export function ProgressDemo() {
   )
 }`,
     propsData: [
-      { name: "value", type: "number", description: "Progress value (0-100).", default: "0" },
-      { name: "max", type: "number", description: "Maximum value.", default: "100" },
+      {
+        name: "value",
+        type: "number",
+        description: "Progress value (0-100).",
+        default: "0",
+      },
+      {
+        name: "max",
+        type: "number",
+        description: "Maximum value.",
+        default: "100",
+      },
     ],
   },
   {
@@ -605,14 +727,25 @@ export function TextareaDemo() {
   )
 }`,
     propsData: [
-      { name: "id", type: "string", description: "Unique identifier for the textarea.", required: true },
-      { name: "placeholder", type: "string", description: "Placeholder text.", default: "" },
+      {
+        name: "id",
+        type: "string",
+        description: "Unique identifier for the textarea.",
+        required: true,
+      },
+      {
+        name: "placeholder",
+        type: "string",
+        description: "Placeholder text.",
+        default: "",
+      },
     ],
   },
   {
     id: "chat",
     title: "Chat",
-    description: "Interactive chat demo with animations, theming and code snippet handling.",
+    description:
+      "Interactive chat demo with animations, theming and code snippet handling.",
     category: "Widgets",
     preview: (
       <ChatBox
@@ -625,13 +758,19 @@ export function ChatDemo() {
   return <ChatBox header={{ title: "AI Assistant", subtitle: "Powered by DevUI " }} />
 }`,
     propsData: [
-      { name: "header", type: "{ title: string; subtitle?: string }", description: "Header configuration.", default: "{ title: '' }" },
+      {
+        name: "header",
+        type: "{ title: string; subtitle?: string }",
+        description: "Header configuration.",
+        default: "{ title: '' }",
+      },
     ],
   },
   {
     id: "toast",
     title: "Toast",
-    description: "A brief message that appears temporarily to inform users of an action or event.",
+    description:
+      "A brief message that appears temporarily to inform users of an action or event.",
     category: "Feedback",
     preview: (
       <>
@@ -693,14 +832,25 @@ export function ToastDemo() {
   )
 }`,
     propsData: [
-      { name: "message", type: "string", description: "Toast message.", required: true },
-      { name: "description", type: "string", description: "Optional description.", default: "undefined" },
+      {
+        name: "message",
+        type: "string",
+        description: "Toast message.",
+        required: true,
+      },
+      {
+        name: "description",
+        type: "string",
+        description: "Optional description.",
+        default: "undefined",
+      },
     ],
   },
   {
     id: "sidebar",
     title: "Sidebar Navigation",
-    description: "A responsive sidebar navigation with expand/collapse states, nested menu items, and smooth animations.",
+    description:
+      "A responsive sidebar navigation with expand/collapse states, nested menu items, and smooth animations.",
     category: "Navigation",
     preview: (
       <div className="w-full h-64 border rounded-lg overflow-hidden bg-background">
@@ -757,8 +907,18 @@ export function SidebarDemo() {
   );
 }`,
     propsData: [
-      { name: "items", type: "MenuItem[]", description: "Navigation items.", required: true },
-      { name: "onItemClick", type: "(item: MenuItem) => void", description: "Callback for item clicks.", default: "undefined" },
+      {
+        name: "items",
+        type: "MenuItem[]",
+        description: "Navigation items.",
+        required: true,
+      },
+      {
+        name: "onItemClick",
+        type: "(item: MenuItem) => void",
+        description: "Callback for item clicks.",
+        default: "undefined",
+      },
     ],
   },
   {
@@ -830,7 +990,12 @@ export function MenuBarDemo() {
   )
 }`,
     propsData: [
-      { name: "orientation", type: '"horizontal" | "vertical"', description: "Menu bar orientation.", default: "horizontal" },
+      {
+        name: "orientation",
+        type: '"horizontal" | "vertical"',
+        description: "Menu bar orientation.",
+        default: "horizontal",
+      },
     ],
   },
   {
@@ -905,14 +1070,25 @@ export function DrawerDemo() {
   )
 }`,
     propsData: [
-      { name: "open", type: "boolean", description: "Controls drawer visibility.", required: true },
-      { name: "onOpenChange", type: "(open: boolean) => void", description: "Callback for open state changes.", default: "undefined" },
+      {
+        name: "open",
+        type: "boolean",
+        description: "Controls drawer visibility.",
+        required: true,
+      },
+      {
+        name: "onOpenChange",
+        type: "(open: boolean) => void",
+        description: "Callback for open state changes.",
+        default: "undefined",
+      },
     ],
   },
   {
     id: "file-upload",
     title: "File Upload",
-    description: "A versatile file upload component with drag & drop, progress tracking, and multiple variants.",
+    description:
+      "A versatile file upload component with drag & drop, progress tracking, and multiple variants.",
     category: "Form",
     preview: (
       <div className="w-full max-w-md space-y-4">
@@ -957,14 +1133,25 @@ export function FileUploadDemo() {
   )
 }`,
     propsData: [
-      { name: "variant", type: '"default" | "compact" | "dropzone"', description: "Upload style variant.", default: "default" },
-      { name: "accept", type: "string", description: "Accepted file types.", default: "*/*" },
+      {
+        name: "variant",
+        type: '"default" | "compact" | "dropzone"',
+        description: "Upload style variant.",
+        default: "default",
+      },
+      {
+        name: "accept",
+        type: "string",
+        description: "Accepted file types.",
+        default: "*/*",
+      },
     ],
   },
   {
     id: "sonner",
     title: "Sonner",
-    description: "A toast notification system for displaying brief messages to users.",
+    description:
+      "A toast notification system for displaying brief messages to users.",
     category: "Feedback",
     preview: (
       <div className="flex justify-center gap-4">
@@ -1018,8 +1205,18 @@ export function SonnerDemo() {
   )
 }`,
     propsData: [
-      { name: "message", type: "string", description: "Toast message.", required: true },
-      { name: "description", type: "string", description: "Optional description.", default: "undefined" },
+      {
+        name: "message",
+        type: "string",
+        description: "Toast message.",
+        required: true,
+      },
+      {
+        name: "description",
+        type: "string",
+        description: "Optional description.",
+        default: "undefined",
+      },
     ],
   },
   {
@@ -1052,7 +1249,6 @@ export function AccordionDemo() {
   return <Accordion items={items} />
 }`,
   },
-
   {
     id: "tooltip",
     title: "Tooltip",
@@ -1114,6 +1310,52 @@ export function TooltipDemo() {
           </TooltipContent>
         </Tooltip>
       </TooltipProvider>
+    </div>
+  )
+}`,
+  },
+  {
+    id: "typography",
+    title: "Typography",
+    description:
+      "Predefined text styles for headings, paragraphs, and inline elements.",
+    category: "Content",
+    preview: (
+      <div className="space-y-4 text-center">
+        <h1 className="text-4xl font-bold tracking-tight">Heading 1</h1>
+        <h2 className="text-3xl font-semibold tracking-tight">Heading 2</h2>
+        <h3 className="text-2xl font-medium tracking-tight">Heading 3</h3>
+        <p className="text-base text-gray-600 max-w-md mx-auto">
+          This is a paragraph demonstrating the base text size and color. You
+          can use this style for body content across your app.
+        </p>
+        <blockquote className="border-l-4 border-blue-500 pl-4 italic text-gray-700">
+          “Good design is as little design as possible.”
+        </blockquote>
+        <p className="text-sm text-gray-500">
+          Inline styles like{" "}
+          <span className="font-semibold text-gray-900">bold</span> or{" "}
+          <span className="italic text-gray-800">italic</span> text are
+          supported too.
+        </p>
+      </div>
+    ),
+    code: `export function TypographyDemo() {
+  return (
+    <div className="space-y-4">
+      <h1 className="text-4xl font-bold tracking-tight">Heading 1</h1>
+      <h2 className="text-3xl font-semibold tracking-tight">Heading 2</h2>
+      <h3 className="text-2xl font-medium tracking-tight">Heading 3</h3>
+      <p className="text-base text-gray-600">
+        This is a paragraph demonstrating the base text size and color. You can use this style for body content across your app.
+      </p>
+      <blockquote className="border-l-4 border-blue-500 pl-4 italic text-gray-700">
+        “Good design is as little design as possible.”
+      </blockquote>
+      <p className="text-sm text-gray-500">
+        Inline styles like <span className="font-semibold text-gray-900">bold</span> or{" "}
+        <span className="italic text-gray-800">italic</span> text are supported too.
+      </p>
     </div>
   )
 }`,
