@@ -449,6 +449,8 @@
                 License.
               </p>
             </div>
+          </div>
+        </div>
       </footer>
     </div>
   );
