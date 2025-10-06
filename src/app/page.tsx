@@ -264,7 +264,7 @@ const Index = () => {
       </section>
 
       {/* Components Grid Section */}
-      <section className="container mx-auto px-4 sm:px-6 lg:px-8 pb-20 sm:pb-24 lg:pb-32">
+      <section id="components" className="container mx-auto px-4 sm:px-6 lg:px-8 pb-20 sm:pb-24 lg:pb-32">
         {/* ... (The entire component grid display logic remains exactly the same) ... */}
         <div className="max-w-6xl mx-auto">
           {filteredComponents.length > 0 ? (
@@ -337,7 +337,13 @@ const Index = () => {
               <br />
               <span className="text-foreground">Components? </span>
         </h1>
-        <a href="" className="bg-zinc-900 px-6 rotate-[13deg] py-2 rounded-full -translate-9">
+        <a
+          href="https://github.com/fahimahammed/DevUI/blob/main/CONTRIBUTING.md"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Read the contributing guide on GitHub"
+          className="bg-zinc-900 px-6 rotate-[13deg] py-2 rounded-full -translate-9"
+        >
         <div className=" text-2xl text-white">
           Contribute it Here
         </div>

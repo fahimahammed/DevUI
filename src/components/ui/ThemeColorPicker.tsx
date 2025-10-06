@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Paintbrush } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -19,22 +19,62 @@ const STORAGE_KEY = "devui-theme-color";
 const ThemeColorPicker = () => {
   const [mounted, setMounted] = useState(false);
   const [activeColor, setActiveColor] = useState(themes[0].color);
+  const [open, setOpen] = useState(false);
+  const [alignLeft, setAlignLeft] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const menuRef = useRef<HTMLDivElement>(null);
 
   // UPDATED: This effect now loads the saved theme from localStorage on mount
   useEffect(() => {
     setMounted(true);
     const savedThemeName = localStorage.getItem(STORAGE_KEY);
-    const savedTheme = themes.find(t => t.name === savedThemeName);
+    const savedTheme = themes.find((t) => t.name === savedThemeName);
 
     if (savedTheme) {
       // If a theme was saved, apply it
       handleThemeChange(savedTheme, false); // Pass false to prevent re-saving
     } else {
       // Otherwise, get the default color from CSS
-      const currentColor = getComputedStyle(document.body).getPropertyValue('--primary').trim();
+      const currentColor = getComputedStyle(document.body)
+        .getPropertyValue("--primary")
+        .trim();
       setActiveColor(currentColor);
     }
   }, []);
+
+  // Close on outside click
+  useEffect(() => {
+    const onDown = (e: MouseEvent) => {
+      if (!open) return;
+      if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
+        setOpen(false);
+      }
+    };
+    const onKey = (e: KeyboardEvent) => {
+      if (!open) return;
+      if (e.key === "Escape") setOpen(false);
+    };
+    document.addEventListener("mousedown", onDown);
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.removeEventListener("mousedown", onDown);
+      document.removeEventListener("keydown", onKey);
+    };
+  }, [open]);
+
+  // When opening, detect viewport overflow and flip alignment if needed
+  useEffect(() => {
+    if (!open) return;
+    const el = menuRef.current;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    const viewportRight = window.innerWidth - 8; // 8px safe padding
+    if (rect.right > viewportRight) {
+      setAlignLeft(true);
+    } else {
+      setAlignLeft(false);
+    }
+  }, [open]);
 
   // UPDATED: This function now saves the choice to localStorage
   const handleThemeChange = (theme: typeof themes[0], save = true) => {
@@ -57,22 +97,41 @@ const ThemeColorPicker = () => {
   }
 
   return (
-    <div className="fixed bottom-4 right-4 z-50">
-      <div className="group relative">
-        <div className="absolute bottom-full right-0 mb-4 grid grid-cols-5 gap-2 rounded-lg border bg-background/80 p-2 backdrop-blur-md opacity-0 transition-all duration-300 group-hover:opacity-100 group-focus-within:opacity-100">
+    <div className="fixed bottom-4 right-4 z-50" ref={containerRef}>
+      <div className="relative">
+        <div
+          ref={menuRef}
+          className={`absolute bottom-full ${alignLeft ? 'left-0 right-auto' : 'right-0 left-auto'} mb-3 flex items-center gap-2 rounded-xl border bg-background/90 p-2 backdrop-blur-md shadow-lg transition-all duration-200 origin-bottom-right overflow-visible min-w-max ${alignLeft ? 'translate-x-[4px]' : 'translate-x-[-4px]'}
+            ${open ? "opacity-100 scale-100 pointer-events-auto" : "opacity-0 scale-95 pointer-events-none"}`}
+          role="menu"
+          aria-label="Theme colors"
+          id="theme-color-menu"
+        >
           {themes.map((theme) => (
             <button
               key={theme.name}
               aria-label={`Switch to ${theme.name} theme`}
-              onClick={() => handleThemeChange(theme)}
-              className={`h-8 w-8 rounded-full border-2 transition-transform hover:scale-110 ${
+              onClick={() => {
+                handleThemeChange(theme);
+                setOpen(false);
+              }}
+              className={`h-8 w-8 rounded-full border-2 transition-transform hover:scale-110 focus-ring ${
                 activeColor === theme.color ? "border-foreground" : "border-transparent"
               }`}
               style={{ backgroundColor: theme.color }}
+              role="menuitem"
             />
           ))}
         </div>
-        <Button variant="outline" size="icon" className="h-12 w-12 rounded-full shadow-lg">
+        <Button
+          variant="outline"
+          size="icon"
+          className="h-12 w-12 rounded-full shadow-lg"
+          aria-haspopup="menu"
+          aria-expanded={open}
+          aria-controls="theme-color-menu"
+          onClick={() => setOpen((prev: boolean) => !prev)}
+        >
           <Paintbrush className="h-6 w-6" />
           <span className="sr-only">Change Theme Color</span>
         </Button>
