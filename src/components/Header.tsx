@@ -2,7 +2,7 @@
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useTheme } from "next-themes";
+import ThemeButton from "./ThemeButton";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input"; 
 import {
@@ -139,6 +139,7 @@ const Header = ({ searchQuery, setSearchQuery }: HeaderProps) => {
                 >
                   {isSearchOpen ? <X className="h-5 w-5" /> : <Search className="h-5 w-5" />}
                 </Button>
+                </ThemeButton>
               </div>
               {/* ✅ END: Animated Search Bar */}
 
