@@ -30,7 +30,7 @@ export default function BackToTopButton() {
     <button
       onClick={scrollToTop} 
       aria-label="Scroll back to top"
-      className="group fixed bottom-8 right-8 z-50 flex items-center justify-center w-14 h-14 bg-primary hover:bg-primary/90 text-primary-foreground rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 active:scale-95 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background animate-in fade-in slide-in-from-bottom-4"
+      className="group fixed bottom-28 sm:bottom-14 md:bottom-10 lg:bottom-8 right-4 sm:right-6 md:right-8 z-50 flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 bg-primary hover:bg-primary/90 text-primary-foreground rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 active:scale-95 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background animate-in fade-in slide-in-from-bottom-4"
     >
       {/* Progress circle */}
       <svg 

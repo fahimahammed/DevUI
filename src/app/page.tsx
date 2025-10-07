@@ -121,11 +121,15 @@
       {/* Hero Section */}
       <section
         id="main-content"
-        className="relative overflow-hidden border-b border-border/50"
+        className="relative overflow-hidden border-b border-border/50 starfield"
       >
         {/* ... (Hero section content remains exactly the same) ... */}
          {/* Animated Background */}
-         <div className="absolute inset-0 bg-grid-pattern opacity-[0.02] dark:opacity-[0.05]" />
+        <div className="absolute inset-0 bg-grid-pattern opacity-[0.02] dark:opacity-[0.05]" />
+        {/* Animated starfield layers */}
+        <div aria-hidden className="star-layer star-layer-1" />
+        <div aria-hidden className="star-layer star-layer-2" />
+        <div aria-hidden className="star-layer star-layer-3" />
         <div className="absolute inset-0">
           <div className="absolute top-20 left-20 w-72 h-72 bg-primary/10 dark:bg-primary/5 rounded-full blur-[100px] animate-glow float-animation" />
           <div
@@ -145,7 +149,7 @@
             </div>
 
             {/* Main Heading */}
-            <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold tracking-tight animate-fade-up px-4">
+            <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight animate-fade-up px-4">
               <span className="gradient-text">DevUI</span>
               <br />
               <span className="text-foreground">Components</span>
@@ -168,19 +172,22 @@
               className="flex items-center justify-center gap-4 flex-wrap px-4 animate-fade-up"
               style={{ animationDelay: "0.2s" }}
             >
-              <Link
-                href="https://github.com/fahimahammed/DevUI"
-                target="_blank"
-                rel="noopener noreferrer"
+              <Button
+                asChild
+                size="lg"
+                className="bg-primary hover:bg-primary/90 transition-all duration-300 focus-ring shine-effect shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/30 hover:scale-105"
               >
-                <Button
-                  size="lg"
-                  className="bg-primary hover:bg-primary/90 transition-all duration-300 focus-ring shine-effect shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/30 hover:scale-105"
+                <Link
+                  href="https://github.com/fahimahammed/DevUI"
+                  target="_blank"
+                  rel="noopener noreferrer"
                 >
-                  <Github className="mr-2 h-5 w-5" />
-                  Star on GitHub
-                </Button>
-              </Link>
+                  <span className="inline-flex items-center">
+                    <Github className="mr-2 h-5 w-5" />
+                    Star on GitHub
+                  </span>
+                </Link>
+              </Button>
               <Button
                 size="lg"
                 variant="outline"
@@ -188,15 +195,14 @@
               >
                 <a href="#component-categories">Browse Components</a>
               </Button>
-              <Link href="/about">
-                <Button
-                  size="lg"
-                  variant="ghost"
-                  className="text-foreground font-semibold hover:bg-primary/10 transition-all duration-300 focus-ring"
-                >
-                  About Us
-                </Button>
-              </Link>
+              <Button
+                asChild
+                size="lg"
+                variant="ghost"
+                className="text-foreground font-semibold hover:bg-primary/10 transition-all duration-300 focus-ring"
+              >
+                <Link href="/about">About Us</Link>
+              </Button>
             </div>
             {/* Stats Section */}
             <section className="relative z-10 mt-6 sm:mt-10">
@@ -370,9 +376,9 @@
       </section>
 
       {/* ... (Rest of the page and footer remain the same) ... */}
-      <section className="flex justify-evenly items-center">
+      <section className="flex flex-col md:flex-row justify-evenly items-center gap-6 px-4 sm:px-6 lg:px-8 py-12">
 
-        <h1 className="text-5xl sm:text-6xl md:text-5xl lg:text-7xl min-h-[30vh] font-bold tracking-tight animate-fade-up px-4 mb-10 w-1/2">
+        <h1 className="text-3xl sm:text-5xl md:text-5xl lg:text-7xl md:min-h-[30vh] font-bold tracking-tight animate-fade-up md:px-4 mb-6 md:mb-10 w-full md:w-1/2 text-center md:text-left">
               <span className="gradient-text">Wanna Build More</span>
               <br />
               <span className="text-foreground">Components? </span>
@@ -382,9 +388,9 @@
           target="_blank"
           rel="noopener noreferrer"
           aria-label="Read the contributing guide on GitHub"
-          className="bg-zinc-900 px-6 rotate-[13deg] py-2 rounded-full -translate-9"
+          className="bg-zinc-900 px-6 rotate-[13deg] py-2 rounded-full -translate-9 md:translate-x-0"
         >
-        <div className=" text-2xl text-white">
+        <div className=" text-xl sm:text-2xl text-white">
           Contribute it Here
         </div>
         </a>
@@ -411,35 +417,39 @@
                 </p>
               </div>
 
-              <div className="flex items-center gap-3">
-                <Link
-                  href="https://github.com/fahimahammed/DevUI"
-                  target="_blank"
-                  rel="noopener noreferrer"
+              <div className="flex items-center gap-3" suppressHydrationWarning>
+                <Button
+                  asChild
+                  variant="ghost"
+                  size="icon"
+                  className="text-muted-foreground hover:text-foreground hover:bg-primary/10 transition-all duration-200 focus-ring"
+                  aria-label="View on GitHub"
                 >
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    className="text-muted-foreground hover:text-foreground hover:bg-primary/10 transition-all duration-200 focus-ring"
-                    aria-label="View on GitHub"
+                  <Link
+                    href="https://github.com/fahimahammed/DevUI"
+                    target="_blank"
+                    rel="noopener noreferrer"
                   >
                     <Github className="h-5 w-5" />
-                  </Button>
-                </Link>
-                <Link
-                  href="https://github.com/fahimahammed"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  </Link>
+                </Button>
+                <Button
+                  asChild
+                  variant="ghost"
+                  size="sm"
+                  className="text-muted-foreground hover:text-foreground hover:bg-primary/10 transition-all duration-200 focus-ring"
                 >
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    className="text-muted-foreground hover:text-foreground hover:bg-primary/10 transition-all duration-200 focus-ring"
+                  <Link
+                    href="https://github.com/fahimahammed"
+                    target="_blank"
+                    rel="noopener noreferrer"
                   >
-                    <Users className="h-4 w-4 mr-2" />
-                    Contributors
-                  </Button>
-                </Link>
+                    <span className="inline-flex items-center">
+                      <Users className="h-4 w-4 mr-2" />
+                      Contributors
+                    </span>
+                  </Link>
+                </Button>
               </div>
             </div>
 

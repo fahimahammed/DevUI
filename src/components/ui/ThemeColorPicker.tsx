@@ -97,7 +97,7 @@ const ThemeColorPicker = () => {
   }
 
   return (
-    <div className="fixed bottom-4 right-4 z-50" ref={containerRef}>
+    <div className="fixed bottom-4 right-4 sm:bottom-4 sm:right-4 z-50" ref={containerRef}>
       <div className="relative">
         <div
           ref={menuRef}

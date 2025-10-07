@@ -384,6 +384,66 @@
   .dark .btn-glow:focus-visible::before {
     opacity: 0.08;
   }
+
+  /* Starfield background utilities (lightweight, GPU-accelerated) */
+  .starfield {
+    position: relative;
+  }
+
+  .star-layer {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.35; /* base, tuned per layer */
+  }
+
+  /* Small dense stars */
+  .star-layer-1 {
+    opacity: 0.25;
+    background-image:
+      radial-gradient(1px 1px at 20px 30px, hsl(0 0% 100% / 0.8) 50%, transparent 51%),
+      radial-gradient(1px 1px at 80px 120px, hsl(0 0% 100% / 0.7) 50%, transparent 51%),
+      radial-gradient(1px 1px at 160px 90px, hsl(0 0% 100% / 0.6) 50%, transparent 51%),
+      radial-gradient(1px 1px at 240px 40px, hsl(0 0% 100% / 0.7) 50%, transparent 51%);
+    background-size: 300px 300px;
+    animation: star-pan-1 120s linear infinite;
+  }
+
+  /* Medium stars */
+  .star-layer-2 {
+    opacity: 0.18;
+    background-image:
+      radial-gradient(1.5px 1.5px at 60px 80px, hsl(0 0% 100% / 0.8) 50%, transparent 52%),
+      radial-gradient(1.5px 1.5px at 200px 160px, hsl(0 0% 100% / 0.75) 50%, transparent 52%);
+    background-size: 400px 400px;
+    animation: star-pan-2 180s linear infinite;
+  }
+
+  /* Sparse larger stars */
+  .star-layer-3 {
+    opacity: 0.12;
+    background-image:
+      radial-gradient(2px 2px at 120px 40px, hsl(0 0% 100% / 0.9) 50%, transparent 53%),
+      radial-gradient(2px 2px at 280px 220px, hsl(0 0% 100% / 0.85) 50%, transparent 53%);
+    background-size: 500px 500px;
+    animation: star-pan-3 240s linear infinite;
+  }
+
+  @keyframes star-pan-1 {
+    0% { transform: translate3d(0, 0, 0); }
+    100% { transform: translate3d(-150px, -150px, 0); }
+  }
+
+  @keyframes star-pan-2 {
+    0% { transform: translate3d(0, 0, 0); }
+    100% { transform: translate3d(-120px, -90px, 0); }
+  }
+
+  @keyframes star-pan-3 {
+    0% { transform: translate3d(0, 0, 0); }
+    100% { transform: translate3d(-90px, -60px, 0); }
+  }
 }
 
 /* Keyframe animations */

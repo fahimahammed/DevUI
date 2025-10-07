@@ -72,7 +72,7 @@ const Header = ({ searchQuery, setSearchQuery }: HeaderProps) => {
         Skip to main content
       </a>
 
-      <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur-lg supports-[backdrop-filter]:bg-background/60 transition-shadow">
+      <header suppressHydrationWarning className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur-lg supports-[backdrop-filter]:bg-background/60 transition-shadow">
         <div className="container mx-auto px-4">
           <div className="flex h-16 items-center justify-between gap-4">
             {/* Logo */}
@@ -96,8 +96,9 @@ const Header = ({ searchQuery, setSearchQuery }: HeaderProps) => {
               {navigation.map((item) => {
                 const isActive = pathname === item.href;
                 return (
-                  <Link key={item.name} href={item.href}>
-                    <Button
+                  <Button
+                    key={item.name}
+                    asChild
                       variant="ghost"
                       aria-current={isActive ? "page" : undefined}
                       className={`text-muted-foreground hover:text-foreground hover:bg-primary/10 transition-all duration-200 focus-ring ${
@@ -106,10 +107,13 @@ const Header = ({ searchQuery, setSearchQuery }: HeaderProps) => {
                           : ""
                       }`}
                     >
-                      <item.icon className="h-4 w-4 mr-2" />
-                      {item.name}
-                    </Button>
-                  </Link>
+                      <Link href={item.href}>
+                        <span className="inline-flex items-center">
+                          <item.icon className="h-4 w-4 mr-2" />
+                          {item.name}
+                        </span>
+                      </Link>
+                  </Button>
                 );
               })}
             </nav>
@@ -118,16 +122,15 @@ const Header = ({ searchQuery, setSearchQuery }: HeaderProps) => {
             <div className="flex items-center justify-end space-x-2 flex-1">
               {/* ✅ START: Animated Search Bar */}
               <div className="relative flex items-center">
+                {/* Desktop search input */}
                 <Input
                   ref={searchInputRef}
                   type="text"
                   placeholder="Search components..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className={`h-10 rounded-full border-2 border-transparent bg-muted/50 focus:border-primary focus:bg-transparent transition-all duration-300 ease-in-out ${
-                    isSearchOpen
-                      ? "w-48 sm:w-64 px-4 opacity-100"
-                      : "w-0 px-0 opacity-0"
+                  className={`hidden md:block h-10 rounded-full border-2 border-transparent bg-muted/50 focus:border-primary focus:bg-transparent transition-all duration-300 ease-in-out ${
+                    isSearchOpen ? "w-64 px-4 opacity-100" : "w-0 px-0 opacity-0"
                   }`}
                 />
                  <Button
@@ -161,20 +164,21 @@ const Header = ({ searchQuery, setSearchQuery }: HeaderProps) => {
               )}
 
               {/* GitHub Link */}
-              <Link
-                href="https://github.com/fahimahammed/DevUI"
-                target="_blank"
-                rel="noopener noreferrer"
+              <Button
+                asChild
+                variant="ghost"
+                size="icon"
+                className="hover:bg-primary/10 transition-all duration-200 focus-ring rounded-full"
+                aria-label="View on GitHub"
               >
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="hover:bg-primary/10 transition-all duration-200 focus-ring rounded-full"
-                  aria-label="View on GitHub"
+                <Link
+                  href="https://github.com/fahimahammed/DevUI"
+                  target="_blank"
+                  rel="noopener noreferrer"
                 >
                   <Github className="h-5 w-5" />
-                </Button>
-              </Link>
+                </Link>
+              </Button>
 
               {/* Mobile Menu Toggle */}
               <Button
@@ -194,6 +198,20 @@ const Header = ({ searchQuery, setSearchQuery }: HeaderProps) => {
               </Button>
             </div>
           </div>
+
+        {/* Mobile Search Overlay */}
+        {isSearchOpen && (
+          <div className="md:hidden px-2 pb-2">
+            <Input
+              ref={searchInputRef}
+              type="text"
+              placeholder="Search components..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="h-10 w-full rounded-full border-2 border-transparent bg-muted/70 focus:border-primary focus:bg-background transition-all duration-300 ease-in-out px-4 opacity-100"
+            />
+          </div>
+        )}
 
           {/* Mobile Navigation */}
           {/* ... (Mobile navigation remains the same) ... */}
