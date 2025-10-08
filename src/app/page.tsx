@@ -19,7 +19,10 @@
     Code2,
     Users,
   } from "lucide-react";
-  import { Button } from "@/components/ui/button";
+  import { Button } from "@/components/ui/Button";
+  import { Card } from "@/components/ui/Card";
+  import { Input } from "@/components/ui/Input";
+  import { Modal } from "@/components/ui/Modal";
   import Link from "next/link";
   import Header from "@/components/Header";
 
@@ -33,6 +36,25 @@
     const router = useRouter();
     const searchParams = useSearchParams();
     const pathname = usePathname();
+    return (
+      <div className="min-h-screen bg-gray-900 flex-col gap-6 items-center justify-center">
+        <Card>
+          <h1 className="text-white text-2xl mb-4"> Dark Theme Example</h1>
+          <Input placeholder ="Type something...."/>
+          <Button> Click me</Button>
+        </Card>
+        {openModal &&
+        (
+          <Modal title ="Dark Theme Modal" oneClose={()=> setOpenModal(false)}>
+            <p 
+            classNAme="Text-grey-300"> This is a modal with neon dark theme!</p>
+          </Modal>
+        
+        )}
+      </div>
+    );
+    
+  };
 
     useEffect(() => {
       const handle = setTimeout(() => setDebouncedQuery(searchQuery), 250);
