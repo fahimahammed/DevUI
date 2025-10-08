@@ -2,7 +2,8 @@
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import ThemeButton from "./ThemeButton";
+import { useTheme } from "next-themes";
+import { ThemeButton } from "./ThemeButton";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input"; 
 import {
@@ -113,6 +114,7 @@ const Header = ({ searchQuery, setSearchQuery }: HeaderProps) => {
                 );
               })}
             </nav>
+            < ThemeButton />
 
             {/* Actions */}
             <div className="flex items-center justify-end space-x-2 flex-1">
