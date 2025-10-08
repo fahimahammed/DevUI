@@ -141,7 +141,6 @@ const Header = ({ searchQuery, setSearchQuery }: HeaderProps) => {
                 >
                   {isSearchOpen ? <X className="h-5 w-5" /> : <Search className="h-5 w-5" />}
                 </Button>
-                </ThemeButton>
               </div>
               {/* ✅ END: Animated Search Bar */}
 
