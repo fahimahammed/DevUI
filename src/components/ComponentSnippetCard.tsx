@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Card } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -262,7 +261,7 @@ export function ${title}Demo() {
           {usageNotes && (
             <div className="mt-3 p-3 rounded-lg bg-primary/5 border border-primary/20">
               <p className="text-xs text-foreground/80 leading-relaxed">
-                💡 <span className="font-medium">Usage Tip:</span> {usageNotes}
+                <span className="font-medium">Usage Tip:</span> {usageNotes}
               </p>
             </div>
           )}
@@ -327,10 +326,12 @@ export function ${title}Demo() {
           {loading ? (
             <Skeleton width="100%" height="200px" className={isDark ? "bg-zinc-700" : "bg-zinc-200"} />
           ) : (
-            <div className="mb-4 p-3 bg-secondary/30 rounded-lg border border-border">
-              <h4 className="text-sm font-medium text-foreground mb-2">Copy Code</h4>
-              <CodeBlock code={snippet} componentName={title} language="tsx" />
-              <div className="flex flex-wrap gap-2 mt-4">
+            <div>
+              <div className="mb-4 p-3 bg-secondary/30 rounded-lg border border-border">
+                <h4 className="text-sm font-medium text-foreground mb-2">Copy Code</h4>
+                <CodeBlock code={snippet} componentName={title} language="tsx" />
+              </div>
+              <div className="flex flex-wrap gap-2">
                 {variations.map((variant) => (
                   <Button
                     key={variant}

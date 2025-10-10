@@ -61,7 +61,7 @@ const DocsPage = () => {
         <p className="mt-4 text-lg text-gray-700 dark:text-gray-300">
           Explore the collection of reusable UI components built with React and Tailwind CSS, featuring copyable code snippets and AI-generated variations.
         </p>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 mt-8">
           {componentsData.map((component) => (
             <ComponentSnippetCard
               key={component.id}

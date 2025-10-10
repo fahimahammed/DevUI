@@ -13,7 +13,7 @@ const themes = [
   { name: "Violet", color: "oklch(0.65 0.2 280)", ring: "oklch(0.65 0.2 280)" },
 ];
 
-// NEW: Define a key for localStorage
+// Define a key for localStorage
 const STORAGE_KEY = "devui-theme-color";
 
 const ThemeColorPicker = () => {
@@ -24,7 +24,7 @@ const ThemeColorPicker = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
 
-  // UPDATED: This effect now loads the saved theme from localStorage on mount
+  // Load saved theme from localStorage on mount
   useEffect(() => {
     setMounted(true);
     const savedThemeName = localStorage.getItem(STORAGE_KEY);
@@ -76,17 +76,51 @@ const ThemeColorPicker = () => {
     }
   }, [open]);
 
-  // UPDATED: This function now saves the choice to localStorage
+  // Close on outside click or Escape key
+  useEffect(() => {
+    const onDown = (e: MouseEvent) => {
+      if (!open) return;
+      if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
+        setOpen(false);
+      }
+    };
+    const onKey = (e: KeyboardEvent) => {
+      if (!open) return;
+      if (e.key === "Escape") setOpen(false);
+    };
+    document.addEventListener("mousedown", onDown);
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.removeEventListener("mousedown", onDown);
+      document.removeEventListener("keydown", onKey);
+    };
+  }, [open]);
+
+  // Detect viewport overflow and flip alignment if needed
+  useEffect(() => {
+    if (!open) return;
+    const el = menuRef.current;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    const viewportRight = window.innerWidth - 8; // 8px safe padding
+    if (rect.right > viewportRight) {
+      setAlignLeft(true);
+    } else {
+      setAlignLeft(false);
+    }
+  }, [open]);
+
+  // Handle theme change and save to localStorage
   const handleThemeChange = (theme: typeof themes[0], save = true) => {
     // Update CSS variables directly on the body
     document.body.style.setProperty("--primary", theme.color);
     document.body.style.setProperty("--ring", theme.ring);
     document.body.style.setProperty("--sidebar-primary", theme.color);
     document.body.style.setProperty("--sidebar-ring", theme.ring);
-    
+
     setActiveColor(theme.color);
 
-    // NEW: Save the selected theme NAME to localStorage if 'save' is true
+    // Save the selected theme name to localStorage if 'save' is true
     if (save) {
       localStorage.setItem(STORAGE_KEY, theme.name);
     }
@@ -97,6 +131,9 @@ const ThemeColorPicker = () => {
   }
 
   return (
+    <div className="fixed bottom-4 right-4 z-50">
+      <div className="group relative">
+        <div className="absolute bottom-full right-0 mb-4 grid grid-cols-5 gap-2 rounded-lg border bg-background/80 p-2 backdrop-blur-md opacity-0 transition-all duration-300 group-hover:opacity-100 group-focus-within:opacity-100">
     <div className="fixed bottom-4 right-4 sm:bottom-4 sm:right-4 z-50" ref={containerRef}>
       <div className="relative">
         <div
@@ -123,22 +160,16 @@ const ThemeColorPicker = () => {
             />
           ))}
         </div>
-        <Button
-          variant="outline"
-          size="icon"
-          className="h-12 w-12 rounded-full shadow-lg"
-          aria-haspopup="menu"
-          aria-expanded={open}
-          aria-controls="theme-color-menu"
-          onClick={() => setOpen((prev: boolean) => !prev)}
-        >
+        <Button variant="outline" size="icon" className="h-12 w-12 rounded-full shadow-lg">
           <Paintbrush className="h-6 w-6" />
           <span className="sr-only">Change Theme Color</span>
         </Button>
       </div>
     </div>
+          </div>
+      </div>
+    </div>
   );
-};
+}
 
 export default ThemeColorPicker;
-

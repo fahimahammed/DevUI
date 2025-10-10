@@ -57,11 +57,7 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
-
 import { FileUpload } from "@/components/ui/file-upload";
-// REMOVED: import React, { useState } from "react";
-// ADDED: Import the component that now correctly encapsulates useState:
-
 import Accordion from "@/components/ui/Accordion";
 import {
   Tooltip,
@@ -387,6 +383,7 @@ export function CheckboxDemo() {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
+import { Button } from "@/components/ui/button"
 
 export function AlertDialogDemo() {
   return (
@@ -749,13 +746,13 @@ export function TextareaDemo() {
     category: "Widgets",
     preview: (
       <ChatBox
-        header={{ title: "AI Assistant", subtitle: "Powered by DevUI " }}
+        header={{ title: "AI Assistant", subtitle: "Powered by DevUI" }}
       />
     ),
     code: `import ChatBox from "@/components/ui/chat"
 
 export function ChatDemo() {
-  return <ChatBox header={{ title: "AI Assistant", subtitle: "Powered by DevUI " }} />
+  return <ChatBox header={{ title: "AI Assistant", subtitle: "Powered by DevUI" }} />
 }`,
     propsData: [
       {
@@ -773,59 +770,94 @@ export function ChatDemo() {
       "A brief message that appears temporarily to inform users of an action or event.",
     category: "Feedback",
     preview: (
-      <>
-        <div className="grid grid-cols-2 gap-2">
-          <Button
-            variant="outline"
-            onClick={() => toast("This is a toast notification!")}
-          >
-            Show Toast
-          </Button>
-          <Button
-            variant="outline"
-            onClick={() =>
-              toast("This is a toast notification!", {
-                description: "Here is a description for more context.",
-              })
-            }
-          >
-            Toast with Description
-          </Button>
-          <Button
-            variant="outline"
-            onClick={() => toast.success("This is a success toast!")}
-          >
-            Success Toast
-          </Button>
-          <Button
-            variant="outline"
-            onClick={() => toast.error("This is an error toast!")}
-          >
-            Error Toast
-          </Button>
-          <Button
-            variant="outline"
-            onClick={() => toast.warning("This is a warning toast!")}
-          >
-            Warning Toast
-          </Button>
-          <Button
-            variant="outline"
-            onClick={() => toast.info("This is an info toast!")}
-          >
-            Info Toast
-          </Button>
-        </div>
-      </>
+      <div className="grid grid-cols-2 gap-2">
+        <Button
+          variant="outline"
+          onClick={() => toast("This is a toast notification!")}
+        >
+          Show Toast
+        </Button>
+        <Button
+          variant="outline"
+          onClick={() =>
+            toast("This is a toast notification!", {
+              description: "Here is a description for more context.",
+            })
+          }
+        >
+          Toast with Description
+        </Button>
+        <Button
+          variant="outline"
+          onClick={() => toast.success("This is a success toast!")}
+        >
+          Success Toast
+        </Button>
+        <Button
+          variant="outline"
+          onClick={() => toast.error("This is an error toast!")}
+        >
+          Error Toast
+        </Button>
+        <Button
+          variant="outline"
+          onClick={() => toast.warning("This is a warning toast!")}
+        >
+          Warning Toast
+        </Button>
+        <Button
+          variant="outline"
+          onClick={() => toast.info("This is an info toast!")}
+        >
+          Info Toast
+        </Button>
+      </div>
     ),
     code: `import { toast, Toaster } from "sonner"
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/button"
 
 export function ToastDemo() {
   return (
-    <div>
-      <Button variant="outline" onClick={() => toast.success('This is a success toast!')}>
+    <div className="grid grid-cols-2 gap-2">
+      <Button
+        variant="outline"
+        onClick={() => toast("This is a toast notification!")}
+      >
+        Show Toast
+      </Button>
+      <Button
+        variant="outline"
+        onClick={() =>
+          toast("This is a toast notification!", {
+            description: "Here is a description for more context.",
+          })
+        }
+      >
+        Toast with Description
+      </Button>
+      <Button
+        variant="outline"
+        onClick={() => toast.success("This is a success toast!")}
+      >
         Success Toast
+      </Button>
+      <Button
+        variant="outline"
+        onClick={() => toast.error("This is an error toast!")}
+      >
+        Error Toast
+      </Button>
+      <Button
+        variant="outline"
+        onClick={() => toast.warning("This is a warning toast!")}
+      >
+        Warning Toast
+      </Button>
+      <Button
+        variant="outline"
+        onClick={() => toast.info("This is an info toast!")}
+      >
+        Info Toast
       </Button>
       <Toaster position="bottom-right" richColors closeButton />
     </div>
@@ -1097,7 +1129,7 @@ export function DrawerDemo() {
           accept="image/*,.pdf,.doc,.docx"
           multiple={true}
           maxFiles={3}
-          maxSize={5 * 1024 * 1024} // 5MB
+          maxSize={5 * 1024 * 1024}
           onFileSelect={(files) => console.log("Selected files:", files)}
           onFileUpload={async (files) => {
             console.log("Uploading files:", files);
@@ -1133,18 +1165,8 @@ export function FileUploadDemo() {
   )
 }`,
     propsData: [
-      {
-        name: "variant",
-        type: '"default" | "compact" | "dropzone"',
-        description: "Upload style variant.",
-        default: "default",
-      },
-      {
-        name: "accept",
-        type: "string",
-        description: "Accepted file types.",
-        default: "*/*",
-      },
+      { name: "variant", type: '"default" | "compact" | "dropzone"', description: "Upload style variant.", default: "default" },
+      { name: "accept", type: "string", description: "Accepted file types.", default: "*/*" },
     ],
   },
   {
@@ -1186,7 +1208,9 @@ import { Button } from "@/components/ui/button"
 export function SonnerDemo() {
   return (
     <div className="flex gap-4">
-      <Button onClick={() => toast("Simple notification")}>
+      <Button
+        onClick={() => toast("Hi there, I am Sonner! 👋")}
+      >
         Show Toast
       </Button>
       <Button
@@ -1222,13 +1246,10 @@ export function SonnerDemo() {
   {
     id: "accordion",
     title: "Accordion",
-    description:
-      "A vertically stacked set of expandable panels that reveal hidden content.",
+    description: "A vertically stacked set of expandable panels that reveal hidden content.",
     category: "Display",
     preview: <Accordion />,
     code: `import Accordion from "@/components/ui/Accordion"
-
-import Accordion from "@/components/ui/Accordion"
 
 export function AccordionDemo() {
   const items = [
@@ -1248,12 +1269,15 @@ export function AccordionDemo() {
 
   return <Accordion items={items} />
 }`,
+    propsData: [
+      { name: "items", type: "{ title: string; content: string }[]", description: "Array of accordion items with title and content.", required: true },
+      { name: "defaultOpen", type: "string[]", description: "Array of item IDs to be open by default.", default: "[]" },
+    ],
   },
   {
     id: "tooltip",
     title: "Tooltip",
-    description:
-      "A popup that appears when hovering or focusing on an element, providing additional information.",
+    description: "A popup that appears when hovering or focusing on an element, providing additional information.",
     category: "Feedback",
     preview: (
       <div className="flex justify-center gap-6">
@@ -1267,7 +1291,6 @@ export function AccordionDemo() {
             </TooltipContent>
           </Tooltip>
         </TooltipProvider>
-
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger asChild>
@@ -1287,6 +1310,7 @@ export function AccordionDemo() {
   TooltipProvider,
 } from "@/components/ui/tooltip"
 import { Button } from "@/components/ui/button"
+
 export function TooltipDemo() {
   return (
     <div className="flex gap-6">
@@ -1359,5 +1383,57 @@ export function TooltipDemo() {
     </div>
   )
 }`,
+    propsData: [
+      { name: "children", type: "React.ReactNode", description: "Content to be displayed inside the tooltip.", required: true },
+      { name: "delayDuration", type: "number", description: "Delay before tooltip appears (in milliseconds).", default: "700" },
+    ],
+  },
+  {
+    id: "typography",
+    title: "Typography",
+    description: "Predefined text styles for headings, paragraphs, and inline elements.",
+    category: "Content",
+    preview: (
+      <div className="space-y-4 text-center">
+        <h1 className="text-4xl font-bold tracking-tight">Heading 1</h1>
+        <h2 className="text-3xl font-semibold tracking-tight">Heading 2</h2>
+        <h3 className="text-2xl font-medium tracking-tight">Heading 3</h3>
+        <p className="text-base text-gray-600 max-w-md mx-auto">
+          This is a paragraph demonstrating the base text size and color. You
+          can use this style for body content across your app.
+        </p>
+        <blockquote className="border-l-4 border-blue-500 pl-4 italic text-gray-700">
+          “Good design is as little design as possible.”
+        </blockquote>
+        <p className="text-sm text-gray-500">
+          Inline styles like{" "}
+          <span className="font-semibold text-gray-900">bold</span> or{" "}
+          <span className="italic text-gray-800">italic</span> text are
+          supported too.
+        </p>
+      </div>
+    ),
+    code: `export function TypographyDemo() {
+  return (
+    <div className="space-y-4">
+      <h1 className="text-4xl font-bold tracking-tight">Heading 1</h1>
+      <h2 className="text-3xl font-semibold tracking-tight">Heading 2</h2>
+      <h3 className="text-2xl font-medium tracking-tight">Heading 3</h3>
+      <p className="text-base text-gray-600">
+        This is a paragraph demonstrating the base text size and color. You can use this style for body content across your app.
+      </p>
+      <blockquote className="border-l-4 border-blue-500 pl-4 italic text-gray-700">
+        “Good design is as little design as possible.”
+      </blockquote>
+      <p className="text-sm text-gray-500">
+        Inline styles like <span className="font-semibold text-gray-900">bold</span> or{" "}
+        <span className="italic text-gray-800">italic</span> text are supported too.
+      </p>
+    </div>
+  )
+}`,
+    propsData: [
+      { name: "className", type: "string", description: "CSS classes for styling text elements.", default: "" },
+    ],
   },
 ];
