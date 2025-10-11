@@ -65,6 +65,23 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+  DropdownMenuCheckboxItem,
+  DropdownMenuRadioItem,
+  DropdownMenuRadioGroup,
+} from "@/components/ui/dropdown-menu";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 
 export const componentsData = [
   {
@@ -1165,8 +1182,18 @@ export function FileUploadDemo() {
   )
 }`,
     propsData: [
-      { name: "variant", type: '"default" | "compact" | "dropzone"', description: "Upload style variant.", default: "default" },
-      { name: "accept", type: "string", description: "Accepted file types.", default: "*/*" },
+      {
+        name: "variant",
+        type: '"default" | "compact" | "dropzone"',
+        description: "Upload style variant.",
+        default: "default",
+      },
+      {
+        name: "accept",
+        type: "string",
+        description: "Accepted file types.",
+        default: "*/*",
+      },
     ],
   },
   {
@@ -1246,7 +1273,8 @@ export function SonnerDemo() {
   {
     id: "accordion",
     title: "Accordion",
-    description: "A vertically stacked set of expandable panels that reveal hidden content.",
+    description:
+      "A vertically stacked set of expandable panels that reveal hidden content.",
     category: "Display",
     preview: <Accordion />,
     code: `import Accordion from "@/components/ui/Accordion"
@@ -1270,14 +1298,25 @@ export function AccordionDemo() {
   return <Accordion items={items} />
 }`,
     propsData: [
-      { name: "items", type: "{ title: string; content: string }[]", description: "Array of accordion items with title and content.", required: true },
-      { name: "defaultOpen", type: "string[]", description: "Array of item IDs to be open by default.", default: "[]" },
+      {
+        name: "items",
+        type: "{ title: string; content: string }[]",
+        description: "Array of accordion items with title and content.",
+        required: true,
+      },
+      {
+        name: "defaultOpen",
+        type: "string[]",
+        description: "Array of item IDs to be open by default.",
+        default: "[]",
+      },
     ],
   },
   {
     id: "tooltip",
     title: "Tooltip",
-    description: "A popup that appears when hovering or focusing on an element, providing additional information.",
+    description:
+      "A popup that appears when hovering or focusing on an element, providing additional information.",
     category: "Feedback",
     preview: (
       <div className="flex justify-center gap-6">
@@ -1339,6 +1378,331 @@ export function TooltipDemo() {
 }`,
   },
   {
+    id: "tabs",
+    title: "Tabs",
+    description:
+      "A set of layered sections of content—known as tab panels—that are displayed one at a time.",
+    category: "Navigation",
+    preview: (
+      <div className="w-full max-w-md">
+        <Tabs defaultValue="account" className="w-full">
+          <TabsList className="grid w-full grid-cols-2">
+            <TabsTrigger value="account">Account</TabsTrigger>
+            <TabsTrigger value="password">Password</TabsTrigger>
+          </TabsList>
+          <TabsContent value="account" className="space-y-4">
+            <div className="space-y-2">
+              <label className="text-sm font-medium">Name</label>
+              <Input placeholder="Enter your name" />
+            </div>
+            <div className="space-y-2">
+              <label className="text-sm font-medium">Username</label>
+              <Input placeholder="@username" />
+            </div>
+          </TabsContent>
+          <TabsContent value="password" className="space-y-4">
+            <div className="space-y-2">
+              <label className="text-sm font-medium">Current Password</label>
+              <Input type="password" placeholder="Enter current password" />
+            </div>
+            <div className="space-y-2">
+              <label className="text-sm font-medium">New Password</label>
+              <Input type="password" placeholder="Enter new password" />
+            </div>
+          </TabsContent>
+        </Tabs>
+      </div>
+    ),
+    code: `import {
+  Tabs,
+  TabsList,
+  TabsTrigger,
+  TabsContent,
+} from "@/components/ui/tabs"
+import { Input } from "@/components/ui/input"
+
+export function TabsDemo() {
+  return (
+    <Tabs defaultValue="account" className="w-full max-w-md">
+      <TabsList className="grid w-full grid-cols-2">
+        <TabsTrigger value="account">Account</TabsTrigger>
+        <TabsTrigger value="password">Password</TabsTrigger>
+      </TabsList>
+      <TabsContent value="account" className="space-y-4">
+        <div className="space-y-2">
+          <label className="text-sm font-medium">Name</label>
+          <Input placeholder="Enter your name" />
+        </div>
+        <div className="space-y-2">
+          <label className="text-sm font-medium">Username</label>
+          <Input placeholder="@username" />
+        </div>
+      </TabsContent>
+      <TabsContent value="password" className="space-y-4">
+        <div className="space-y-2">
+          <label className="text-sm font-medium">Current Password</label>
+          <Input type="password" placeholder="Enter current password" />
+        </div>
+        <div className="space-y-2">
+          <label className="text-sm font-medium">New Password</label>
+          <Input type="password" placeholder="Enter new password" />
+        </div>
+      </TabsContent>
+    </Tabs>
+  )
+}`,
+    propsData: [
+      {
+        name: "defaultValue",
+        type: "string",
+        description:
+          "The value of the tab that should be active when initially rendered.",
+        default: "undefined",
+      },
+      {
+        name: "value",
+        type: "string",
+        description: "The controlled value of the tab to activate.",
+        default: "undefined",
+      },
+      {
+        name: "onValueChange",
+        type: "(value: string) => void",
+        description: "Event handler called when the value changes.",
+        default: "undefined",
+      },
+    ],
+  },
+  {
+    id: "dropdown-menu",
+    title: "Dropdown Menu",
+    description:
+      "A customizable dropdown menu with support for submenus, checkboxes, and radio buttons.",
+    category: "Overlay",
+    preview: (
+      <div className="flex gap-4 justify-center">
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="outline">Open Menu</Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="w-56">
+            <DropdownMenuLabel>My Account</DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem>Profile</DropdownMenuItem>
+            <DropdownMenuItem>Billing</DropdownMenuItem>
+            <DropdownMenuItem>Team</DropdownMenuItem>
+            <DropdownMenuItem>Subscription</DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button>Options</Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="w-48">
+            <DropdownMenuCheckboxItem checked>
+              Show Toolbar
+            </DropdownMenuCheckboxItem>
+            <DropdownMenuCheckboxItem>Show Sidebar</DropdownMenuCheckboxItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuRadioGroup value="dark">
+              <DropdownMenuRadioItem value="light">Light</DropdownMenuRadioItem>
+              <DropdownMenuRadioItem value="dark">Dark</DropdownMenuRadioItem>
+              <DropdownMenuRadioItem value="system">
+                System
+              </DropdownMenuRadioItem>
+            </DropdownMenuRadioGroup>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </div>
+    ),
+    code: `import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+  DropdownMenuCheckboxItem,
+  DropdownMenuRadioItem,
+  DropdownMenuRadioGroup,
+} from "@/components/ui/dropdown-menu"
+import { Button } from "@/components/ui/button"
+
+export function DropdownMenuDemo() {
+  return (
+    <div className="flex gap-4">
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button variant="outline">Open Menu</Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent className="w-56">
+          <DropdownMenuLabel>My Account</DropdownMenuLabel>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem>Profile</DropdownMenuItem>
+          <DropdownMenuItem>Billing</DropdownMenuItem>
+          <DropdownMenuItem>Team</DropdownMenuItem>
+          <DropdownMenuItem>Subscription</DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button>Options</Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent className="w-48">
+          <DropdownMenuCheckboxItem checked>
+            Show Toolbar
+          </DropdownMenuCheckboxItem>
+          <DropdownMenuCheckboxItem>
+            Show Sidebar
+          </DropdownMenuCheckboxItem>
+          <DropdownMenuSeparator />
+          <DropdownMenuRadioGroup value="dark">
+            <DropdownMenuRadioItem value="light">Light</DropdownMenuRadioItem>
+            <DropdownMenuRadioItem value="dark">Dark</DropdownMenuRadioItem>
+            <DropdownMenuRadioItem value="system">System</DropdownMenuRadioItem>
+          </DropdownMenuRadioGroup>
+        </DropdownMenuContent>
+      </DropdownMenu>
+    </div>
+  )
+}`,
+    propsData: [
+      {
+        name: "open",
+        type: "boolean",
+        description: "Controls the open state of the dropdown menu.",
+        default: "undefined",
+      },
+      {
+        name: "onOpenChange",
+        type: "(open: boolean) => void",
+        description: "Event handler called when the open state changes.",
+        default: "undefined",
+      },
+    ],
+  },
+  {
+    id: "popover",
+    title: "Popover",
+    description:
+      "A floating content area that displays rich content in a portal, triggered by a button.",
+    category: "Overlay",
+    preview: (
+      <div className="flex justify-center">
+        <Popover>
+          <PopoverTrigger asChild>
+            <Button variant="outline">Open Popover</Button>
+          </PopoverTrigger>
+          <PopoverContent className="w-80">
+            <div className="space-y-4">
+              <h4 className="font-medium leading-none">Dimensions</h4>
+              <p className="text-sm text-muted-foreground">
+                Set the dimensions for the layer.
+              </p>
+              <div className="grid gap-2">
+                <div className="grid grid-cols-3 items-center gap-4">
+                  <label htmlFor="width" className="text-sm">
+                    Width
+                  </label>
+                  <Input
+                    id="width"
+                    defaultValue="100%"
+                    className="col-span-2 h-8"
+                  />
+                </div>
+                <div className="grid grid-cols-3 items-center gap-4">
+                  <label htmlFor="maxWidth" className="text-sm">
+                    Max. width
+                  </label>
+                  <Input
+                    id="maxWidth"
+                    defaultValue="300px"
+                    className="col-span-2 h-8"
+                  />
+                </div>
+                <div className="grid grid-cols-3 items-center gap-4">
+                  <label htmlFor="height" className="text-sm">
+                    Height
+                  </label>
+                  <Input
+                    id="height"
+                    defaultValue="25px"
+                    className="col-span-2 h-8"
+                  />
+                </div>
+              </div>
+            </div>
+          </PopoverContent>
+        </Popover>
+      </div>
+    ),
+    code: `import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+
+export function PopoverDemo() {
+  return (
+    <Popover>
+      <PopoverTrigger asChild>
+        <Button variant="outline">Open Popover</Button>
+      </PopoverTrigger>
+      <PopoverContent className="w-80">
+        <div className="space-y-4">
+          <h4 className="font-medium leading-none">Dimensions</h4>
+          <p className="text-sm text-muted-foreground">
+            Set the dimensions for the layer.
+          </p>
+          <div className="grid gap-2">
+            <div className="grid grid-cols-3 items-center gap-4">
+              <label htmlFor="width" className="text-sm">Width</label>
+              <Input
+                id="width"
+                defaultValue="100%"
+                className="col-span-2 h-8"
+              />
+            </div>
+            <div className="grid grid-cols-3 items-center gap-4">
+              <label htmlFor="maxWidth" className="text-sm">Max. width</label>
+              <Input
+                id="maxWidth"
+                defaultValue="300px"
+                className="col-span-2 h-8"
+              />
+            </div>
+            <div className="grid grid-cols-3 items-center gap-4">
+              <label htmlFor="height" className="text-sm">Height</label>
+              <Input
+                id="height"
+                defaultValue="25px"
+                className="col-span-2 h-8"
+              />
+            </div>
+          </div>
+        </div>
+      </PopoverContent>
+    </Popover>
+  )
+}`,
+    propsData: [
+      {
+        name: "open",
+        type: "boolean",
+        description: "Controls the open state of the popover.",
+        default: "undefined",
+      },
+      {
+        name: "onOpenChange",
+        type: "(open: boolean) => void",
+        description: "Event handler called when the open state changes.",
+        default: "undefined",
+      },
+    ],
+  },
+  {
     id: "typography",
     title: "Typography",
     description:
@@ -1384,14 +1748,25 @@ export function TooltipDemo() {
   )
 }`,
     propsData: [
-      { name: "children", type: "React.ReactNode", description: "Content to be displayed inside the tooltip.", required: true },
-      { name: "delayDuration", type: "number", description: "Delay before tooltip appears (in milliseconds).", default: "700" },
+      {
+        name: "children",
+        type: "React.ReactNode",
+        description: "Content to be displayed inside the tooltip.",
+        required: true,
+      },
+      {
+        name: "delayDuration",
+        type: "number",
+        description: "Delay before tooltip appears (in milliseconds).",
+        default: "700",
+      },
     ],
   },
   {
     id: "typography",
     title: "Typography",
-    description: "Predefined text styles for headings, paragraphs, and inline elements.",
+    description:
+      "Predefined text styles for headings, paragraphs, and inline elements.",
     category: "Content",
     preview: (
       <div className="space-y-4 text-center">
@@ -1433,7 +1808,12 @@ export function TooltipDemo() {
   )
 }`,
     propsData: [
-      { name: "className", type: "string", description: "CSS classes for styling text elements.", default: "" },
+      {
+        name: "className",
+        type: "string",
+        description: "CSS classes for styling text elements.",
+        default: "",
+      },
     ],
   },
 ];
