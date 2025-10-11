@@ -1,3 +1,4 @@
+// src/data/components.tsx
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
@@ -59,12 +60,14 @@ import {
 } from "@/components/ui/drawer";
 import { FileUpload } from "@/components/ui/file-upload";
 import Accordion from "@/components/ui/Accordion";
+import Collapsible from "@/components/ui/collapsible";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import {
   DropdownMenu,
@@ -82,6 +85,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { Carousel } from "@/components/ui/carousel";
 
 export const componentsData = [
   {
@@ -121,6 +125,73 @@ export function ButtonDemo() {
         type: '"sm" | "default" | "lg"',
         description: "Button size.",
         default: "default",
+      },
+    ],
+  },
+  {
+    id: "carousel",
+    title: "Carousel",
+    description:
+      "A slideshow component for cycling through elements with navigation controls, keyboard support, and touch gestures.",
+    category: "Display",
+    preview: (
+      <div className="w-full max-w-md">
+        <Carousel options={{ autoplay: true, intervalMs: 3000 }}>
+          <div className="flex h-48 items-center justify-center bg-gradient-to-br from-blue-500 to-purple-600 text-white rounded-lg">
+            <div className="text-center">
+              <h3 className="text-xl font-bold">Slide 1</h3>
+              <p className="text-blue-100">Beautiful gradient background</p>
+            </div>
+          </div>
+          <div className="flex h-48 items-center justify-center bg-gradient-to-br from-green-500 to-teal-600 text-white rounded-lg">
+            <div className="text-center">
+              <h3 className="text-xl font-bold">Slide 2</h3>
+              <p className="text-green-100">Smooth transitions</p>
+            </div>
+          </div>
+          <div className="flex h-48 items-center justify-center bg-gradient-to-br from-orange-500 to-red-600 text-white rounded-lg">
+            <div className="text-center">
+              <h3 className="text-xl font-bold">Slide 3</h3>
+              <p className="text-orange-100">Touch & keyboard support</p>
+            </div>
+          </div>
+        </Carousel>
+      </div>
+    ),
+    code: `import { Carousel } from "@/components/ui/carousel"
+
+export function CarouselDemo() {
+  return (
+    <div className="w-full max-w-md">
+      <Carousel options={{ autoplay: true, intervalMs: 3000 }}>
+        <div className="flex h-48 items-center justify-center bg-gradient-to-br from-blue-500 to-purple-600 text-white rounded-lg">
+          <div className="text-center">
+            <h3 className="text-xl font-bold">Slide 1</h3>
+            <p className="text-blue-100">Beautiful gradient background</p>
+          </div>
+        </div>
+        <div className="flex h-48 items-center justify-center bg-gradient-to-br from-green-500 to-teal-600 text-white rounded-lg">
+          <div className="text-center">
+            <h3 className="text-xl font-bold">Slide 2</h3>
+            <p className="text-green-100">Smooth transitions</p>
+          </div>
+        </div>
+        <div className="flex h-48 items-center justify-center bg-gradient-to-br from-orange-500 to-red-600 text-white rounded-lg">
+          <div className="text-center">
+            <h3 className="text-xl font-bold">Slide 3</h3>
+            <p className="text-orange-100">Touch & keyboard support</p>
+          </div>
+        </div>
+      </Carousel>
+    </div>
+  )
+}`,
+    propsData: [
+      {
+        name: "options",
+        type: "{ loop?: boolean; autoplay?: boolean; intervalMs?: number }",
+        description: "Carousel configuration options.",
+        default: "{ loop: true, autoplay: false, intervalMs: 5000 }",
       },
     ],
   },
@@ -1558,7 +1629,7 @@ export function DropdownMenuDemo() {
           <DropdownMenuSeparator />
           <DropdownMenuRadioGroup value="dark">
             <DropdownMenuRadioItem value="light">Light</DropdownMenuRadioItem>
-            <DropdownMenuRadioItem value="dark">Dark</DropdownMenuRadioItem>
+            <DropdownMenuRadioItem value="dark">Dark</DropdownMenuItem>
             <DropdownMenuRadioItem value="system">System</DropdownMenuRadioItem>
           </DropdownMenuRadioGroup>
         </DropdownMenuContent>
@@ -1760,6 +1831,39 @@ export function PopoverDemo() {
         description: "Delay before tooltip appears (in milliseconds).",
         default: "700",
       },
+    ],
+  },
+  {
+    id: "collapsible",
+    title: "Collapsible",
+    description: "A small accessible collapsible component with smooth height animation.",
+    category: "Display",
+    preview: (
+      <div className="w-full max-w-xl mx-auto">
+        <Collapsible header={<span className="font-medium">Props & API</span>}>
+          <div className="text-sm text-muted-foreground">
+            <p>Use the component to hide/show content with smooth height animation.</p>
+            <ul className="mt-2 list-disc ml-5">
+              <li><code>defaultOpen</code>: boolean</li>
+              <li><code>duration</code>: number (ms)</li>
+            </ul>
+          </div>
+        </Collapsible>
+      </div>
+    ),
+    code: `import Collapsible from "@/components/ui/collapsible"
+
+export function CollapsibleDemo() {
+  return (
+    <Collapsible header="More details">
+      <p>Hidden content goes here.</p>
+    </Collapsible>
+  )
+}`,
+    propsData: [
+      { name: "header", type: "React.ReactNode", description: "Header shown as the toggle.", required: true },
+      { name: "defaultOpen", type: "boolean", description: "Start opened.", default: "false" },
+      { name: "duration", type: "number", description: "Transition duration in ms.", default: "220" },
     ],
   },
 ];
