@@ -59,6 +59,7 @@ import {
 } from "@/components/ui/drawer";
 import { FileUpload } from "@/components/ui/file-upload";
 import Accordion from "@/components/ui/Accordion";
+import Collapsible from "@/components/ui/collapsible";
 import {
   Tooltip,
   TooltipContent,
@@ -1502,6 +1503,39 @@ export function TooltipDemo() {
 }`,
     propsData: [
       { name: "className", type: "string", description: "CSS classes for styling text elements.", default: "" },
+    ],
+  },
+  {
+    id: "collapsible",
+    title: "Collapsible",
+    description: "A small accessible collapsible component with smooth height animation.",
+    category: "Display",
+    preview: (
+      <div className="w-full max-w-xl mx-auto">
+        <Collapsible header={<span className="font-medium">Props & API</span>}>
+          <div className="text-sm text-muted-foreground">
+            <p>Use the component to hide/show content with smooth height animation.</p>
+            <ul className="mt-2 list-disc ml-5">
+              <li><code>defaultOpen</code>: boolean</li>
+              <li><code>duration</code>: number (ms)</li>
+            </ul>
+          </div>
+        </Collapsible>
+      </div>
+    ),
+    code: `import Collapsible from "@/components/ui/collapsible"
+
+export function CollapsibleDemo() {
+  return (
+    <Collapsible header="More details">
+      <p>Hidden content goes here.</p>
+    </Collapsible>
+  )
+}`,
+    propsData: [
+      { name: "header", type: "React.ReactNode", description: "Header shown as the toggle.", required: true },
+      { name: "defaultOpen", type: "boolean", description: "Start opened.", default: "false" },
+      { name: "duration", type: "number", description: "Transition duration in ms.", default: "220" },
     ],
   },
 ];
