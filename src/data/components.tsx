@@ -1761,7 +1761,5 @@ export function PopoverDemo() {
         default: "700",
       },
     ],
-
-
   },
 ];
