@@ -20,11 +20,16 @@ import {
 } from "lucide-react";
 
 interface HeaderProps {
-  searchQuery: string;
-  setSearchQuery: (query: string) => void;
+  searchQuery?: string;
+  setSearchQuery?: (query: string) => void;
 }
 
-const Header = ({ searchQuery, setSearchQuery }: HeaderProps) => { 
+const Header = ({ searchQuery, setSearchQuery }: HeaderProps) => {
+  // If parent doesn't provide search state, use internal state so Header
+  // can be used standalone (e.g. when included in layout).
+  const [localQuery, setLocalQuery] = useState("");
+  const query = searchQuery !== undefined ? searchQuery : localQuery;
+  const setQuery = setSearchQuery ?? setLocalQuery;
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false); 
   const { theme, setTheme } = useTheme();
@@ -127,8 +132,8 @@ const Header = ({ searchQuery, setSearchQuery }: HeaderProps) => {
                   ref={searchInputRef}
                   type="text"
                   placeholder="Search components..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
+                  value={query}
+                  onChange={(e) => setQuery(e.target.value)}
                   className={`hidden md:block h-10 rounded-full border-2 border-transparent bg-muted/50 focus:border-primary focus:bg-transparent transition-all duration-300 ease-in-out ${
                     isSearchOpen ? "w-64 px-4 opacity-100" : "w-0 px-0 opacity-0"
                   }`}
@@ -206,8 +211,8 @@ const Header = ({ searchQuery, setSearchQuery }: HeaderProps) => {
               ref={searchInputRef}
               type="text"
               placeholder="Search components..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
               className="h-10 w-full rounded-full border-2 border-transparent bg-muted/70 focus:border-primary focus:bg-background transition-all duration-300 ease-in-out px-4 opacity-100"
             />
           </div>
