@@ -67,6 +67,8 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { Carousel } from "@/components/ui/carousel";
+import LiveSearch from "@/components/ui/live-search";
+import ColorSwatchGrid from "@/components/ui/color-swatch-grid";
 
 export const componentsData = [
   {
@@ -174,6 +176,77 @@ export function CarouselDemo() {
         description: "Carousel configuration options.",
         default: "{ loop: true, autoplay: false, intervalMs: 5000 }",
       },
+    ],
+  },
+  {
+    id: "live-search",
+    title: "Live Search",
+    description:
+      "A small, accessible searchable dropdown with keyboard navigation and debounced input.",
+    category: "Form",
+    preview: (
+      <div className="w-full max-w-md">
+        <LiveSearch
+          items={[
+            { id: "1", label: "Apple" },
+            { id: "2", label: "Banana" },
+            { id: "3", label: "Blueberry" },
+            { id: "4", label: "Grapes" },
+            { id: "5", label: "Pineapple" },
+          ]}
+          placeholder="Search fruit..."
+          onSelect={(it) => console.log("Selected", it)}
+        />
+      </div>
+    ),
+    code: `import LiveSearch from "@/components/ui/live-search"
+
+export function LiveSearchDemo() {
+  return (
+    <LiveSearch
+      items={[{ id: '1', label: 'Apple' }, { id: '2', label: 'Banana' }]}
+      onSelect={(it) => console.log(it)}
+      placeholder="Search..."
+    />
+  )
+}`,
+    propsData: [
+      { name: "items", type: "{id:string;label:string}[]", description: "Array of items to search.", required: true },
+      { name: "onSelect", type: "(item) => void", description: "Called when an item is selected.", default: "undefined" },
+    ],
+  },
+  {
+    id: "color-swatch-grid",
+    title: "Color Swatch Grid",
+    description: "A responsive grid of color swatches with copy-to-clipboard and selection.",
+    category: "Display",
+    preview: (
+      <div className="w-full max-w-lg">
+        <ColorSwatchGrid
+          colors={[
+            { name: "Blue", hex: "#3b82f6" },
+            { name: "Green", hex: "#10b981" },
+            { name: "Purple", hex: "#8b5cf6" },
+            { name: "Orange", hex: "#f97316" },
+            { name: "Red", hex: "#ef4444" },
+            { name: "Gray", hex: "#6b7280" },
+          ]}
+          onSelect={(c) => console.log("Color selected", c)}
+        />
+      </div>
+    ),
+    code: `import ColorSwatchGrid from "@/components/ui/color-swatch-grid"
+
+export function ColorSwatchGridDemo() {
+  const palette = [
+    { name: 'Blue', hex: '#3b82f6' },
+    { name: 'Green', hex: '#10b981' },
+  ]
+  return <ColorSwatchGrid colors={palette} onSelect={(c) => console.log(c)} />
+}`,
+    propsData: [
+      { name: "colors", type: "{name:string;hex:string}[]", description: "Array of colors to display.", required: true },
+      { name: "onSelect", type: "(color) => void", description: "Called when a color is selected.", default: "undefined" },
     ],
   },
   {
