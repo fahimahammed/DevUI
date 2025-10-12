@@ -1,100 +1,107 @@
-import * as React from "react"
+import * as React from "react";
 
-import { cn } from "@/lib/utils"
-import { Button } from "./button"
+import { cn } from "@/lib/utils";
+import { Button } from "./button";
 
 type CarouselOptions = {
-  loop?: boolean
-  autoplay?: boolean
-  intervalMs?: number
-}
+  loop?: boolean;
+  autoplay?: boolean;
+  intervalMs?: number;
+};
 
 type CarouselContextValue = {
-  activeIndex: number
-  count: number
-  next: () => void
-  prev: () => void
-  goTo: (index: number) => void
-}
+  activeIndex: number;
+  count: number;
+  next: () => void;
+  prev: () => void;
+  goTo: (index: number) => void;
+};
 
-const CarouselContext = React.createContext<CarouselContextValue | null>(null)
+const CarouselContext = React.createContext<CarouselContextValue | null>(null);
 
 function useCarouselContext() {
-  const ctx = React.useContext(CarouselContext)
-  if (!ctx) throw new Error("Carousel components must be used within <Carousel>")
-  return ctx
+  const ctx = React.useContext(CarouselContext);
+  if (!ctx)
+    throw new Error("Carousel components must be used within <Carousel>");
+  return ctx;
 }
 
 type CarouselProps = React.ComponentProps<"div"> & {
-  options?: CarouselOptions
-}
+  options?: CarouselOptions;
+};
 
 function Carousel({ className, children, options, ...props }: CarouselProps) {
-  const { loop = true, autoplay = false, intervalMs = 5000 } = options ?? {}
+  const { loop = true, autoplay = false, intervalMs = 5000 } = options ?? {};
 
-  const items = React.Children.toArray(children)
-  const count = items.length
-  const [activeIndex, setActiveIndex] = React.useState(0)
+  const items = React.Children.toArray(children);
+  const count = items.length;
+  const [activeIndex, setActiveIndex] = React.useState(0);
 
   const goTo = React.useCallback(
     (index: number) => {
-      if (count === 0) return
+      if (count === 0) return;
       if (loop) {
-        const nextIndex = (index + count) % count
-        setActiveIndex(nextIndex)
+        const nextIndex = (index + count) % count;
+        setActiveIndex(nextIndex);
       } else {
-        const clamped = Math.max(0, Math.min(index, count - 1))
-        setActiveIndex(clamped)
+        const clamped = Math.max(0, Math.min(index, count - 1));
+        setActiveIndex(clamped);
       }
     },
     [count, loop]
-  )
+  );
 
-  const next = React.useCallback(() => goTo(activeIndex + 1), [activeIndex, goTo])
-  const prev = React.useCallback(() => goTo(activeIndex - 1), [activeIndex, goTo])
+  const next = React.useCallback(
+    () => goTo(activeIndex + 1),
+    [activeIndex, goTo]
+  );
+  const prev = React.useCallback(
+    () => goTo(activeIndex - 1),
+    [activeIndex, goTo]
+  );
 
   // Autoplay
   React.useEffect(() => {
-    if (!autoplay || count <= 1) return
+    if (!autoplay || count <= 1) return;
     const id = window.setInterval(() => {
-      next()
-    }, intervalMs)
-    return () => window.clearInterval(id)
-  }, [autoplay, count, intervalMs, next])
+      next();
+    }, intervalMs);
+    return () => window.clearInterval(id);
+  }, [autoplay, count, intervalMs, next]);
 
   // Keyboard navigation
-  const rootRef = React.useRef<HTMLDivElement | null>(null)
+  const rootRef = React.useRef<HTMLDivElement | null>(null);
   React.useEffect(() => {
-    const el = rootRef.current
-    if (!el) return
+    const el = rootRef.current;
+    if (!el) return;
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "ArrowRight") next()
-      if (e.key === "ArrowLeft") prev()
-    }
-    el.addEventListener("keydown", onKey)
-    return () => el.removeEventListener("keydown", onKey)
-  }, [next, prev])
+      if (e.key === "ArrowRight") next();
+      if (e.key === "ArrowLeft") prev();
+    };
+    el.addEventListener("keydown", onKey);
+    return () => el.removeEventListener("keydown", onKey);
+  }, [next, prev]);
 
   // Touch / drag swipe
-  const startX = React.useRef<number | null>(null)
-  const deltaX = React.useRef(0)
+  const startX = React.useRef<number | null>(null);
+  const deltaX = React.useRef(0);
 
   const onPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
-    ;(e.currentTarget as HTMLDivElement).setPointerCapture(e.pointerId)
-    startX.current = e.clientX
-    deltaX.current = 0
-  }
+    (e.currentTarget as HTMLDivElement).setPointerCapture(e.pointerId);
+    startX.current = e.clientX;
+    deltaX.current = 0;
+  };
   const onPointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
-    if (startX.current == null) return
-    deltaX.current = e.clientX - startX.current
-  }
+    if (startX.current == null) return;
+    deltaX.current = e.clientX - startX.current;
+  };
   const onPointerUp = () => {
-    const threshold = 56 // px
-    if (deltaX.current > threshold) prev()
-    if (deltaX.current < -threshold) next()
-    startX.current = null
-    deltaX.current = 0
-  }
+    const threshold = 56; // px
+    if (deltaX.current > threshold) prev();
+    if (deltaX.current < -threshold) next();
+    startX.current = null;
+    deltaX.current = 0;
+  };
 
   return (
     <CarouselContext.Provider value={{ activeIndex, count, next, prev, goTo }}>
@@ -155,57 +162,71 @@ function Carousel({ className, children, options, ...props }: CarouselProps) {
         ) : null}
       </div>
     </CarouselContext.Provider>
-  )
+  );
 }
 
-type NavProps = React.ComponentProps<typeof Button>
+type NavProps = React.ComponentProps<typeof Button>;
 
 const CarouselNext = React.forwardRef<HTMLButtonElement, NavProps>(
   ({ className, ...props }, ref) => {
-    const { next, count } = useCarouselContext()
-    if (count <= 1) return null
+    const { next, count } = useCarouselContext();
+    if (count <= 1) return null;
     return (
       <Button
         ref={ref}
         size="icon"
         variant="outline"
-        className={cn("rounded-full bg-background/70 backdrop-blur-sm", className)}
+        className={cn(
+          "rounded-full bg-background/70 backdrop-blur-sm",
+          className
+        )}
         aria-label="Next slide"
         onClick={next}
         {...props}
       >
         <svg viewBox="0 0 24 24" className="size-5" aria-hidden="true">
-          <path d="M8 4l8 8-8 8" fill="none" stroke="currentColor" strokeWidth="2" />
+          <path
+            d="M8 4l8 8-8 8"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+          />
         </svg>
       </Button>
-    )
+    );
   }
-)
-CarouselNext.displayName = "CarouselNext"
+);
+CarouselNext.displayName = "CarouselNext";
 
 const CarouselPrevious = React.forwardRef<HTMLButtonElement, NavProps>(
   ({ className, ...props }, ref) => {
-    const { prev, count } = useCarouselContext()
-    if (count <= 1) return null
+    const { prev, count } = useCarouselContext();
+    if (count <= 1) return null;
     return (
       <Button
         ref={ref}
         size="icon"
         variant="outline"
-        className={cn("rounded-full bg-background/70 backdrop-blur-sm", className)}
+        className={cn(
+          "rounded-full bg-background/70 backdrop-blur-sm",
+          className
+        )}
         aria-label="Previous slide"
         onClick={prev}
         {...props}
       >
         <svg viewBox="0 0 24 24" className="size-5" aria-hidden="true">
-          <path d="M16 4L8 12l8 8" fill="none" stroke="currentColor" strokeWidth="2" />
+          <path
+            d="M16 4L8 12l8 8"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+          />
         </svg>
       </Button>
-    )
+    );
   }
-)
-CarouselPrevious.displayName = "CarouselPrevious"
+);
+CarouselPrevious.displayName = "CarouselPrevious";
 
-export { Carousel, CarouselNext, CarouselPrevious }
-
-
+export { Carousel, CarouselNext, CarouselPrevious };
