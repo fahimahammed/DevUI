@@ -67,6 +67,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { Carousel } from "@/components/ui/carousel";
 
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import {
@@ -1833,6 +1834,40 @@ export function PopoverDemo() {
       },
     ],
   },
+  {
+    id: "collapsible",
+    title: "Collapsible",
+    description: "A small accessible collapsible component with smooth height animation.",
+    category: "Display",
+    preview: (
+      <div className="w-full max-w-xl mx-auto">
+        <Collapsible header={<span className="font-medium">Props & API</span>}>
+          <div className="text-sm text-muted-foreground">
+            <p>Use the component to hide/show content with smooth height animation.</p>
+            <ul className="mt-2 list-disc ml-5">
+              <li><code>defaultOpen</code>: boolean</li>
+              <li><code>duration</code>: number (ms)</li>
+            </ul>
+          </div>
+        </Collapsible>
+      </div>
+    ),
+    code: `import Collapsible from "@/components/ui/collapsible"
+
+export function CollapsibleDemo() {
+  return (
+    <Collapsible header="More details">
+      <p>Hidden content goes here.</p>
+    </Collapsible>
+  )
+}`,
+    propsData: [
+      { name: "header", type: "React.ReactNode", description: "Header shown as the toggle.", required: true },
+      { name: "defaultOpen", type: "boolean", description: "Start opened.", default: "false" },
+      { name: "duration", type: "number", description: "Transition duration in ms.", default: "220" },
+    ],
+  },
+];
   {
     id: "collapsible",
     title: "Collapsible",
