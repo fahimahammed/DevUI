@@ -89,6 +89,8 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 
+import { Spinner } from "@/components/ui/spinner";
+
 export const componentsData = [
   {
     id: "button",
@@ -1960,6 +1962,40 @@ export function CollapsibleDemo() {
         description: "Transition duration in ms.",
         default: "220",
       },
+    ],
+  },
+  {
+  id: "spinner",
+  title: "Spinner",
+  description: "A small self-contained spinner used to indicate loading states.",
+  category: "Feedback",
+  preview: (
+    <div className="flex flex-col items-center gap-4">
+      <Spinner />
+      <div className="flex gap-3 items-center">
+        <Spinner size="sm" />
+        <Spinner size="md" />
+        <Spinner size="lg" />
+      </div>
+    </div>
+  ),
+  code: `import { Spinner } from "@/components/Spinner"
+
+export function SpinnerDemo() {
+  return (
+    <div className="flex flex-col items-center gap-4">
+      <Spinner />
+      <div className="flex gap-3 items-center">
+        <Spinner size="sm" />
+        <Spinner size="md" />
+        <Spinner size="lg" />
+      </div>
+    </div>
+  )
+}`,
+  propsData: [
+      { name: "size", type: '"sm" | "md" | "lg"', description: "Size preset for the spinner.", default: "md" },
+      { name: "label", type: "string", description: "Accessible label for screen readers.", default: "Loading" },
     ],
   },
 ];
