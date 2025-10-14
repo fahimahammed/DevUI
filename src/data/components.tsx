@@ -93,6 +93,8 @@ import { Spinner } from "@/components/ui/spinner";
 
 import { Kbd } from "@/components/ui/kbd";
 
+import { InputOTP } from "@/components/ui/input-otp";
+
 export const componentsData = [
   {
     id: "button",
@@ -2065,6 +2067,41 @@ export function KbdDemo() {
       description: "Additional classes to customize appearance.",
       default: '""',
       },
+    ],
+  },
+  {
+  id: "input-otp",
+  title: "Input OTP",
+  description: "An OTP input split into two groups (3-3) separated by a hyphen; supports paste, navigation, and backspace behavior.",
+  category: "Form",
+  preview: <InputOTP.Preview />,
+  code: `import {
+  InputOTP,
+  InputOTPGroup,
+  InputOTPSeparator,
+  InputOTPSlot,
+} from "@/components/InputOTP"
+
+export function InputOTPDemo() {
+  return (
+    <InputOTP maxLength={6}>
+      <InputOTPGroup>
+        <InputOTPSlot index={0} />
+        <InputOTPSlot index={1} />
+        <InputOTPSlot index={2} />
+      </InputOTPGroup>
+      <InputOTPSeparator />
+      <InputOTPGroup>
+        <InputOTPSlot index={3} />
+        <InputOTPSlot index={4} />
+        <InputOTPSlot index={5} />
+      </InputOTPGroup>
+    </InputOTP>
+  )
+}`,
+  propsData: [
+      { name: "maxLength", type: "number", description: "Total number of OTP digits.", default: "6" },
+      { name: "children", type: "ReactNode", description: "Slot groups and separators." },
     ],
   },
 ];
