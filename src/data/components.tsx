@@ -2001,8 +2001,8 @@ export function SpinnerDemo() {
     ],
   },
   {
-  id: "kbd",
-  title: "Kbd",
+  id: "keyboard-shortcut",
+  title: "Keyboard Shortcut",
   description: "A small self-contained keyboard key element for displaying shortcuts.",
   category: "Display",
   preview: <Kbd.Preview />,
