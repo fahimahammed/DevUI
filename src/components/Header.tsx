@@ -18,18 +18,10 @@ import {
   Star,
   Search,
 } from "lucide-react";
+import { useSearch } from "@/lib/SearchContext";
 
-interface HeaderProps {
-  searchQuery?: string;
-  setSearchQuery?: (query: string) => void;
-}
-
-const Header = ({ searchQuery, setSearchQuery }: HeaderProps) => {
-  // If parent doesn't provide search state, use internal state so Header
-  // can be used standalone (e.g. when included in layout).
-  const [localQuery, setLocalQuery] = useState("");
-  const query = searchQuery !== undefined ? searchQuery : localQuery;
-  const setQuery = setSearchQuery ?? setLocalQuery;
+const Header = () => {
+  const { searchQuery, setSearchQuery } = useSearch();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false); 
   const { theme, setTheme } = useTheme();
@@ -42,10 +34,13 @@ const Header = ({ searchQuery, setSearchQuery }: HeaderProps) => {
   const navigation = [
     { name: "Home", href: "/", icon: Home },
     { name: "About", href: "/about", icon: Users },
-    { name: "Components", href: "#components", icon: Code2 },
+    { name: "Components", href: "/#components", icon: Code2 },
     { name: "Docs", href: "/docs", icon: BookOpen },
     { name: "Analytics", href: "/analytics", icon: Star },
   ];
+
+  // Only show search on home page
+  const isHomePage = pathname === "/";
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
@@ -125,30 +120,32 @@ const Header = ({ searchQuery, setSearchQuery }: HeaderProps) => {
 
             {/* Actions */}
             <div className="flex items-center justify-end space-x-2 flex-1">
-              {/* ✅ START: Animated Search Bar */}
-              <div className="relative flex items-center">
-                {/* Desktop search input */}
-                <Input
-                  ref={searchInputRef}
-                  type="text"
-                  placeholder="Search components..."
-                  value={query}
-                  onChange={(e) => setQuery(e.target.value)}
-                  className={`hidden md:block h-10 rounded-full border-2 border-transparent bg-muted/50 focus:border-primary focus:bg-transparent transition-all duration-300 ease-in-out ${
-                    isSearchOpen ? "w-64 px-4 opacity-100" : "w-0 px-0 opacity-0"
-                  }`}
-                />
-                 <Button
-                  variant="ghost"
-                  size="icon"
-                  onClick={() => setIsSearchOpen(!isSearchOpen)}
-                  className="hover:bg-primary/10 rounded-full"
-                  aria-label="Toggle search bar"
-                >
-                  {isSearchOpen ? <X className="h-5 w-5" /> : <Search className="h-5 w-5" />}
-                </Button>
-              </div>
-              {/* ✅ END: Animated Search Bar */}
+              {/* START: Animated Search Bar - Only show on home page */}
+              {isHomePage && (
+                <div className="relative flex items-center">
+                  {/* Desktop search input */}
+                  <Input
+                    ref={searchInputRef}
+                    type="text"
+                    placeholder="Search components..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className={`hidden md:block h-10 rounded-full border-2 border-transparent bg-muted/50 focus:border-primary focus:bg-transparent transition-all duration-300 ease-in-out ${
+                      isSearchOpen ? "w-64 px-4 opacity-100" : "w-0 px-0 opacity-0"
+                    }`}
+                  />
+                   <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={() => setIsSearchOpen(!isSearchOpen)}
+                    className="hover:bg-primary/10 rounded-full"
+                    aria-label="Toggle search bar"
+                  >
+                    {isSearchOpen ? <X className="h-5 w-5" /> : <Search className="h-5 w-5" />}
+                  </Button>
+                </div>
+              )}
+              {/*  END: Animated Search Bar */}
 
               {/* Theme Toggle */}
               {mounted && (
@@ -204,15 +201,15 @@ const Header = ({ searchQuery, setSearchQuery }: HeaderProps) => {
             </div>
           </div>
 
-        {/* Mobile Search Overlay */}
-        {isSearchOpen && (
+        {/* Mobile Search Overlay - Only show on home page */}
+        {isHomePage && isSearchOpen && (
           <div className="md:hidden px-2 pb-2">
             <Input
               ref={searchInputRef}
               type="text"
               placeholder="Search components..."
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
               className="h-10 w-full rounded-full border-2 border-transparent bg-muted/70 focus:border-primary focus:bg-background transition-all duration-300 ease-in-out px-4 opacity-100"
             />
           </div>
