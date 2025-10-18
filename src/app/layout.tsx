@@ -37,15 +37,9 @@ export default function RootLayout({
       >
         {/* ✅ Wrap everything in ThemeProvider */}
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem storageKey="devui-theme">
-          <ThemeColorPicker />
-          {children}
-          <Toaster position="top-center" richColors />
-          <BackToTopButton />
-        {/*  Wrap everything in ThemeProvider */}
-        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
           <SearchProvider>
-            <ThemeColorPicker />
             <Header />
+            <ThemeColorPicker />
             {children}
             <Toaster position="top-center" richColors />
             <BackToTopButton />
