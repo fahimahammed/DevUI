@@ -34,7 +34,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         {/* ✅ Wrap everything in ThemeProvider */}
-        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
+        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem storageKey="devui-theme">
           <ThemeColorPicker />
           {children}
           <Toaster position="top-center" richColors />
