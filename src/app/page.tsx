@@ -21,11 +21,11 @@
   } from "lucide-react";
   import { Button } from "@/components/ui/button";
   import Link from "next/link";
-  import Header from "@/components/Header";
+  import { useSearch } from "@/lib/SearchContext";
 
   const Index = () => {
-    // ✅ This logic STAYS here. This page will control the search.
-    const [searchQuery, setSearchQuery] = useState("");
+    // Use search context instead of local state
+    const { searchQuery, setSearchQuery } = useSearch();
     const [debouncedQuery, setDebouncedQuery] = useState("");
     const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
@@ -115,8 +115,6 @@
 
   return (
     <div className="min-h-screen bg-background">
-      {/* ✅ We will now pass the search state and function to the Header */}
-      <Header searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
 
       {/* Hero Section */}
       <section
