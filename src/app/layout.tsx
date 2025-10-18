@@ -6,6 +6,8 @@ import "./globals.css";
 import ThemeColorPicker from "@/components/ui/ThemeColorPicker";
 import { ThemeProvider } from "next-themes"; // ⬅️ import
 import { Toaster } from "@/components/ui/sonner";
+import Header from "@/components/Header";
+import { SearchProvider } from "@/lib/SearchContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -39,6 +41,15 @@ export default function RootLayout({
           {children}
           <Toaster position="top-center" richColors />
           <BackToTopButton />
+        {/*  Wrap everything in ThemeProvider */}
+        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
+          <SearchProvider>
+            <ThemeColorPicker />
+            <Header />
+            {children}
+            <Toaster position="top-center" richColors />
+            <BackToTopButton />
+          </SearchProvider>
         </ThemeProvider>
       </body>
     </html>
