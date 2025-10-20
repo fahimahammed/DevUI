@@ -27,13 +27,29 @@ const ThemeColorPicker = () => {
   // Load saved theme from localStorage on mount
   useEffect(() => {
     setMounted(true);
+    
+    // Clean up any invalid theme names from next-themes localStorage
+    const nextThemesKey = 'devui-theme';
+    const nextThemesValue = localStorage.getItem(nextThemesKey);
+    if (nextThemesValue && nextThemesValue.includes(' ')) {
+      localStorage.removeItem(nextThemesKey);
+    }
+    
     const savedThemeName = localStorage.getItem(STORAGE_KEY);
-    const savedTheme = themes.find((t) => t.name === savedThemeName);
+    
+    // Validate theme name - remove any invalid characters
+    const cleanThemeName = savedThemeName?.replace(/[^a-zA-Z0-9-_]/g, '');
+    const savedTheme = themes.find((t) => t.name === cleanThemeName);
 
     if (savedTheme) {
       // If a theme was saved, apply it
       handleThemeChange(savedTheme, false); // Pass false to prevent re-saving
     } else {
+      // Clean up invalid theme names from localStorage
+      if (savedThemeName && savedThemeName !== cleanThemeName) {
+        localStorage.removeItem(STORAGE_KEY);
+      }
+      
       // Otherwise, get the default color from CSS
       const currentColor = getComputedStyle(document.body)
         .getPropertyValue("--primary")

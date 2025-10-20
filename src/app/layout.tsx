@@ -35,11 +35,11 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {/*  Wrap everything in ThemeProvider */}
-        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
+        {/* ✅ Wrap everything in ThemeProvider */}
+        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem storageKey="devui-theme">
           <SearchProvider>
-            <ThemeColorPicker />
             <Header />
+            <ThemeColorPicker />
             {children}
             <Toaster position="top-center" richColors />
             <BackToTopButton />
