@@ -95,6 +95,8 @@ import { Kbd } from "@/components/ui/kbd";
 
 import { InputOTP } from "@/components/ui/input-otp";
 
+import { ResizablePanelGroup } from "@/components/ui/resizable";
+
 export const componentsData = [
   {
     id: "button",
@@ -2102,6 +2104,44 @@ export function InputOTPDemo() {
   propsData: [
       { name: "maxLength", type: "number", description: "Total number of OTP digits.", default: "6" },
       { name: "children", type: "ReactNode", description: "Slot groups and separators." },
+    ],
+  },
+  {
+  id: "resizable-panels",
+  title: "Resizable Panels",
+  description: "Accessible, resizable panel group with keyboard and pointer support (horizontal/vertical).",
+  category: "Layout",
+  preview: <ResizablePanelGroup.Preview />,
+  code: `import {
+  ResizablePanelGroup,
+  ResizablePanel,
+  ResizableHandle,
+} from "@/components/ui/resizable"
+
+export function ResizableHandleDemo() {
+  return (
+    <ResizablePanelGroup
+      direction="horizontal"
+      className="min-h-[200px] max-w-md rounded-lg border md:min-w-[450px]"
+    >
+      <ResizablePanel defaultSize={25}>
+        <div className="flex h-full items-center justify-center p-6">
+          <span className="font-semibold">Sidebar</span>
+        </div>
+      </ResizablePanel>
+      <ResizableHandle withHandle />
+      <ResizablePanel defaultSize={75}>
+        <div className="flex h-full items-center justify-center p-6">
+          <span className="font-semibold">Content</span>
+        </div>
+      </ResizablePanel>
+    </ResizablePanelGroup>
+  )
+}`,
+  propsData: [
+      { name: "direction", type: '"horizontal" | "vertical"', description: "Resize axis.", default: "horizontal" },
+      { name: "className", type: "string", description: "Additional classes for wrapper.", default: '""' },
+      { name: "ResizablePanel.defaultSize", type: "number", description: "Default percentage size for a panel.", default: "50" },
     ],
   },
 ];
